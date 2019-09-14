@@ -1,3 +1,5 @@
+//// Standardize to hit and damage bonus from enchantment on launchers and ammo
+
 // TODO: Remove +1/2/3 ammo from all containers and shops
 
 // TODO: Flag +1/2/3 and drow +3 ammo as undroppable
@@ -7,7 +9,7 @@ COPY_EXISTING GLOB ~strmod.2da~ ~override~
   READ_2DA_ENTRIES_NOW ~strmod~ 5
 BUT_ONLY
 
-COPY_EXISTING_REGEXP GLOB ~.*.item~ ~override~
+COPY_EXISTING_REGEXP GLOB ~.+.item~ ~override~
   READ_SHORT 0x1c item_type
   READ_LONG  0x60 item_ench
 
@@ -39,7 +41,7 @@ COPY_EXISTING_REGEXP GLOB ~.*.item~ ~override~
   END
 BUT_ONLY
 
-COPY ~std_launchers_ammo/itemmod.2da~ ~item_rev/components/main~
+COPY ~mcr_salt_and_pepper/2da/launcher_ammo_mod.2da~ ~mcr_salt_and_pepper/components~
   READ_2DA_ENTRIES_NOW ~itemmod~ 6
   FOR (row = 0; row < itemmod; row += 1) BEGIN
     READ_2DA_ENTRY_FORMER ~r2en_items~ row 0  id

@@ -1,41 +1,26 @@
-BACKUP ~mcr_flavors/backup~
+BACKUP ~mcr_salt_and_pepper/backup~
 AUTHOR ~mercurier~
-VERSION ~v0.1~
+VERSION ~v0.2~
+
+README ~mcr_salt_and_pepper/readme-mcr_salt_and_pepper.md~
+
+ASK_EVERY_COMPONENT
+
+LANGUAGE ~English~
+         ~english~
+         ~mcr_salt_and_pepper/languages/English/setup.tra~
 
 ///////////////////////////////////
-BEGIN ~Standardize store markups~
+BEGIN @10 // Standardize store buy and sell markups
+DESIGNATED 10
 
-//// remove store depreciation, regularize buy markup (25 for normal shops, 15 for fences)
-COPY_EXISTING_REGEXP GLOB ~^.+\.sto$~ ~override~
-  WRITE_SHORT 0x14 150          // 150 sell
-  WRITE_SHORT 0x1c 0            // 0 depreciation
-  WRITE_SHORT 0x18 25           // 25 buy markup
-  READ_LONG  0x10 "flags"
-  PATCH_IF (("%flags%" BAND 0x1000) = 0x1000) BEGIN
-    WRITE_SHORT 0x0018            // 15 buy markup for fence
-  END
-BUT_ONLY
+INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
-//// scale up trophy value
-
-// bandit scalp
-COPY_EXISTING_REGEXP GLOB ~misc86.itm$~ ~override~
-  WRITE_SHORT 0x0034 0x00c8
-BUT_ONLY
-
-// winter wolf pelt
-COPY_EXISTING_REGEXP GLOB ~misc01.itm$~ ~override~
-  WRITE_SHORT 0x0034 0x07d0
-BUT_ONLY
-
-// wyvern head
-COPY_EXISTING_REGEXP GLOB ~misc52.itm$~ ~override~
-  WRITE_SHORT 0x0034 0x0fa0
-BUT_ONLY
 
 ///////////////////////////////////
-BEGIN ~Remove random treasure~
-// Adapted from Bartimaeus@G3
+BEGIN @20 // Remove random treasure
+DESIGNATED 20
+// Adapted from Bartimaeus@G3's posted code
 
 COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
   PATCH_IF (SOURCE_SIZE > 0x2d3) BEGIN
@@ -50,3 +35,11 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
    REMOVE_CRE_ITEM ~rndtre09~
   END
 BUT_ONLY
+
+
+///////////////////////////////////
+BEGIN @30 // Standardize to hit and damage bonus from enchantment on launchers and ammo
+DESIGNATED 30
+// Some work is based on Item Revisions Revised by Bartimaeus@G3
+
+INCLUDE ~mcr_salt_and_pepper/components/std_launchers_ammo.tpa~

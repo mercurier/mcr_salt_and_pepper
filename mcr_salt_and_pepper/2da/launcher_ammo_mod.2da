@@ -1,0 +1,112 @@
+2DA V1.0
+*
+                                           TYPE     ITM      TOHIT    DMG      ENCH
+ARROW                                      ARROW    arow01   0        0        0
+ARROW_1                                    ARROW    arow02   0        0        0
+ARROW_OF_SLAYING_2                         ARROW    arow03   0        0        0
+ARROW_OF_ACID_2                            ARROW    arow04   0        0        0
+ARROW_OF_BITING                            ARROW    arow05   0        0        0
+ARROW_OF_DETONATION                        ARROW    arow06   0        0        0
+ARROW_OF_DISPELLING_1                      ARROW    arow07   0        0        0
+ARROW_OF_FIRE_1                            ARROW    arow08   0        0        0
+ARROW_OF_ICE_1                             ARROW    arow09   0        0        0
+ARROW_OF_PIERCING_3                        ARROW    arow10   0        0        0
+ARROW_2                                    ARROW    arow11   0        0        0
+POISONED_ARROW                             ARROW    arow14   0        0        0
+ARROW_3                                    ARROW    arow15   0        0        0
+QUIVER_OF_PLENTY_1                         ARROW    quiver01 1        0        0
+QUIVER_OF_PLENTY_3                         ARROW    quiver03 1        1        0
+
+BOLT                                       BOLT     bolt01   0        0        0
+BOLT_1                                     BOLT     bolt02   0        0        0
+BOLT_OF_LIGHTNING_1                        BOLT     bolt03   0        0        0
+BOLT_OF_BITING                             BOLT     bolt04   0        0        0
+BOLT_OF_POLYMORPHING_2                     BOLT     bolt05   0        0        0
+BOLT_2                                     BOLT     bolt06   0        0        0
+FLASHER_MASTER_BRUISER_MATE_1              BOLT     bolt07   0        0        0
+BLESSED_BOLT_3                             BOLT     bolt08   0        0        0
+BOLT_3                                     BOLT     bolt09   0        0        0
+PARALYTIC_BOLT_1                           BOLT     sahbolt  0        0        0
+KUO-TOA_BOLT_1                             BOLT     kuobolt  0        0        0
+KUO-TOA_BOLT_2                             BOLT     kuobolt2 0        0        0
+KUO-TOA_BOLT_3                             BOLT     kuobolt3 0        0        0
+CASE_OF_PLENTY_1                           BOLT     quiver02 1        0        0
+CASE_OF_PLENTY_3                           BOLT     quiver04 1        1        0
+
+COMPOSITE_LONG_BOW                         BOWCOMP  bow01    0        0        0
+COMPOSITE_LONG_BOW_1                       BOWCOMP  bow02    0        0        0
+LONG_BOW                                   BOWLONG  bow03    0        0        0
+LONG_BOW_1                                 BOWLONG  bow04    0        0        0
+SHORT_BOW                                  BOWSHORT bow05    0        0        0
+SHORT_BOW_1                                BOWSHORT bow06    0        0        0
+LONG_BOW_OF_MARKSMANSHIP_2                 BOWLONG  bow07    0        0        0
+EAGLE_BOW_2                                BOWSHORT bow08    0        0        0
+RIPPER_2                                   BOWCOMP  bow09    0        0        0
+HEARTSEEKER_3                              BOWCOMP  bow10    3        0        0
+STRONG_ARM_2                               BOWCOMP  bow11    -2       -2       -2
+ELVEN_COURT_BOW_3                          BOWLONG  bow12    0        0        0
+MANA_BOW_4                                 BOWLONG  bow13    0        0        0
+TUIGAN_BOW_1                               BOWSHORT bow14    0        0        0
+TANSHERONS_BOW_3                           BOWSHORT bow15    0        0        0
+COMPOSITE_LONG_BOW_2                       BOWCOMP  bow16    0        0        0
+LONG_BOW_2                                 BOWLONG  bow17    0        0        0
+SHORT_BOW_2                                BOWSHORT bow18    0        0        0
+IRON_BOW_OF_GESEN_4                        BOWSHORT bow19    0        0        0
+DARKFIRE_BOW_4                             BOWSHORT bow20    0        0        0
+DARKFIRE_BOW_5                             BOWSHORT bow21    0        0        0
+TARALASH_4                                 BOWLONG  bow22    0        0        0
+TARALASH_5                                 BOWLONG  bow23    0        0        0
+COMPOSITE_LONG_BOW_3                       BOWCOMP  bow24    0        0        0
+LONG_BOW_3                                 BOWLONG  bow25    0        0        0
+SHORT_BOW_3                                BOWSHORT bow26    0        0        0
+
+BULLET                                     BULLET   bull01   0        0        0
+BULLET_1                                   BULLET   bull02   0        0        0
+BULLET_2                                   BULLET   bull03   0        0        0
+SUNSTONE_BULLET_2                          BULLET   bull04   0        0        0
+BULLET_3                                   BULLET   bull05   0        0        0
+BULLET_OF_SMITING_3                        BULLET   bull06   0        0        0
+BAG_OF_PLENTY_1                            BULLET   quiver05 1        0        0
+BAG_OF_PLENTY_3                            BULLET   quiver06 1        1        0
+
+DROWCRAFT_BOLT_OF_SLEEP_1                  BOLT     dwbolt01 1        1        0
+DROWCRAFT_BOLT_OF_STUNNING_2               BOLT     dwbolt02 1        1        0
+DROWCRAFT_BOLT_3                           BOLT     dwbolt03 1        1        0
+DROWCRAFT_LIGHT_CROSSBOW_OF_SPEED_1        XBOWLITE dwxbow01 4        4        2
+
+BIG_METAL_ROD_5                            XBOWHVY  secret01 0        0        0
+PULSE_AMMUNITION_5                         BOLT     secret02 0        1        0
+FRAG_GRENADE_5                             BOLT     secret03 0        0        0
+SCORCHER_AMMUNITION_5                      BOLT     secret04 0        0        0
+
+HEAVY_CROSSBOW                             XBOWHVY  xbow01   0        0        0
+HEAVY_CROSSBOW_1                           XBOWHVY  xbow02   0        0        0
+HEAVY_CROSSBOW_OF_ACCURACY_1               XBOWHVY  xbow03   3        0        0
+LIGHT_CROSSBOW                             XBOWLITE xbow04   0        0        0
+LIGHT_CROSSBOW_1                           XBOWLITE xbow05   0        0        0
+LIGHT_CROSSBOW_OF_SPEED_1                  XBOWLITE xbow06   0        0        0
+HEAVY_CROSSBOW_2                           XBOWHVY  xbow07   0        0        0
+GIANT_HAIR_CROSSBOW_3                      XBOWHVY  xbow08   0        0        0
+LIGHT_CROSSBOW_2                           XBOWLITE xbow09   0        0        0
+NECARADANS_CROSSBOW_2                      XBOWLITE xbow10   0        0        0
+CROSSBOW_OF_AFFLICTION_4                   XBOWHVY  xbow13   0        0        0
+HEAVY_CROSSBOW_OF_SEARING_2                XBOWHVY  xbow14   0        0        0
+FIRETOOTH_4                                XBOWLITE xbow15   0        0        0
+FIRETOOTH_5                                XBOWLITE xbow16   0        0        0
+HEAVY_CROSSBOW_3                           XBOWHVY  xbow17   0        0        0
+LIGHT_CROSSBOW_3                           XBOWLITE xbow18   0        0        0
+
+SLING                                      SLING    slng01   0        0        0
+SLING_1                                    SLING    slng02   0        0        0
+SLING_OF_SEEKING_1                         SLING    slng03   5        0        0
+SLING_2                                    SLING    slng04   0        0        0
+ARLAS_DRAGONBANE_3                         SLING    slng05   -2       -2       0
+SLING_OF_ARVOREEN_2                        SLING    slng06   0        0        0
+SLING_OF_FORCE_2                           SLING    slng07   0        0        0
+ERINNE_SLING_4                             SLING    slng08   0        0        0
+ERINNE_SLING_5                             SLING    slng09   0        0        0
+SLING_3                                    SLING    slng10   0        0        0
+
+SLING_OF_EVERARD_3                         SLING    wasling  0        0        0
+
+SLING_OF_UNERRING_ACCURACY_1               SLING    slng11   1        0        0

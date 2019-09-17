@@ -14,8 +14,8 @@ ARROW_OF_PIERCING_3                        ARROW    arow10   0        0        0
 ARROW_2                                    ARROW    arow11   0        0        0
 POISONED_ARROW                             ARROW    arow14   0        0        0
 ARROW_3                                    ARROW    arow15   0        0        0
-QUIVER_OF_PLENTY_1                         ARROW    quiver01 1        0        0
-QUIVER_OF_PLENTY_3                         ARROW    quiver03 1        1        0
+QUIVER_OF_PLENTY_1                         ARROW    quiver01 0        0        0
+QUIVER_OF_PLENTY_3                         ARROW    quiver03 0        0        0
 
 BOLT                                       BOLT     bolt01   0        0        0
 BOLT_1                                     BOLT     bolt02   0        0        0
@@ -30,8 +30,8 @@ PARALYTIC_BOLT_1                           BOLT     sahbolt  0        0        0
 KUO-TOA_BOLT_1                             BOLT     kuobolt  0        0        0
 KUO-TOA_BOLT_2                             BOLT     kuobolt2 0        0        0
 KUO-TOA_BOLT_3                             BOLT     kuobolt3 0        0        0
-CASE_OF_PLENTY_1                           BOLT     quiver02 1        0        0
-CASE_OF_PLENTY_3                           BOLT     quiver04 1        1        0
+CASE_OF_PLENTY_1                           BOLT     quiver02 0        0        0
+CASE_OF_PLENTY_3                           BOLT     quiver04 0        0        0
 
 COMPOSITE_LONG_BOW                         BOWCOMP  bow01    0        0        0
 COMPOSITE_LONG_BOW_1                       BOWCOMP  bow02    0        0        0
@@ -66,8 +66,8 @@ BULLET_2                                   BULLET   bull03   0        0        0
 SUNSTONE_BULLET_2                          BULLET   bull04   0        0        0
 BULLET_3                                   BULLET   bull05   0        0        0
 BULLET_OF_SMITING_3                        BULLET   bull06   0        0        0
-BAG_OF_PLENTY_1                            BULLET   quiver05 1        0        0
-BAG_OF_PLENTY_3                            BULLET   quiver06 1        1        0
+BAG_OF_PLENTY_1                            BULLET   quiver05 0        0        0
+BAG_OF_PLENTY_3                            BULLET   quiver06 0        0        0
 
 DROWCRAFT_BOLT_OF_SLEEP_1                  BOLT     dwbolt01 1        1        0
 DROWCRAFT_BOLT_OF_STUNNING_2               BOLT     dwbolt02 1        1        0

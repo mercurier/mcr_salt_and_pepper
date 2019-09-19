@@ -9,7 +9,7 @@ COPY_EXISTING GLOB ~strmod.2da~ ~override~
   READ_2DA_ENTRIES_NOW ~strmod~ 5
 BUT_ONLY
 
-COPY_EXISTING_REGEXP GLOB ~.+.item~ ~override~
+COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
   READ_SHORT 0x1c item_type
   READ_LONG  0x60 item_ench
 

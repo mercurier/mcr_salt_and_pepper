@@ -43,3 +43,13 @@ DESIGNATED 30
 // Some work is based on Item Revisions Revised by Bartimaeus@G3
 
 INCLUDE ~mcr_salt_and_pepper/components/std_launchers_ammo.tpa~
+
+
+///////////////////////////////////
+BEGIN @40 // Alternative proficiency mastery system
+DESIGNATED 40
+// Inspired by Scales of Balance and Tweak Anthology
+// Maximum 4 stars for fighters (single or multiclass)
+// True grand mastery
+
+INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~

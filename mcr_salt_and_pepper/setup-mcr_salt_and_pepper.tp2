@@ -53,3 +53,11 @@ DESIGNATED 40
 // True grand mastery
 
 INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
+
+
+///////////////////////////////////
+BEGIN @50 // Alternative saving throws
+DESIGNATED 50
+// Include modified classes ST tables from Kit Revisions
+
+INCLUDE ~mcr_salt_and_pepper/components/alt_saving_throws.tpa~

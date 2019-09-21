@@ -1,0 +1,5 @@
+// Alternative saving throws
+// Include modified classes ST tables from Kit Revisions
+
+
+COPY ~mcr_salt_and_pepper/2da/saving_throws/^.+\.2da$~ ~override~

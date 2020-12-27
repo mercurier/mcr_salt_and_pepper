@@ -1,5 +1,8 @@
 // Alternative saving throws
 // Include modified classes ST tables from Kit Revisions
 
-
-COPY ~mcr_salt_and_pepper/2da/saving_throws/^.+\.2da$~ ~override~
+COPY ~mcr_salt_and_pepper/2da/saving_throws/savemonk.2da~ ~override~
+COPY ~mcr_salt_and_pepper/2da/saving_throws/saveprs.2da~ ~override~
+COPY ~mcr_salt_and_pepper/2da/saving_throws/saverog.2da~ ~override~
+COPY ~mcr_salt_and_pepper/2da/saving_throws/savewar.2da~ ~override~
+COPY ~mcr_salt_and_pepper/2da/saving_throws/savewiz.2da~ ~override~

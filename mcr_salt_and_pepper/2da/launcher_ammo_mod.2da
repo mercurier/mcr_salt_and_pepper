@@ -72,7 +72,7 @@ BAG_OF_PLENTY_3                            BULLET   quiver06 0        0        0
 DROWCRAFT_BOLT_OF_SLEEP_1                  BOLT     dwbolt01 1        1        0
 DROWCRAFT_BOLT_OF_STUNNING_2               BOLT     dwbolt02 1        1        0
 DROWCRAFT_BOLT_3                           BOLT     dwbolt03 1        1        0
-DROWCRAFT_LIGHT_CROSSBOW_OF_SPEED_1        XBOWLITE dwxbow01 4        4        2
+DROWCRAFT_LIGHT_CROSSBOW_OF_SPEED_1        XBOWLITE dwxbow01 2        2        0
 
 BIG_METAL_ROD_5                            XBOWHVY  secret01 0        0        0
 PULSE_AMMUNITION_5                         BOLT     secret02 0        1        0

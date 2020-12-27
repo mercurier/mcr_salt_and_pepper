@@ -3,13 +3,16 @@
 // Maximum 4 stars for fighters (single or multiclass)
 // True grand mastery
 
-COPY ~mcr_salt_and_pepper/2da/alt_prof/^.+\.2da$~ ~override~
+COPY ~mcr_salt_and_pepper/2da/alt_prof/profmax.2da~ ~override~
+COPY ~mcr_salt_and_pepper/2da/alt_prof/profs.2da~ ~override~
+COPY ~mcr_salt_and_pepper/2da/alt_prof/wspatck.2da~ ~override~
+COPY ~mcr_salt_and_pepper/2da/alt_prof/wspecial.2da~ ~override~
 
 COPY_EXISTING ~weapprof.2da~  ~override~
   // update 5-star prof system to 4-star
   COUNT_2DA_COLS cols
-  FOR (column = 4; column <= cols; column = column + 1) BEGIN
-    FOR (row = 11; row < 31; row = row + 1) BEGIN
+  FOR (column = 4; column < cols; ++column) BEGIN
+    FOR (row = 11; row < 31; ++row) BEGIN
       READ_2DA_ENTRY row column 1 stars
       PATCH_IF (stars = 4) BEGIN
         SET_2DA_ENTRY_LATER ~alt_mastery~ row column ~3~

@@ -1,12 +1,15 @@
 //// Standardize store buy and sell markups
 
 COPY_EXISTING_REGEXP GLOB ~.*\.sto$~ ~override~
-  WRITE_SHORT 0x14 150          // 150 sell
-  // WRITE_SHORT 0x1c 0            // 0 depreciation; deprecated
-  WRITE_SHORT 0x18 25           // 25 buy markup
-  READ_LONG  0x10 "flags"
-  PATCH_IF (("%flags%" BAND 0x1000) = 0x1000) BEGIN
-    WRITE_SHORT 0x18 15            // 15 buy markup for fence
+  READ_LONG 0x08 shop_type
+  PATCH_IF shop_type=0 BEGIN
+    WRITE_SHORT 0x14 150          // 150 sell
+    // WRITE_SHORT 0x1c 0            // 0 depreciation; deprecated
+    WRITE_SHORT 0x18 25           // 25 buy markup
+    READ_LONG  0x10 "flags"
+    PATCH_IF (("%flags%" BAND 0x1000) = 0x1000) BEGIN
+      WRITE_SHORT 0x18 15            // 15 buy markup for fence
+    END
   END
 BUT_ONLY
 

@@ -7,6 +7,7 @@ COPY ~mcr_salt_and_pepper/2da/alt_prof/profmax.2da~ ~override~
 COPY ~mcr_salt_and_pepper/2da/alt_prof/profs.2da~ ~override~
 COPY ~mcr_salt_and_pepper/2da/alt_prof/wspatck.2da~ ~override~
 COPY ~mcr_salt_and_pepper/2da/alt_prof/wspecial.2da~ ~override~
+COPY ~mcr_salt_and_pepper/2da/alt_prof/PROFSMAX.2DA~ ~override~
 
 COPY_EXISTING ~weapprof.2da~  ~override~
   // update 5-star prof system to 4-star

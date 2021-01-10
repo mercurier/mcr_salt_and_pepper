@@ -2,7 +2,7 @@
 
 COPY_EXISTING_REGEXP GLOB ~.*\.sto$~ ~override~
   READ_LONG 0x08 shop_type
-  PATCH_IF shop_type=0 BEGIN
+  PATCH_IF shop_type<=3 BEGIN
     WRITE_SHORT 0x14 150          // 150 sell
     // WRITE_SHORT 0x1c 0            // 0 depreciation; deprecated
     WRITE_SHORT 0x18 25           // 25 buy markup

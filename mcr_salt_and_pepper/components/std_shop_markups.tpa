@@ -3,13 +3,13 @@
 COPY_EXISTING_REGEXP GLOB ~.*\.sto$~ ~override~
   READ_LONG 0x08 shop_type
   PATCH_IF shop_type<=3 BEGIN
-    WRITE_SHORT 0x14 150          // 150 sell
-    // WRITE_SHORT 0x1c 0            // 0 depreciation; deprecated
-    WRITE_SHORT 0x18 25           // 25 buy markup
-    READ_LONG  0x10 "flags"
-    PATCH_IF (("%flags%" BAND 0x1000) = 0x1000) BEGIN
-      WRITE_SHORT 0x18 15            // 15 buy markup for fence
-    END
+    // WRITE_SHORT 0x14 150          // 150 sell
+    WRITE_SHORT 0x1c 0            // 0 depreciation
+    WRITE_SHORT 0x18 20           // 20 buy markup, minimum allowed value per system
+    // READ_LONG  0x10 "flags"
+    // PATCH_IF (("%flags%" BAND 0x1000) = 0x1000) BEGIN
+    //  WRITE_SHORT 0x18 20            // 20 buy markup for fence
+    //END
   END
 BUT_ONLY
 
@@ -17,15 +17,15 @@ BUT_ONLY
 
 // bandit scalp
 COPY_EXISTING_REGEXP GLOB ~misc86.itm$~ ~override~
-  WRITE_SHORT 0x0034 0x00c8
+  WRITE_SHORT 0x0034 0x00fa
 BUT_ONLY
 
 // winter wolf pelt
 COPY_EXISTING_REGEXP GLOB ~misc01.itm$~ ~override~
-  WRITE_SHORT 0x0034 0x07d0
+  WRITE_SHORT 0x0034 0x04e2
 BUT_ONLY
 
 // wyvern head
 COPY_EXISTING_REGEXP GLOB ~misc52.itm$~ ~override~
-  WRITE_SHORT 0x0034 0x0fa0
+  WRITE_SHORT 0x0034 0x09c4
 BUT_ONLY

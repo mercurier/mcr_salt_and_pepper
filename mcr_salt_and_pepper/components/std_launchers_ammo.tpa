@@ -1,9 +1,5 @@
 //// Standardize to hit and damage bonus from enchantment on launchers and ammo
 
-// TODO: Remove +1/2/3 ammo from all containers and shops
-
-// TODO: Flag +1/2/3 and drow +3 ammo as undroppable
-
 
 COPY_EXISTING ~strmod.2da~ ~override~
   READ_2DA_ENTRIES_NOW ~strmod~ 5
@@ -14,39 +10,40 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
   READ_LONG  0x60 item_ench
 
   // remove to hit and damage bonus from enchantment on ammo
-  PATCH_IF (item_type = 0x05) OR (item_type = 0x1f) OR (item_type = 0x1f) BEGIN
+  PATCH_IF (item_type = 0x05) OR (item_type = 0x0e) OR (item_type = 0x1f) BEGIN
     READ_SHORT 0x82 req_launcher_flag
-	PATCH_IF req_launcher_flag != 0 BEGIN  // make sure it's a ammo ability
-      WRITE_SHORT 0x86  0 // to hit bonus 0
-      PATCH_IF item_type = 0x1f BEGIN // is bullet
-        WRITE_SHORT 0x8c  1 // dmg bonus 1
+    PATCH_IF req_launcher_flag != 0 BEGIN  // make sure it is a ammo ability
+      WRITE_SHORT 0x86  0 // to hit bonus = enchantment level
+      PATCH_IF item_type = 0x0e BEGIN // is bullet
+        WRITE_SHORT 0x8c  1 // dmg bonus = enchantment level + 1
       END ELSE BEGIN
-        WRITE_SHORT 0x8c  0 // dmg bonus 0
+        WRITE_SHORT 0x8c  0 // dmg bonus = enchantment level
       END
-	END
+    END
+    
   // set to hit and damage bonus from enchantment on slings universally
   END ELSE PATCH_IF item_type = 0x12 BEGIN
     READ_BYTE 0x72 ability_type
-	PATCH_IF ability_type = 4 BEGIN  // make sure is a launcher ability
-      WRITE_SHORT 0x86  item_ench // to hit bonus 0
-      WRITE_SHORT 0x8c  item_ench // dmg bonus 0
-	END
+    PATCH_IF ability_type = 4 BEGIN  // make sure it is a launcher ability
+      WRITE_SHORT 0x86  item_ench // to hit bonus = enchantment level
+      WRITE_SHORT 0x8c  item_ench // dmg bonus = enchantment level
+    END
+    
   // set to hit and damage bonus from enchantment on bows and xbows universally
   END ELSE PATCH_IF (item_type = 0x0f) OR (item_type = 0x1b) BEGIN
     READ_BYTE 0x72 ability_type
-	PATCH_IF ability_type = 4 BEGIN  // make sure is a launcher ability
-	  READ_BYTE  0x20 thief_unusable
-      // SET is_long_heavy = (1 - (thief_unusable BAND 0b01000000))  // is long bow or heavy xbow?
-	  SET is_long_heavy = ((thief_unusable BAND 0b01000000) > 0)  // is long bow or heavy xbow?
+    PATCH_IF ability_type = 4 BEGIN  // make sure it is a launcher ability
+      READ_BYTE  0x20 thief_unusable
+      SET is_long_heavy = ((thief_unusable BAND 0b01000000) > 0)  // is long bow or heavy xbow?
       READ_SHORT 0x26 strreq
       READ_2DA_ENTRY_FORMER ~strmod~ strreq 2 str_dmg  // row and col idx starts from 0
-	  SET str_dmg = (str_dmg * (str_dmg>0))
+      SET str_dmg = (str_dmg * (str_dmg>0))
       PATCH_IF item_type = 0x0f BEGIN // bows
         WRITE_SHORT 0x86  (item_ench)  
-        WRITE_SHORT 0x8c  (item_ench+str_dmg+is_long_heavy)  // str bonus up to req is added to composite bows
+        WRITE_SHORT 0x8c  (item_ench+str_dmg+is_long_heavy)  // dmg bonus = enchantment level + str bonus up to req + (1 for long bow)
       END ELSE BEGIN // xbows
-        WRITE_SHORT 0x86  (item_ench)
-        WRITE_SHORT 0x8c  (item_ench+str_dmg+is_long_heavy)  // str bonus up to req is added to composite bows
+        WRITE_SHORT 0x86  (item_ench+1)  // to hit bonus = enchantment level + 1
+        WRITE_SHORT 0x8c  (item_ench+str_dmg+is_long_heavy*2)  // dmg bonus = enchantment level + str bonus up to req + (2 for heavy xbow)
       END
     END
   END
@@ -64,10 +61,10 @@ COPY - ~mcr_salt_and_pepper/2da/launcher_ammo_mod.2da~ ~mcr_salt_and_pepper/comp
     READ_2DA_ENTRY_FORMER itemmod row 3  mod_tohit
     READ_2DA_ENTRY_FORMER itemmod row 4  mod_dmg
     READ_2DA_ENTRY_FORMER itemmod row 5  mod_ench
-	
-	
-	INNER_ACTION BEGIN
-	  ACTION_IF FILE_EXISTS_IN_GAME ~%itm_id%.itm~ BEGIN
+    
+    
+    INNER_ACTION BEGIN
+      ACTION_IF FILE_EXISTS_IN_GAME ~%itm_id%.itm~ BEGIN
         COPY_EXISTING ~%itm_id%.itm~ ~override~
           READ_LONG  0x60 item_ench
           READ_SHORT 0x86 tohit_bonus
@@ -76,6 +73,6 @@ COPY - ~mcr_salt_and_pepper/2da/launcher_ammo_mod.2da~ ~mcr_salt_and_pepper/comp
           WRITE_SHORT 0x86 (tohit_bonus + mod_tohit)
           WRITE_SHORT 0x8c (dmg_bonus + mod_dmg)
         BUT_ONLY
-	  END
-	END
+      END
+    END
   END

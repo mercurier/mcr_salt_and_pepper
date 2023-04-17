@@ -11,7 +11,10 @@ LANGUAGE ~English~
          ~mcr_salt_and_pepper/languages/English/setup.tra~
 
 ///////////////////////////////////
-BEGIN @10 // Standardize store buy and sell markups
+BEGIN @10 // Standardize store buying markups
+// All shops buy at 20% of item value. No depreciation.
+// Less gold from selling loot.
+
 DESIGNATED 10
 
 INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
@@ -21,6 +24,7 @@ INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 BEGIN @20 // Remove random treasure
 DESIGNATED 20
 // Adapted from Bartimaeus@G3's posted code
+// No random gold, gems or scrolls from loot.
 
 COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
   PATCH_IF (SOURCE_SIZE > 0x2d3) BEGIN
@@ -35,14 +39,6 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
    REMOVE_CRE_ITEM ~rndtre09~
   END
 BUT_ONLY
-
-
-///////////////////////////////////
-BEGIN @30 // Standardize to hit and damage bonus from enchantment on launchers and ammo
-DESIGNATED 30
-// Some work is based on Item Revisions Revised by Bartimaeus@G3
-
-INCLUDE ~mcr_salt_and_pepper/components/std_launchers_ammo.tpa~
 
 
 ///////////////////////////////////
@@ -61,3 +57,23 @@ DESIGNATED 50
 // Include modified classes ST tables from Kit Revisions
 
 INCLUDE ~mcr_salt_and_pepper/components/alt_saving_throws.tpa~
+
+
+///////////////////////////////////
+BEGIN @60 // Alternative strength modification
+DESIGNATED 60
+// Slightly better STR bonus at low STR 
+// Less sharp change from STR 18 to 19
+
+INCLUDE ~mcr_salt_and_pepper/components/alt_saving_throws.tpa~
+
+
+///////////////////////////////////
+BEGIN @100 // Standardize to hit and damage bonus from enchantment on launchers and ammo
+DESIGNATED 100
+// Some work is based on Item Revisions Revised by Bartimaeus@G3
+// Long bow get +1 damage
+// Heavy crossbow get +2 damage
+// Composite bows get bonus damage per strength requirement
+
+INCLUDE ~mcr_salt_and_pepper/components/std_launchers_ammo.tpa~

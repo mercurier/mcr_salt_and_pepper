@@ -1,0 +1,7 @@
+// Alternative proficiency mastery system
+// Inspired by Scales of Balance and Tweak Anthology
+// Maximum 4 stars for fighters (single or multiclass)
+// True grand mastery
+
+COPY ~mcr_salt_and_pepper/2da/strmod/STRMOD.2da~ ~override~
+COPY ~mcr_salt_and_pepper/2da/strmod/STRMODEX.2da~ ~override~

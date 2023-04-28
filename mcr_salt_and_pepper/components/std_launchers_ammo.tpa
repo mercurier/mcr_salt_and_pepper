@@ -9,7 +9,7 @@ BUT_ONLY
 COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
   READ_SHORT 0x1c item_type
   READ_LONG  0x60 item_ench
-  PATCH_IF (%SOURCE_SIZE% > 0x71) BEGIN
+  PATCH_IF (%SOURCE_SIZE% > 0x7f) BEGIN
     // launchers bestow enchantment to ammo (this block was originally wrote by daniel.pennyway@gmail.com, https://forums.beamdog.com/discussion/58374/enchant-the-missile-launchers-ranged-weapon-tweak)
     PATCH_IF (item_type = 0x0f || item_type = 0x12 || item_type = 0x1b) BEGIN // double-check those values
       READ_LONG 0x60 enchantment
@@ -132,7 +132,7 @@ END
 COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
   READ_SHORT 0x1c item_type
   READ_LONG  0x60 item_ench
-  PATCH_IF (%SOURCE_SIZE% > 0x71) BEGIN
+  PATCH_IF (%SOURCE_SIZE% > 0x7f) BEGIN
     PATCH_IF (item_type = 0x0f || item_type = 0x12 || item_type = 0x1b || item_type = 0x05 OR item_type = 0x0e OR item_type = 0x1f) BEGIN // double-check those values
 		READ_SHORT 0x8c damage_bonus
 		READ_SHORT 0x86 thac0_bonus

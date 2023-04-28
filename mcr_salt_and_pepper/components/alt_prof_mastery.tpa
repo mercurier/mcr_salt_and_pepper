@@ -3,8 +3,7 @@
 // Maximum 4 stars for fighters (single or multiclass)
 // True grand mastery
 
-COPY ~mcr_salt_and_pepper/2da/alt_prof/profmax.2da~ ~override~
-COPY ~mcr_salt_and_pepper/2da/alt_prof/profs.2da~ ~override~
+// COPY ~mcr_salt_and_pepper/2da/alt_prof/profs.2da~ ~override~ // disabled for now as it might be op
 COPY ~mcr_salt_and_pepper/2da/alt_prof/wspatck.2da~ ~override~
 COPY ~mcr_salt_and_pepper/2da/alt_prof/wspecial.2da~ ~override~
 COPY ~mcr_salt_and_pepper/2da/alt_prof/PROFSMAX.2DA~ ~override~

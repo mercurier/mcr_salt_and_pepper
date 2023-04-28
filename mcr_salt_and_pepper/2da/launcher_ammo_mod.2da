@@ -43,7 +43,7 @@ LONG_BOW_OF_MARKSMANSHIP_2                 BOWLONG  bow07    0        0        0
 EAGLE_BOW_2                                BOWSHORT bow08    0        0        0
 RIPPER_2                                   BOWCOMP  bow09    0        0        0
 HEARTSEEKER_3                              BOWCOMP  bow10    3        0        0
-STRONG_ARM_2                               BOWCOMP  bow11    -2       -2       -2
+STRONG_ARM_2                               BOWCOMP  bow11    0        0        0
 ELVEN_COURT_BOW_3                          BOWLONG  bow12    0        0        0
 MANA_BOW_4                                 BOWLONG  bow13    0        0        0
 TUIGAN_BOW_1                               BOWSHORT bow14    0        0        0

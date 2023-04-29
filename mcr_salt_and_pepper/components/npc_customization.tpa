@@ -1,0 +1,60 @@
+//// update NPC properties per 2da
+
+COPY - ~mcr_salt_and_pepper/2da/npc_customization.2da~ ~mcr_salt_and_pepper/components~
+	READ_2DA_ENTRIES_NOW ~char_mod~ 16
+	FOR (row = 0; row < char_mod; ++row) BEGIN
+		READ_2DA_ENTRY_FORMER char_mod row 0  res_cre
+		READ_2DA_ENTRY_FORMER char_mod row 1  enabled
+		READ_2DA_ENTRY_FORMER char_mod row 2  str
+		READ_2DA_ENTRY_FORMER char_mod row 3  dex
+		READ_2DA_ENTRY_FORMER char_mod row 4  con
+		READ_2DA_ENTRY_FORMER char_mod row 5  int
+		READ_2DA_ENTRY_FORMER char_mod row 6  wis
+		READ_2DA_ENTRY_FORMER char_mod row 7  cha
+		READ_2DA_ENTRY_FORMER char_mod row 8  class
+		READ_2DA_ENTRY_FORMER char_mod row 9  alignment
+		READ_2DA_ENTRY_FORMER char_mod row 10 kit
+		READ_2DA_ENTRY_FORMER char_mod row 11  flag
+		READ_2DA_ENTRY_FORMER char_mod row 12  race
+		READ_2DA_ENTRY_FORMER char_mod row 13  avatar
+		READ_2DA_ENTRY_FORMER char_mod row 14  racial_e
+		READ_2DA_ENTRY_FORMER char_mod row 15  mr
+
+		INNER_ACTION BEGIN
+			ACTION_IF FILE_EXISTS_IN_GAME ~%res_cre%.cre~ BEGIN
+				COPY_EXISTING ~%res_cre%.cre~ ~override~
+					PATCH_IF enabled = 1 BEGIN
+						PATCH_IF str >= 0 BEGIN 
+							WRITE_BYTE 0x238 str
+						END PATCH_IF dex >= 0 BEGIN 
+							WRITE_BYTE 0x23c dex
+						END PATCH_IF con >= 0 BEGIN 
+							WRITE_BYTE 0x23d con
+						END PATCH_IF int >= 0 BEGIN 
+							WRITE_BYTE 0x23a int
+						END PATCH_IF wis >= 0 BEGIN 
+							WRITE_BYTE 0x23b wis
+						END PATCH_IF cha >= 0 BEGIN 
+							WRITE_BYTE 0x23e cha
+						END PATCH_IF class >= 0 BEGIN 
+							WRITE_BYTE 0x273 class
+						END PATCH_IF alignment >= 0 BEGIN 
+							WRITE_BYTE 0x27b alignment
+						END PATCH_IF kit >= 0 BEGIN 
+							WRITE_LONG 0x244 kit
+						END PATCH_IF race >= 0 BEGIN 
+							// WRITE_LONG 0x74 flag
+							WRITE_BYTE 0x258 race
+						END PATCH_IF avatar >= 0 BEGIN 
+							WRITE_LONG 0x28  avatar
+						END PATCH_IF racial_e >= 0 BEGIN 
+							WRITE_BYTE 0x241 racial_e
+						END PATCH_IF mr >= 0 BEGIN 
+							WRITE_BYTE 0x5d  mr
+						END
+					END
+				BUT_ONLY
+			END
+		END
+	END
+BUT_ONLY

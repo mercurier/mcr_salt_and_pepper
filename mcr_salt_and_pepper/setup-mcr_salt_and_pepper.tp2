@@ -86,3 +86,8 @@ BEGIN @3100 // Restore default 2 APR to bows
 DESIGNATED 3100
 REQUIRE_PREDICATE (MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 17) @3101
 INCLUDE ~mcr_salt_and_pepper/components/restore_bow_2apr.tpa~
+
+
+BEGIN @4000 // NPC customization
+DESIGNATED 4000
+INCLUDE ~mcr_salt_and_pepper/components/npc_customization.tpa~

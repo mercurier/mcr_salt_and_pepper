@@ -1,7 +1,10 @@
 @1  = ~mercurier's salt and pepper~
-@10 = ~Standardize store buying markups~
-@20 = ~Remove random treasure~
-@40 = ~Alternative proficiency mastery system~
-@50 = ~Alternative saving throws~
-@60 = ~Alternative strength modification~
-@100 = ~Standardize to hit and damage bonus from enchantment on launchers and ammo~
+@100 = ~Standardize store buying markups~
+@200 = ~Remove random treasure~
+@2000 = ~Alternative proficiency mastery system~
+@2010 = ~Alternative saving throws~
+@2100 = ~Alternative strength modification~
+@3000 = ~Standardize to hit and damage bonus from magical launchers and ammo~
+@3001 = ~This component requires an EE game~
+@3100 = ~Restore default 2 APR to bows~
+@3101 = ~Cannot install without Item Revisions component Weapon Changes~

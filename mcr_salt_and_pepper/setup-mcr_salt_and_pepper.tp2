@@ -1,6 +1,6 @@
 BACKUP ~mcr_salt_and_pepper/backup~
 AUTHOR ~mercurier~
-VERSION ~v2.0~
+VERSION ~v2.1~
 
 README ~mcr_salt_and_pepper/readme-mcr_salt_and_pepper.md~
 
@@ -11,7 +11,7 @@ LANGUAGE ~English~
          ~mcr_salt_and_pepper/languages/English/setup.tra~
 
 ///////////////////////////////////
-BEGIN @10 // Standardize store buying markups
+BEGIN @100 // Standardize store buying markups
 // Regular shops buy at 25% of item value, fences buy at 20%. No depreciation so you won't bother whom to dump your loot.
 // Will cause less gold from selling loot.
 
@@ -21,7 +21,7 @@ INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
 
 ///////////////////////////////////
-BEGIN @20 // Remove random treasure
+BEGIN @200 // Remove random treasure
 DESIGNATED 1010
 // Adapted from Bartimaeus@G3's posted code
 // No random gold, gems or scrolls from loot.
@@ -42,7 +42,7 @@ BUT_ONLY
 
 
 ///////////////////////////////////
-BEGIN @40 // Alternative proficiency mastery system
+BEGIN @2000 // Alternative proficiency mastery system
 DESIGNATED 2000
 // Inspired by Scales of Balance and Tweak Anthology
 // Maximum 4 stars for fighters (single or multiclass)
@@ -52,7 +52,7 @@ INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
 
 
 ///////////////////////////////////
-BEGIN @50 // Alternative saving throws
+BEGIN @2010 // Alternative saving throws
 DESIGNATED 2010
 // Include modified classes ST tables from Kit Revisions
 
@@ -60,7 +60,7 @@ INCLUDE ~mcr_salt_and_pepper/components/alt_saving_throws.tpa~
 
 
 ///////////////////////////////////
-BEGIN @60 // Alternative strength modification
+BEGIN @2100 // Alternative strength modification
 DESIGNATED 2100
 // Slightly better STR bonus at low STR 
 // Less sharp change from STR 18 to 19
@@ -69,8 +69,9 @@ INCLUDE ~mcr_salt_and_pepper/components/alt_strmod.tpa~
 
 
 ///////////////////////////////////
-BEGIN @100 // Standardize to hit and damage bonus from enchantment on launchers and ammo
+BEGIN @3000 // Standardize to hit and damage bonus from enchantment on launchers and ammo
 DESIGNATED 3000
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @3001
 // A "solution" based on ideas and work from Item Revisions Revised by Bartimaeus@G3 and Enchant the Missile Launchers by Dee
 // Launchers bestow enchantment level, to-hit and damage bunos to ammo
 // Ammo keep their enchantment level, but not to-hit and damage bonus
@@ -79,3 +80,9 @@ DESIGNATED 3000
 // All launchers get half bonus damage per their strength requirement, if above zero. Affect mostly composite bows, plus a few special launchers
 
 INCLUDE ~mcr_salt_and_pepper/components/std_launchers_ammo.tpa~
+
+
+BEGIN @3100 // Restore default 2 APR to bows 
+DESIGNATED 3100
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 17) @3101
+INCLUDE ~mcr_salt_and_pepper/components/restore_bow_2apr.tpa~

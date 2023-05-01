@@ -8,4 +8,6 @@
 @3001 = ~This component requires an EE game~
 @3100 = ~Restore default 2 APR to bows~
 @3101 = ~Cannot install without Item Revisions component Weapon Changes~
-@4000 = ~NPC Customization~
+@4000 = ~NPC Customization (for power gamers only!)~
+@5000 = ~More importable BG1/SOD items available in BG2-SoA (lazy implementation)~
+@5001 = ~Cannot install without Item Revisions main component~

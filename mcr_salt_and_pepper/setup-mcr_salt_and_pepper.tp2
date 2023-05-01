@@ -1,6 +1,6 @@
 BACKUP ~mcr_salt_and_pepper/backup~
 AUTHOR ~mercurier~
-VERSION ~v2.1~
+VERSION ~v2.2~
 
 README ~mcr_salt_and_pepper/readme-mcr_salt_and_pepper.md~
 
@@ -91,3 +91,9 @@ INCLUDE ~mcr_salt_and_pepper/components/restore_bow_2apr.tpa~
 BEGIN @4000 // NPC customization
 DESIGNATED 4000
 INCLUDE ~mcr_salt_and_pepper/components/npc_customization.tpa~
+
+
+BEGIN @5000 // More importable BG1/SOD items available in BG2-SoA
+DESIGNATED 5000
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 0) @5001
+INCLUDE ~mcr_salt_and_pepper/components/more_import_BG1_to_BG2.tpa~

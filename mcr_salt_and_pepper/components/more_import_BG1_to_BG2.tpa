@@ -1,0 +1,26 @@
+//// Valinna EE allows importing only 1 item for each of the three item groups. This components deals with the remainings
+
+COPY_EXISTING ~ribald.sto~ ~override~
+	REMOVE_STORE_ITEM ~blun09~
+	ADD_STORE_ITEM ~blun09~ LAST #0 #0 #0 IDENTIFIED #1
+	REMOVE_STORE_ITEM ~misc72~
+	ADD_STORE_ITEM ~misc72~ LAST #0 #0 #0 IDENTIFIED #1
+	REMOVE_STORE_ITEM ~ring25~
+	ADD_STORE_ITEM ~ring25~ LAST #0 #0 #0 IDENTIFIED #1
+	REMOVE_STORE_ITEM ~leat06~
+	ADD_STORE_ITEM ~leat06~ LAST #0 #0 #0 IDENTIFIED #1
+BUT_ONLY
+
+/* Moved to IR fix branch
+// Patch vanila importing script to avoid double importing
+// ar0602.bcs
+// Ilyich: list 1
+// Table3: list 2
+// Shelf1: list 3
+
+COPY_EXISTING ~ar0602.bcs~ ~override~
+	DECOMPILE_AND_PATCH BEGIN 
+		REPLACE_TEXTUALLY CASE_INSENSITIVE ~[%LNL%%MNL%%WNL%][ %TAB%]*ActionOverride("Table3",TakeItemListPartyNum.*~ ~~
+	END
+BUT_ONLY
+*/

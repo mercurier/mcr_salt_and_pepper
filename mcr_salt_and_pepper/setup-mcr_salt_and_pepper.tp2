@@ -1,6 +1,6 @@
 BACKUP ~mcr_salt_and_pepper/backup~
 AUTHOR ~mercurier~
-VERSION ~v2.2~
+VERSION ~v3.0.0dev~
 
 README ~mcr_salt_and_pepper/readme-mcr_salt_and_pepper.md~
 
@@ -11,57 +11,100 @@ LANGUAGE ~English~
          ~mcr_salt_and_pepper/languages/English/setup.tra~
 
 ///////////////////////////////////
-BEGIN @100 // Standardize store buying markups
+// Standardize store buying markups
+///////////////////////////////////
+BEGIN @1011 DESIGNATED 1011
 // Regular shops buy at 25% of item value, fences buy at 20%. No depreciation so you won't bother whom to dump your loot.
-// Will cause less gold from selling loot.
+// Will significantly reduce gold from selling loot.
+SUBCOMPONENT @1010
+GROUP @1000
 
-DESIGNATED 1000
-
+OUTER_SET shop_buy_markup = 25
 INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
+BEGIN @1012 DESIGNATED 1012
+// Regular shops buy at 20% of item value, fences buy at 20%. No depreciation so you won't bother whom to dump your loot.
+// Will gravely reduce gold from selling loot.
+SUBCOMPONENT @1010
+GROUP @1000
+
+OUTER_SET shop_buy_markup = 20
+INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
 ///////////////////////////////////
-BEGIN @200 // Remove random treasure
-DESIGNATED 1010
-// Adapted from Bartimaeus@G3's posted code
-// No random gold, gems or scrolls from loot.
+// Tweak Officer Vai's shop
+///////////////////////////////////
+BEGIN @1021 DESIGNATED 1021 // buy only scalps at 100%
+SUBCOMPONENT @1020
+GROUP @1000
+REQUIRE_PREDICATE GAME_IS ~bgee eet~ @5
 
-COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
-  PATCH_IF (SOURCE_SIZE > 0x2d3) BEGIN
-   REMOVE_CRE_ITEM ~rndtre01~
-   REMOVE_CRE_ITEM ~rndtre02~
-   REMOVE_CRE_ITEM ~rndtre03~
-   REMOVE_CRE_ITEM ~rndtre04~
-   REMOVE_CRE_ITEM ~rndtre05~
-   REMOVE_CRE_ITEM ~rndtre06~
-   REMOVE_CRE_ITEM ~rndtre07~
-   REMOVE_CRE_ITEM ~rndtre08~
-   REMOVE_CRE_ITEM ~rndtre09~
-  END
-BUT_ONLY
+OUTER_SET vai_buy_markup = 100
+INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa.tpa~
 
+BEGIN @1022 DESIGNATED 1022 // buy only scalps at 50%
+SUBCOMPONENT @1020
+GROUP @1000
+
+OUTER_SET vai_buy_markup = 50
+INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa.tpa~
+
+BEGIN @1023 DESIGNATED 1023 // buy only scalps at markup set previously
+SUBCOMPONENT @1020
+GROUP @1000
+
+OUTER_SET vai_buy_markup = -1
+INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa.tpa~
 
 ///////////////////////////////////
-BEGIN @2000 // Alternative proficiency mastery system
-DESIGNATED 2000
+// Remove random treasure
+///////////////////////////////////
+// No more random gold, gems or scrolls
+// WIP
+// BEGIN @1100 DESIGNATED 1100
+
+// INCLUDE ~mcr_salt_and_pepper/components/remove_random_treasures.tpa~
+
+///////////////////////////////////
+// Alternative proficiency mastery system
+///////////////////////////////////
+
 // Inspired by Scales of Balance and Tweak Anthology
 // Maximum 4 stars for fighters (single or multiclass)
-// True grand mastery
 
+BEGIN @2011 // max 4 stars, without true grandmastery
+DESIGNATED 2011
+SUBCOMPONENT @2010
+GROUP @2000
+
+OUT_SET true_grandmastery = 0
 INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
 
+BEGIN @2012 // max 4 stars, 4th being true grandmastery
+DESIGNATED 2012
+SUBCOMPONENT @2010
+GROUP @2000
+
+OUT_SET true_grandmastery = 1
+INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
 
 ///////////////////////////////////
-BEGIN @2010 // Alternative saving throws
-DESIGNATED 2010
-// Include modified classes ST tables from Kit Revisions
+// Alternative saving throws
+///////////////////////////////////
+
+// Alternative saving throw tables for smooth progress and class distinction
+BEGIN @2100 
+DESIGNATED 2100
+GROUP @2000
 
 INCLUDE ~mcr_salt_and_pepper/components/alt_saving_throws.tpa~
 
-
 ///////////////////////////////////
-BEGIN @2100 // Alternative strength modification
-DESIGNATED 2100
+// Alternative strength modification
+///////////////////////////////////
+BEGIN @2200 
+DESIGNATED 2200
+GROUP @2000
 // Slightly better STR bonus at low STR 
 // Less sharp change from STR 18 to 19
 
@@ -69,9 +112,12 @@ INCLUDE ~mcr_salt_and_pepper/components/alt_strmod.tpa~
 
 
 ///////////////////////////////////
-BEGIN @3000 // Standardize to hit and damage bonus from enchantment on launchers and ammo
-DESIGNATED 3000
-REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @3001
+// Standardize to hit and damage bonus from enchantment on launchers and ammo
+///////////////////////////////////
+BEGIN @3010 
+DESIGNATED 3010
+GROUP @3000
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @2
 // A "solution" based on ideas and work from Item Revisions Revised by Bartimaeus@G3 and Enchant the Missile Launchers by Dee
 // Launchers bestow enchantment level, to-hit and damage bunos to ammo
 // Ammo keep their enchantment level, but not to-hit and damage bonus
@@ -81,19 +127,54 @@ REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @3001
 
 INCLUDE ~mcr_salt_and_pepper/components/std_launchers_ammo.tpa~
 
+///////////////////////////////////
+// Tweak bow APR
+///////////////////////////////////
 
-BEGIN @3100 // Restore default 2 APR to bows 
-DESIGNATED 3100
-REQUIRE_PREDICATE (MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 17) @3101
-INCLUDE ~mcr_salt_and_pepper/components/restore_bow_2apr.tpa~
+BEGIN @3021 // Restore default 2 APR to bows 
+DESIGNATED 3101
+SUBCOMPONENT @3020
+GROUP @3000
+// REQUIRE_PREDICATE (MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 17) @3
+OUTER_SET bow_apr 2
+INCLUDE ~mcr_salt_and_pepper/components/tweak_bow_apr.tpa~
+
+BEGIN @3022 // 1.5 APR for all classes
+DESIGNATED 3101
+SUBCOMPONENT @3020
+GROUP @3000
+// REQUIRE_PREDICATE !(MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 17) @4
+OUTER_SET bow_apr 7
+INCLUDE ~mcr_salt_and_pepper/components/tweak_bow_apr.tpa~
+
+BEGIN @3022 // 1.5 APR for fighters and archers, 1 for others
+DESIGNATED 3101
+SUBCOMPONENT @3020
+GROUP @3000
+OUTER_SET bow_apr 1
+INCLUDE ~mcr_salt_and_pepper/components/tweak_bow_apr.tpa~
 
 
-BEGIN @4000 // NPC customization
-DESIGNATED 4000
-INCLUDE ~mcr_salt_and_pepper/components/npc_customization.tpa~
-
-
-BEGIN @5000 // More importable BG1/SOD items available in BG2-SoA
-DESIGNATED 5000
+BEGIN @4010 // More importable BG1/SOD items available in BG2-SoA
+DESIGNATED 4011
 REQUIRE_PREDICATE (MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 0) @5001
 INCLUDE ~mcr_salt_and_pepper/components/more_import_BG1_to_BG2.tpa~
+
+///////////////////////////////////
+// Tactical challenges tweaks
+///////////////////////////////////
+
+BEGIN @6010 // Make SCS kobolds' poisonous weaponry undroppable
+DESIGNATED 6010
+GROUP @6000
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #7030) @5001
+INCLUDE ~mcr_salt_and_pepper/components/scs_kobold_tweaks.tpa~
+
+///////////////////////////////////
+// NPC tweaks
+///////////////////////////////////
+
+BEGIN @7010 // NPC customization
+DESIGNATED 7010
+GROUP @7000
+INCLUDE ~mcr_salt_and_pepper/components/npc_customization.tpa~

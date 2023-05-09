@@ -1,6 +1,10 @@
 //// Standardize store buy and sell markups
 
-COPY_EXISTING_REGEXP GLOB ~.*\.sto$~ ~override~
+COPY_EXISTING ~dwkob#01.itm~ ~override~
+	WRITE_LONG 0x18 0x28 // undroppable dagger
+BUT_ONLY
+
+COPY_EXISTING_REGEXP GLOB ~.*\.cre$~ ~override~
   READ_LONG 0x08 shop_type
   PATCH_IF shop_type<=3 BEGIN
     // WRITE_SHORT 0x14 150          // 150 sell

@@ -1,0 +1,12 @@
+//// Standardize store buy and sell markups
+
+COPY_EXISTING_REGEXP ~stovai2.sto~ ~override~
+	WRITE_SHORT 0x1c 0            // 0 depreciation
+	PATCH_IF va_buy_markup >0 BEGIN
+		WRITE_SHORT 0x18 va_buy_markup
+	END
+	FOR (i=0x0; i<0x4a; i+=) BEGIN
+		LPF REMOVE_STORE_PURCHASE INT_VAR category = i END
+	END
+	LPF ADD_STORE_PURCHASE INT_VAR category = 0x27 END
+BUT_ONLY

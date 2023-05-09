@@ -1,13 +1,42 @@
 @1  = ~mercurier's salt and pepper~
-@100 = ~Standardize store buying markups~
-@200 = ~Remove random treasure~
-@2000 = ~Alternative proficiency mastery system~
-@2010 = ~Alternative saving throws~
-@2100 = ~Alternative strength modification~
-@3000 = ~Standardize to hit and damage bonus from magical launchers and ammo~
-@3001 = ~This component requires an EE game~
-@3100 = ~Restore default 2 APR to bows~
-@3101 = ~Cannot install without Item Revisions component Weapon Changes~
+@2 = ~This component requires a BGEE, BG2EE or EET game~
+@3 = ~This component requires Item Revisions component Weapon Changes to install~
+@4 = ~This component is not needed if Item Revisions component Weapon Changes is installed~
+@5 = ~This component requires a BGEE or EET game~
+@6 = ~This component requires SCS component Improved kobolds~
+
+@1000 = ~Economy system tweaks~
+@1010 = ~Standardize store buying markups~
+@1011 = ~Regular shops buy at 25%, fences buy at 20%, no depreciation~
+@1012 = ~All shops buy at 20%, no depreciation~
+
+@1020 = ~Tweak BG1 Officer Vai's bounty~
+@1021 = ~Officer Vai buys only trophies at 100%~
+@1022 = ~Officer Vai buys only trophies at 50%~
+@1023 = ~Officer Vai buys only trophies at markup set previously~
+
+@1100 = ~Remove random treasure from creatures~
+
+@2000 = ~Generic combat system tweaks~
+@2010 = ~Alternative proficiency mastery system~
+@2011 = ~max 4 stars for fighters, without true grandmastery~
+@2012 = ~max 4 stars for fighters and archers, with the 4th being true grandmastery~
+@2013 = ~max 4 stars for fighters, 5 stars for kensais and archers, with the 5th being true grandmastery~
+
+@2100 = ~Alternative saving throw tables for smooth progress and class distinction~
+@2200 = ~Alternative strength modification: smoothier bonus progress~
+
+@3000 = ~Ranged combat system tweaks~
+@3010 = ~Standardize to hit and damage bonus from magical launchers and ammo~
+@3020 = ~Tweak attacks per round of bows~
+@3021 = ~Base 2 APR for all class (vanilla)~
+@3022 = ~Base 1.5 APR for all class~
+@3023 = ~Base 1.5 APR for Fighters, Archer and alike, 1 APR for other class~
+
+@3100 = ~Archer kit tweak: mirror kensai restrictions~
+
 @4000 = ~NPC Customization (for power gamers only!)~
 @5000 = ~More importable BG1/SOD items available in BG2-SoA (lazy implementation)~
-@5001 = ~Cannot install without Item Revisions main component~
+
+@6000 = ~Tactical tweaks~
+@6010 = ~Make SCS kobolds' poisonous weaponry undroppable~

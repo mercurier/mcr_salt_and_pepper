@@ -35,8 +35,15 @@
 
 @3100 = ~Archer kit tweak: mirror kensai restrictions~
 
-@4000 = ~NPC Customization (for power gamers only!)~
-@5000 = ~More importable BG1/SOD items available in BG2-SoA (lazy implementation)~
+@4000 = ~Items tweaks~
+@4010 = ~More importable BG1/SOD items available in BG2-SoA (lazy implementation)~
 
-@6000 = ~Tactical tweaks~
-@6010 = ~Make SCS kobolds' poisonous weaponry undroppable~
+@5000 = ~Spell tweaks~
+
+@6000 = ~Tactical challenges tweaks~
+@6010 = ~Make SCS kobolds' poisonous weaponry undroppable (install after SCS)~
+
+@7000 = ~NPC tweaks~
+@7010 = ~NPC Customization (for power gamers only!)~
+
+

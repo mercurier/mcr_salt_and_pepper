@@ -1,18 +1,35 @@
-//// Standardize store buy and sell markups
 
-COPY_EXISTING ~dwkob#01.itm~ ~override~
-	WRITE_LONG 0x18 0x28 // undroppable dagger
+// make poisonous dagger undroppable
+
+COPY_EXISTING ~dw#kob01.itm~ ~override~
+	WRITE_LONG 0x18 0x28 
 BUT_ONLY
+
+// make poisonous arrow undroppable
+
+COPY_EXISTING ~dw#kob02.itm~ ~override~
+	WRITE_LONG 0x18 0x28 
+BUT_ONLY
+
+// replace poisonous daggers with plain ones
 
 COPY_EXISTING_REGEXP GLOB ~.*\.cre$~ ~override~
-  READ_LONG 0x08 shop_type
-  PATCH_IF shop_type<=3 BEGIN
-    // WRITE_SHORT 0x14 150          // 150 sell
-    WRITE_SHORT 0x1c 0            // 0 depreciation
-    WRITE_SHORT 0x18 shop_buy_markup
-    READ_LONG  0x10 "flags"
-    PATCH_IF (("%flags%" BAND 0x1000) = 0x1000) BEGIN
-     WRITE_SHORT 0x18 20            // 20 buy markup for fence
-    END
-  END
+	PATCH_IF SOURCE_SIZE>0x2c4 BEGIN
+		READ_LONG 0x2bc item_list_offset
+		READ_LONG 0x2b8 item_slot_offset
+		FOR (i = 9; i <= 12; i += 1) BEGIN
+			READ_SHORT item_slot_offset+i*2 item_idx
+			PATCH_IF item_idx != 0xffff BEGIN
+				// PATCH_PRINT ~%item_idx%~
+				READ_ASCII item_list_offset + item_idx*0x14 weapon
+				// PATCH_PRINT ~%weapon%~
+				PATCH_IF (~%weapon%~ STRING_EQUAL ~DW#KOB01~) BEGIN
+					// PATCH_PRINT ~found in cre~
+					// PATCH_PRINT ~%SOURCE_FILE%~
+					ADD_CRE_ITEM ~dagg01~ #0 #0 #0 NONE ~inv1 inv2 inv3 inv4~
+				END
+			END
+		END
+	END
 BUT_ONLY
+

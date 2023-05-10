@@ -98,7 +98,7 @@ DESIGNATED 2011
 SUBCOMPONENT @2010
 GROUP @2000
 
-OUT_SET true_grandmastery = 4
+OUT_SET true_grandmastery_at = 4
 OUT_SET grandmastery_pips = 4
 INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
 
@@ -107,11 +107,11 @@ DESIGNATED 2012
 SUBCOMPONENT @2010
 GROUP @2000
 
-OUT_SET true_grandmastery = 0
+OUT_SET true_grandmastery_at = -1
 OUT_SET grandmastery_pips = 4
 INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
 
-OUT_SET true_grandmastery = 5
+OUT_SET true_grandmastery_at = 5
 OUT_SET grandmastery_pips = 4
 INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
 

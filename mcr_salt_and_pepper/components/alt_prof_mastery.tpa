@@ -4,34 +4,67 @@
 // True grand mastery
 
 // COPY ~mcr_salt_and_pepper/2da/alt_prof/profs.2da~ ~override~ // disabled for now as it might be op
-COPY ~mcr_salt_and_pepper/2da/alt_prof/wspatck.2da~ ~override~
-COPY ~mcr_salt_and_pepper/2da/alt_prof/wspecial.2da~ ~override~
-COPY ~mcr_salt_and_pepper/2da/alt_prof/PROFSMAX.2DA~ ~override~
+
+// Patch APR
+ACTION_IF true_grandmastery_at > 0 BEGIN
+	COPY_EXISTING ~wspatck.2da~ ~override~
+		COUNT_2DA_COLS n_cols
+		FOR (i=1; i<n_cols; i+=1) BEGIN
+			READ_2DA_ENTRY true_grandmastery_at i n_cols attacks
+			SET_2DA_ENTRY_LATER ~wspatck2~ true_grandmastery_at i n_cols (attacks < 0)?(0 - attacks):(0 - attacks - 1)
+		END
+		SET_2DA_ENTRIES_NOW ~wspatck2~ 1
+	BUT_ONLY
+END
+
+// Patch other bonus
+
+COPY_EXISTING ~wspecial.2da~ ~override~
+	// COUNT_2DA_COLS n_cols
+	SET_2DA_ENTRY_LATER ~wpspecial2~ 3 1 2
+	SET_2DA_ENTRY_LATER ~wpspecial2~ 3 2 4
+	SET_2DA_ENTRY_LATER ~wpspecial2~ 3 3 (0 - 1)
+	SET_2DA_ENTRY_LATER ~wpspecial2~ 4 1 3
+	SET_2DA_ENTRY_LATER ~wpspecial2~ 4 2 5
+	SET_2DA_ENTRY_LATER ~wpspecial2~ 4 3 (0 - 3)
+	
+	SET_2DA_ENTRIES_NOW ~wpspecial2~ 1
+END
+
+// Patch max for all classes 
 
 COPY_EXISTING ~weapprof.2da~  ~override~
-  // update 5-star prof system to 4-star
-  COUNT_2DA_COLS cols
-  FOR (column = 4; column < cols; ++column) BEGIN
-    FOR (row = 11; row < 31; ++row) BEGIN
-      READ_2DA_ENTRY row column 1 stars
-      PATCH_IF (stars = 4) BEGIN
-        SET_2DA_ENTRY_LATER ~alt_mastery~ row column ~3~
-      END
-      PATCH_IF (stars = 5) BEGIN
-        SET_2DA_ENTRY_LATER ~alt_mastery~ row column ~4~
-      END
-    END
-  END
-  SET_2DA_ENTRIES_NOW ~alt_mastery~ 1
+	// update 5-star prof system to 4-star
+	COUNT_2DA_COLS cols
+	FOR (column = 4; column < cols; ++column) BEGIN
+		FOR (row = 11; row < 31; ++row) BEGIN
+			READ_2DA_ENTRY row column 1 stars
+			PATCH_IF (stars = 4) BEGIN
+				SET_2DA_ENTRY_LATER ~alt_mastery~ row column ~3~
+			END ELSE BEGIN
+				PATCH_IF (stars = 5) BEGIN
+					PATCH_IF (true_grandmastery_at != 5) OR
+						((true_grandmastery_at = 5) AND (column != 32) AND (column != 36))
+					BEGIN
+						SET_2DA_ENTRY_LATER ~alt_mastery~ row column ~4~
+					END
+				END
+			END
+		PATCH_IF true_grandmastery_at = 5 AND row = BEGIN
+		END
+	END
+	SET_2DA_ENTRIES_NOW ~alt_mastery~ 1
 
   // multiclass fighter full mastery
-  FOR (column = 12; column < 21; column = column + 1) BEGIN
-    FOR (row = 11; row < 31; row = row + 1) BEGIN
-      READ_2DA_ENTRY row column 1 stars
-      PATCH_IF (stars > 1) BEGIN
-        SET_2DA_ENTRY_LATER ~multigrand~ row column ~4~
-      END
-    END
-  END
-  SET_2DA_ENTRIES_NOW ~multigrand~ 1
-  BUT_ONLY
+  // FOR (column = 12; column < 21; column = column + 1) BEGIN
+    // FOR (row = 11; row < 31; row = row + 1) BEGIN
+      // READ_2DA_ENTRY row column 1 stars
+      // PATCH_IF (stars > 1) BEGIN
+        // SET_2DA_ENTRY_LATER ~multigrand~ row column ~4~
+      // END
+    // END
+  // END
+  // SET_2DA_ENTRIES_NOW ~multigrand~ 1
+	BUT_ONLY
+
+COPY ~mcr_salt_and_pepper/2da/alt_prof/PROFSMAX.2DA~ ~override~

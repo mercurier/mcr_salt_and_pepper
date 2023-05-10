@@ -15,6 +15,7 @@
 @1022 = ~Officer Vai buys only trophies, at 50% value~
 @1023 = ~Officer Vai buys only trophies, at whatever discont set previously~
 
+@1030 = ~Standardize store selling markups~
 @1031 = ~All shops sell at 150%~
 @1032 = ~All shops sell at AT LEAST 150%~
 
@@ -26,7 +27,7 @@
 @2012 = ~4 stars BG2EE style grandmastery~
 @2013 = ~4 stars BG2EE style grandmastery，5th star for true grandmastery exclusive to kensais and archers~
 
-@2100 = ~Alternative saving throw tables for smoothier progress and class distinction~
+@2100 = ~Alternative saving throw tables for smoothier progress and better class distinction~
 @2200 = ~Alternative strength modification: bonus starts from 15 STR and smoothier progress~
 
 @3000 = ~Ranged combat system tweaks~

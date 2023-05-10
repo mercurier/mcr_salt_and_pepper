@@ -10,6 +10,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.sto$~ ~override~
 			PATCH_IF (("%flags%" BAND 0x1000) = 0x1000) BEGIN
 				WRITE_SHORT 0x18 20            // 20 buy markup for fence
 			END
+		END
 		PATCH_IF sell_markup_floor = 0 BEGIN
 			WRITE_LONG 0x14 150
 		END ELSE PATCH_IF sell_markup_floor = 1 BEGIN

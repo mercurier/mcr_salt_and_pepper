@@ -1,4 +1,4 @@
-BACKUP ~mcr_salt_and_pepper/backup~
+BACKUP ~weidu_external/mcr_salt_and_pepper/backup~
 AUTHOR ~mercurier~
 VERSION ~v3.0.0dev~
 
@@ -62,7 +62,7 @@ INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa~
 // Standardize store selling markups
 ///////////////////////////////////
 BEGIN @1031 DESIGNATED 1031 // All shops sell at 150%
-SUBCOMPONENT @1031
+SUBCOMPONENT @1030
 GROUP @1000
 
 OUTER_SET shop_buy_markup = 0 - 1
@@ -70,7 +70,7 @@ OUTER_SET sell_markup_floor = 0
 INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
 BEGIN @1032 DESIGNATED 1032 // All shops sell at AT LEAST 150%
-SUBCOMPONENT @1032
+SUBCOMPONENT @1030
 GROUP @1000
 
 OUTER_SET shop_buy_markup = 0 - 1
@@ -150,8 +150,6 @@ REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @2
 // A "solution" based on ideas and work from Item Revisions Revised by Bartimaeus@G3 and Enchant the Missile Launchers by Dee
 // Launchers bestow enchantment level, to-hit and damage bunos to ammo
 // Ammo keep their enchantment level, but not to-hit and damage bonus
-// Long bow get +1 damage
-// Heavy crossbow get +2 damage
 // All launchers get half bonus damage per their strength requirement, if above zero. Affect mostly composite bows, plus a few special launchers
 
 INCLUDE ~mcr_salt_and_pepper/components/std_launchers_ammo.tpa~
@@ -191,7 +189,7 @@ OUTER_SET bow_apr = 10
 INCLUDE ~mcr_salt_and_pepper/components/tweak_bow_apr.tpa~
 
 BEGIN @4010 // More importable BG1/SOD items available in BG2-SoA
-DESIGNATED 4011
+DESIGNATED 4010
 INCLUDE ~mcr_salt_and_pepper/components/more_import_BG1_to_BG2.tpa~
 
 ///////////////////////////////////

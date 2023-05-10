@@ -6,6 +6,19 @@ COPY_EXISTING ~strmod.2da~ ~override~
   READ_2DA_ENTRIES_NOW ~strmod~ 5
 BUT_ONLY
 
+ACTION_IF (MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 17) BEGIN
+	OUTER_SET LB_DMG = 1
+	OUTER_SET LB_THAC0 = 0
+	OUTER_SET HXB_DMG = 2
+	OUTER_SET XB_THAC0 = 1
+ELSE BEGIN
+	OUTER_SET LB_DMG = 0
+	OUTER_SET LB_THAC0 = 1
+	OUTER_SET HXB_DMG = 2
+	OUTER_SET XB_THAC0 = 0
+END
+
+
 COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
   READ_SHORT 0x1c item_type
   READ_LONG  0x60 item_ench
@@ -52,11 +65,11 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
         READ_2DA_ENTRY_FORMER ~strmod~ strreq 2 str_dmg  // row and col idx starts from 0
         SET str_dmg = (str_dmg * (str_dmg>0)) / (2*half_str_bonus)
         PATCH_IF item_type = 0x0f BEGIN // bows
-          WRITE_SHORT 0x86  (item_ench)  
-          WRITE_SHORT 0x8c  (item_ench+str_dmg+is_long_heavy)  // dmg bonus = enchantment level + str bonus up to req + (1 for long bow)
+          WRITE_SHORT 0x86  (item_ench+is_long_heavy*LB_THAC0)  // to hit bonus = enchantment level + long-bow-specific bonus
+          WRITE_SHORT 0x8c  (item_ench+str_dmg+is_long_heavy*LB_DMG)  // dmg bonus = enchantment level + str bonus up to req + long-bow-specifc bonus
         END ELSE BEGIN // xbows
-          WRITE_SHORT 0x86  (item_ench+1)  // to hit bonus = enchantment level + 1
-          WRITE_SHORT 0x8c  (item_ench+str_dmg+is_long_heavy*2)  // dmg bonus = enchantment level + str bonus up to req + (2 for heavy xbow)
+          WRITE_SHORT 0x86  (item_ench+XB_THAC0)  // to hit bonus = enchantment level + xbow-specific bonus
+          WRITE_SHORT 0x8c  (item_ench+str_dmg+is_long_heavy*HXB_DMG)  // dmg bonus = enchantment level + str bonus up to req + heavy-xbow-specific bonus
         END
       END
     END
@@ -99,6 +112,8 @@ COPY_EXISTING ~arow08.itm~ ~override/arowkc.itm~
 	WRITE_SHORT 0x8c enchantment // restore damage bonus
 	WRITE_SHORT 0x86 enchantment // restore to hit bonus
 BUT_ONLY
+
+// TODO: restore other cre's arrow bonus, e.g. Black Talons, skeleton warriors
 
 ///////////////////////
 // update description

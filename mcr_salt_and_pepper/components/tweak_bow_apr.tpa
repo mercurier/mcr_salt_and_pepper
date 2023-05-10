@@ -1,0 +1,116 @@
+//// Standardize to hit and damage bonus from enchantment on launchers and ammo
+
+COPY_EXISTING ~bow05.itm~ ~override~
+	GET_OFFSET_ARRAY global ITM_V10_GEN_EFFECTS
+	PHP_EACH global AS ind => res BEGIN
+		PATCH_IF (SHORT_AT res)=1 BEGIN // ApR modifier
+			READ_LONG res+0x4 base_apr_raw
+		END
+	END
+BUT_ONLY
+
+ACTION_IF bow_apr = 14 BEGIN
+	OUTER_SET bow_apr = 15
+	OUTER_SET bonus_apr_spec = 1
+	COPY_EXISTING ~phase.eff~ ~override/MC#BOWA1.eff~
+		WRITE_LONG 0x10 1
+		WRITE_LONG 0x14 1
+		WRITE_LONG 0x1c 6
+		WRITE_LONG 0x20 0
+		WRITE_LONG 0x24 2
+	BUT_ONLY
+	COPY_EXISTING ~MC#BOWA1.eff~ ~override/MC#BOWA2.eff~
+		WRITE_LONG 0x1c (0 - 6)
+	BUT_ONLY
+END ELSE BEGIN
+	OUTER_SET bonus_apr_spec = 0
+END
+
+/* TBD: scan for kits added by mod 
+DEFINE_ACTION_FUNCTION get_kit_id_from_col INT_VAR col=0 RET kit_id BEGIN
+	OUTER_SET kit_id = 0
+	COPY_EXISTING ~kitlist.2da~ ~override~
+		COUNT_2DA_COLS n_cols
+		COUNT_2DA_ROWS n_cols n_rows
+		i_row = 0
+		WHILE kit_id = 0 AND i_row < n_rowsBEGIN
+			
+		
+
+ACTION_IF bonus_apr_spec = 1 BEGIN
+	OUTER_SET longbow_spec_kit = ~~
+	OUTER_SET shortbow_spec_kit = ~~
+	COPY_EXISTING ~weapprof.2da~ ~override~
+		FOR (column = 4; column < cols; ++column) BEGIN
+			READ_2DA_ENTRY 27 column 1 longbow_prof
+			PATCH_IF longbow_prof >1 BEGIN
+				get_kit_id_from_col
+				SPRINT longbow_spec_kit ~longbow_spec_kit %column%~
+			END
+			READ_2DA_ENTRY 28 column 1 shortbow_prof
+			PATCH_IF shortbow_prof >1 BEGIN
+				SPRINT shortbow_spec_kit ~shortbow_spec_kit %column%~
+			END
+			
+			COPY_EXISTING ~kitlist.2da~ ~override~
+		END
+	BUT_ONLY
+	
+	
+END
+*/
+OUTER_SET base_apr = (base_apr_raw > 5) ? (10*(base_apr_raw - 6)+5) : base_apr_raw
+OUTER_SET delta_apr = bow_apr - base_apr
+
+COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
+	READ_SHORT 0x1c item_type
+	PATCH_IF (%SOURCE_SIZE% > 0x7f) AND (item_type = 0x0f) BEGIN
+		GET_OFFSET_ARRAY global ITM_V10_GEN_EFFECTS
+		PHP_EACH global AS ind => res BEGIN
+			PATCH_IF (SHORT_AT res)=1 BEGIN // ApR modifier
+				READ_LONG res+0x4 apr_old_raw
+				apr_old = (base_apr_raw > 5) ? (10*(base_apr_raw -6)+5) : base_apr_raw
+				apr_new = apr_old + delta_apr
+				apr_new = (apr_new>50) ? 50 : apr_new
+				apr_new = (apr_new<0) ? 0 : apr_new
+				apr_new_raw = apr_new/10 + ((apr_new MODULO 5 >0) ? 6:0)
+				WRITE_LONG res+0x4 apr_new_raw
+			END
+		END
+		PATCH_IF bonus_apr_spec = 1 BEGIN
+			LPF ADD_ITEM_EQEFFECT INT_VAR 
+				opcode=177 
+				target=1
+				parameter1=203
+				parameter2=5
+				timing =2
+				resist_dispel=2
+			STR_VAR resource=~MC#BOWA1~ END
+			LPF ADD_ITEM_EQEFFECT INT_VAR 
+				opcode=177 
+				target=1
+				parameter1=209
+				parameter2=5
+				timing =2
+				resist_dispel=2
+			STR_VAR resource=~MC#BOWA1~ END
+			LPF ADD_ITEM_EQEFFECT INT_VAR 
+				opcode=177 
+				target=1
+				parameter1=207
+				parameter2=5
+				timing =2
+				resist_dispel=2
+			STR_VAR resource=~MC#BOWA1~ END
+			LPF ADD_ITEM_EQEFFECT INT_VAR 
+				opcode=177 
+				target=1
+				parameter1=16385
+				parameter2=9
+				timing =2
+				resist_dispel=2
+			STR_VAR resource=~MC#BOWA2~ END
+		END
+	END
+BUT_ONLY
+

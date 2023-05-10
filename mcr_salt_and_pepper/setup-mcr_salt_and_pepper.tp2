@@ -20,7 +20,7 @@ SUBCOMPONENT @1010
 GROUP @1000
 
 OUTER_SET shop_buy_markup = 25
-OUTER_SET sell_markup_floor = -1
+OUTER_SET sell_markup_floor = 0 - 1
 INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
 BEGIN @1012 DESIGNATED 1012
@@ -30,7 +30,7 @@ SUBCOMPONENT @1010
 GROUP @1000
 
 OUTER_SET shop_buy_markup = 20
-OUTER_SET sell_markup_floor = -1
+OUTER_SET sell_markup_floor = 0 - 1
 INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
 ///////////////////////////////////
@@ -55,7 +55,7 @@ BEGIN @1023 DESIGNATED 1023 // buy only scalps at markup set previously
 SUBCOMPONENT @1020
 GROUP @1000
 
-OUTER_SET vai_buy_markup = -1
+OUTER_SET vai_buy_markup = 0 - 1
 INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa~
 
 ///////////////////////////////////
@@ -65,7 +65,7 @@ BEGIN @1031 DESIGNATED 1031 // All shops sell at 150%
 SUBCOMPONENT @1031
 GROUP @1000
 
-OUTER_SET shop_buy_markup = -1
+OUTER_SET shop_buy_markup = 0 - 1
 OUTER_SET sell_markup_floor = 0
 INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
@@ -73,7 +73,7 @@ BEGIN @1032 DESIGNATED 1032 // All shops sell at AT LEAST 150%
 SUBCOMPONENT @1032
 GROUP @1000
 
-OUTER_SET shop_buy_markup = -1
+OUTER_SET shop_buy_markup = 0 - 1
 OUTER_SET sell_markup_floor = 1
 INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
@@ -98,8 +98,7 @@ DESIGNATED 2011
 SUBCOMPONENT @2010
 GROUP @2000
 
-OUT_SET true_grandmastery_at = 4
-OUT_SET grandmastery_pips = 4
+OUTER_SET true_grandmastery_at = 4
 INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
 
 BEGIN @2012 // max 4 stars, 4th being BG2EE style grandmastery
@@ -107,12 +106,15 @@ DESIGNATED 2012
 SUBCOMPONENT @2010
 GROUP @2000
 
-OUT_SET true_grandmastery_at = -1
-OUT_SET grandmastery_pips = 4
+OUTER_SET true_grandmastery_at = 0
 INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
 
-OUT_SET true_grandmastery_at = 5
-OUT_SET grandmastery_pips = 4
+BEGIN @2013 // max 4 stars, 5th being true grandmastery exclusive to kensais and archers
+DESIGNATED 2013
+SUBCOMPONENT @2010
+GROUP @2000
+
+OUTER_SET true_grandmastery_at = 5
 INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
 
 ///////////////////////////////////
@@ -159,32 +161,37 @@ INCLUDE ~mcr_salt_and_pepper/components/std_launchers_ammo.tpa~
 ///////////////////////////////////
 
 BEGIN @3021 // Restore default 2 APR to bows 
-DESIGNATED 3101
+DESIGNATED 3121
 SUBCOMPONENT @3020
 GROUP @3000
 // REQUIRE_PREDICATE (MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 17) @3
-OUTER_SET bow_apr 2
+OUTER_SET bow_apr = 20
 INCLUDE ~mcr_salt_and_pepper/components/tweak_bow_apr.tpa~
 
 BEGIN @3022 // 1.5 APR for all classes
-DESIGNATED 3101
+DESIGNATED 3022
 SUBCOMPONENT @3020
 GROUP @3000
 // REQUIRE_PREDICATE !(MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 17) @4
-OUTER_SET bow_apr 7
+OUTER_SET bow_apr = 15
 INCLUDE ~mcr_salt_and_pepper/components/tweak_bow_apr.tpa~
 
-BEGIN @3022 // 1.5 APR for fighters and archers, 1 for others
-DESIGNATED 3101
+BEGIN @3023 // 1.5 APR for classes eligible for specialization, 1 for others
+DESIGNATED 3023
 SUBCOMPONENT @3020
 GROUP @3000
-OUTER_SET bow_apr 1
+OUTER_SET bow_apr = 14
 INCLUDE ~mcr_salt_and_pepper/components/tweak_bow_apr.tpa~
 
+BEGIN @3024 // 1 APR for all classes
+DESIGNATED 3024
+SUBCOMPONENT @3020
+GROUP @3000
+OUTER_SET bow_apr = 10
+INCLUDE ~mcr_salt_and_pepper/components/tweak_bow_apr.tpa~
 
 BEGIN @4010 // More importable BG1/SOD items available in BG2-SoA
 DESIGNATED 4011
-REQUIRE_PREDICATE (MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 0) @5001
 INCLUDE ~mcr_salt_and_pepper/components/more_import_BG1_to_BG2.tpa~
 
 ///////////////////////////////////
@@ -194,7 +201,7 @@ INCLUDE ~mcr_salt_and_pepper/components/more_import_BG1_to_BG2.tpa~
 BEGIN @6010 // Make SCS kobolds' poisonous weaponry undroppable
 DESIGNATED 6010
 GROUP @6000
-REQUIRE_PREDICATE (MOD_IS_INSTALLED ~STRATAGEMS/SETUP-STRATAGEMS.TP2~ #7030) @5001
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~STRATAGEMS/SETUP-STRATAGEMS.TP2~ 7030) @6
 INCLUDE ~mcr_salt_and_pepper/components/scs_kobold_tweaks.tpa~
 
 ///////////////////////////////////

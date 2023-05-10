@@ -3,7 +3,7 @@
 @3 = ~This component requires Item Revisions component Weapon Changes to install~
 @4 = ~This component is not needed if Item Revisions component Weapon Changes is installed~
 @5 = ~This component requires a BGEE or EET game~
-@6 = ~This component requires SCS component Improved kobolds~
+@6 = ~This component requires SCS component Improved kobolds to install~
 
 @1000 = ~Economy system tweaks~
 @1010 = ~Standardize store buying markups~
@@ -24,17 +24,18 @@
 @2010 = ~Alternative proficiency mastery system~
 @2011 = ~4 stars true grandmastery~
 @2012 = ~4 stars BG2EE style grandmastery~
-@2013 = ~4 stars BG2EE style grandmastery，5th star for true grandmastery exclusive to kensais and archers
+@2013 = ~4 stars BG2EE style grandmastery，5th star for true grandmastery exclusive to kensais and archers~
 
-@2100 = ~Alternative saving throw tables for smooth progress and class distinction~
-@2200 = ~Alternative strength modification: bonus starts from 15 STR and progress more smoothly~
+@2100 = ~Alternative saving throw tables for smoothier progress and class distinction~
+@2200 = ~Alternative strength modification: bonus starts from 15 STR and smoothier progress~
 
 @3000 = ~Ranged combat system tweaks~
 @3010 = ~Standardize to hit and damage bonus from magical launchers and ammo~
 @3020 = ~Tweak attacks per round of bows~
 @3021 = ~Base 2 APR for all class (vanilla)~
 @3022 = ~Base 1.5 APR for all class~
-@3023 = ~Base 1.5 APR for Fighters, Archer and alike, 1 APR for other class~
+@3023 = ~Base 1.5 APR for warrior classes eligible for bow specialization, 1 APR for other classes~
+@3024 = ~Base 1 APR for all classes~
 
 @3100 = ~Archer kit tweak: mirror kensai restrictions~
 

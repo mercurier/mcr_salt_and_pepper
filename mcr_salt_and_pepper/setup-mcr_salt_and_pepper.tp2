@@ -20,6 +20,7 @@ SUBCOMPONENT @1010
 GROUP @1000
 
 OUTER_SET shop_buy_markup = 25
+OUTER_SET sell_markup_floor = -1
 INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
 BEGIN @1012 DESIGNATED 1012
@@ -29,6 +30,7 @@ SUBCOMPONENT @1010
 GROUP @1000
 
 OUTER_SET shop_buy_markup = 20
+OUTER_SET sell_markup_floor = -1
 INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
 ///////////////////////////////////
@@ -40,21 +42,40 @@ GROUP @1000
 REQUIRE_PREDICATE GAME_IS ~bgee eet~ @5
 
 OUTER_SET vai_buy_markup = 100
-INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa.tpa~
+INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa~
 
 BEGIN @1022 DESIGNATED 1022 // buy only scalps at 50%
 SUBCOMPONENT @1020
 GROUP @1000
 
 OUTER_SET vai_buy_markup = 50
-INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa.tpa~
+INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa~
 
 BEGIN @1023 DESIGNATED 1023 // buy only scalps at markup set previously
 SUBCOMPONENT @1020
 GROUP @1000
 
 OUTER_SET vai_buy_markup = -1
-INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa.tpa~
+INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa~
+
+///////////////////////////////////
+// Standardize store selling markups
+///////////////////////////////////
+BEGIN @1031 DESIGNATED 1031 // All shops sell at 150%
+SUBCOMPONENT @1031
+GROUP @1000
+
+OUTER_SET shop_buy_markup = -1
+OUTER_SET sell_markup_floor = 0
+INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
+
+BEGIN @1032 DESIGNATED 1032 // All shops sell at AT LEAST 150%
+SUBCOMPONENT @1032
+GROUP @1000
+
+OUTER_SET shop_buy_markup = -1
+OUTER_SET sell_markup_floor = 1
+INCLUDE ~mcr_salt_and_pepper/components/std_shop_markups.tpa~
 
 ///////////////////////////////////
 // Remove random treasure
@@ -72,20 +93,26 @@ INCLUDE ~mcr_salt_and_pepper/components/officer_vai_shop.tpa.tpa~
 // Inspired by Scales of Balance and Tweak Anthology
 // Maximum 4 stars for fighters (single or multiclass)
 
-BEGIN @2011 // max 4 stars, without true grandmastery
+BEGIN @2011 // max 4 stars, 4th being true grandmastery
 DESIGNATED 2011
 SUBCOMPONENT @2010
 GROUP @2000
 
-OUT_SET true_grandmastery = 0
+OUT_SET true_grandmastery = 4
+OUT_SET grandmastery_pips = 4
 INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
 
-BEGIN @2012 // max 4 stars, 4th being true grandmastery
+BEGIN @2012 // max 4 stars, 4th being BG2EE style grandmastery
 DESIGNATED 2012
 SUBCOMPONENT @2010
 GROUP @2000
 
-OUT_SET true_grandmastery = 1
+OUT_SET true_grandmastery = 0
+OUT_SET grandmastery_pips = 4
+INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
+
+OUT_SET true_grandmastery = 5
+OUT_SET grandmastery_pips = 4
 INCLUDE ~mcr_salt_and_pepper/components/alt_prof_mastery.tpa~
 
 ///////////////////////////////////

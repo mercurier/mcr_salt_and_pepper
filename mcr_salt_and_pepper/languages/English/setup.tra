@@ -7,21 +7,24 @@
 
 @1000 = ~Economy system tweaks~
 @1010 = ~Standardize store buying markups~
-@1011 = ~Regular shops buy at 25%, fences buy at 20%, no depreciation~
+@1011 = ~Regular shops buy at 25% value, fences buy at 20% value, no depreciation~
 @1012 = ~All shops buy at 20%, no depreciation~
 
 @1020 = ~Tweak BG1 Officer Vai's bounty~
-@1021 = ~Officer Vai buys only trophies at 100%~
-@1022 = ~Officer Vai buys only trophies at 50%~
-@1023 = ~Officer Vai buys only trophies at markup set previously~
+@1021 = ~Officer Vai buys only trophies, at 100% value~
+@1022 = ~Officer Vai buys only trophies, at 50% value~
+@1023 = ~Officer Vai buys only trophies, at whatever discont set previously~
+
+@1031 = ~All shops sell at 150%~
+@1032 = ~All shops sell at AT LEAST 150%~
 
 @1100 = ~Remove random treasure from creatures~
 
 @2000 = ~Generic combat system tweaks~
 @2010 = ~Alternative proficiency mastery system~
-@2011 = ~max 4 stars for fighters, without true grandmastery~
-@2012 = ~max 4 stars for fighters and archers, with the 4th being true grandmastery~
-@2013 = ~max 4 stars for fighters, 5 stars for kensais and archers, with the 5th being true grandmastery~
+@2011 = ~4 stars true grandmastery~
+@2012 = ~4 stars BG2EE style grandmastery~
+@2013 = ~4 stars BG2EE style grandmastery，5th star for true grandmastery exclusive to kensais and archers
 
 @2100 = ~Alternative saving throw tables for smooth progress and class distinction~
 @2200 = ~Alternative strength modification: smoothier bonus progress~

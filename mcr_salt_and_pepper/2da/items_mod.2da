@@ -1,0 +1,9 @@
+2DA V1.0
+*
+                                           TYPE     ITM      TOHIT    DMG      ENCH_SET  SOURCE  NEW_NAME   NEW_DESC
+HEARTSEEKER_3                              BOWCOMP  bow10    3        0        -1          DV          -1         -1
+HEAVY_CROSSBOW_OF_ACCURACY_1               XBOWHVY  xbow03   3        0         2          ALL         -1     @10102
+SLING_OF_SEEKING_1                         SLING    slng03   6        0        -1          DV          -1         -1
+ARLAS_DRAGONBANE_3                         SLING    slng05   -2       -2       -1          DV          -1         -1
+SLING_OF_UNERRING_ACCURACY_1               SLING    slng11   1        -1       -1          ALL         -1     @10103
+STRONG_ARM_2                               BOWCOMP  bow11    0        0        0           MC#     @10101         -1

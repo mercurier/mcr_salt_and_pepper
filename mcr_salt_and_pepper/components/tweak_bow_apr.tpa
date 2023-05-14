@@ -9,22 +9,29 @@ COPY_EXISTING ~bow05.itm~ ~override~
 	END
 BUT_ONLY
 
-ACTION_IF bow_apr = 14 BEGIN
-	OUTER_SET bow_apr = 15
-	OUTER_SET bonus_apr_spec = 1
-	COPY_EXISTING ~phase.eff~ ~override/MC#BOWA1.eff~
-		WRITE_LONG 0x10 1
-		WRITE_LONG 0x14 1
-		WRITE_LONG 0x1c 6
-		WRITE_LONG 0x20 0
-		WRITE_LONG 0x24 2
-	BUT_ONLY
-	COPY_EXISTING ~MC#BOWA1.eff~ ~override/MC#BOWA2.eff~
-		WRITE_LONG 0x1c (0 - 6)
-	BUT_ONLY
-END ELSE BEGIN
-	OUTER_SET bonus_apr_spec = 0
-END
+COPY_EXISTING ~die.eff~ ~override/MC#BOWN1.eff~
+	WRITE_LONG 0x10 1    // apr
+	WRITE_LONG 0x14 1    // self
+	WRITE_LONG 0x1c 1    // value
+	WRITE_LONG 0x20 0    // increment
+	WRITE_LONG 0x24 2    // while equipped
+	WRITE_LONG 0x38 0
+	WRITE_LONG 0x3c 0
+	WRITE_LONG 0x40 0
+	WRITE_LONG 0x44 0
+	WRITE_LONG 0x90 0
+BUT_ONLY
+COPY_EXISTING ~MC#BOWN1.eff~ ~override/MC#BOWN2.eff~
+	WRITE_LONG 0x1c (0 - 1)
+BUT_ONLY
+COPY_EXISTING ~MC#BOWN1.eff~ ~override/MC#BOWA1.eff~
+	WRITE_LONG 0x10 167    // missle thaco
+	WRITE_LONG 0x1c 2
+BUT_ONLY
+COPY_EXISTING ~MC#BOWN1.eff~ ~override/MC#BOWA2.eff~
+	WRITE_LONG 0x10 167    // missle thaco
+	WRITE_LONG 0x1c (0 - 2)
+BUT_ONLY
 
 /* TBD: scan for kits added by mod 
 DEFINE_ACTION_FUNCTION get_kit_id_from_col INT_VAR col=0 RET kit_id BEGIN
@@ -59,8 +66,13 @@ ACTION_IF bonus_apr_spec = 1 BEGIN
 	
 END
 */
+// store apr in two-digit format, i.e. 1.5 -> 15
 OUTER_SET base_apr = (base_apr_raw > 5) ? (10*(base_apr_raw - 6)+5) : base_apr_raw
-OUTER_SET delta_apr = bow_apr - base_apr
+
+
+ACTION_IF bow_2apr_for_all = 1 BEGIN
+	OUTER_SET delta_apr = 20 - base_apr
+END ELSE BEGIN OUTER_SET delta_apr = 10 - base_apr END
 
 COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 	READ_SHORT 0x1c item_type
@@ -77,38 +89,84 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 				WRITE_LONG res+0x4 apr_new_raw
 			END
 		END
-		PATCH_IF bonus_apr_spec = 1 BEGIN
+		// add global -2 thac0 penalty
+		// LPF ADD_ITEM_EQEFFECT INT_VAR opcode=167 target=1 timing=2 parameter1= (0 - 2) insert_point = (0 - 1)  END
+		
+		PATCH_IF bow_2apr_for_all = 1 BEGIN // global -2 thac0 penalty
+			LPF ADD_ITEM_EQEFFECT INT_VAR 
+				opcode=167 
+				target=1
+				parameter1=(0 - 2)
+				parameter2=0
+				timing=2
+				insert_point=(0 - 1)
+			END
+		END ELSE BEGIN // class-specific +1 APR and -2 thac0 penalty
+			// APR
 			LPF ADD_ITEM_EQEFFECT INT_VAR 
 				opcode=177 
 				target=1
-				parameter1=203
+				parameter1=203 // fighter all
 				parameter2=5
 				timing =2
-				resist_dispel=2
-			STR_VAR resource=~MC#BOWA1~ END
+				insert_point=(0 - 1)
+			STR_VAR resource=~MC#BOWN1~ END
 			LPF ADD_ITEM_EQEFFECT INT_VAR 
 				opcode=177 
 				target=1
-				parameter1=209
+				parameter1=209 // ranger all
 				parameter2=5
 				timing =2
-				resist_dispel=2
-			STR_VAR resource=~MC#BOWA1~ END
+				insert_point=(0 - 1)
+			STR_VAR resource=~MC#BOWN1~ END
 			LPF ADD_ITEM_EQEFFECT INT_VAR 
 				opcode=177 
 				target=1
-				parameter1=207
+				parameter1=207 // paladin all
 				parameter2=5
 				timing =2
-				resist_dispel=2
-			STR_VAR resource=~MC#BOWA1~ END
+				insert_point=(0 - 1)
+			STR_VAR resource=~MC#BOWN1~ END
 			LPF ADD_ITEM_EQEFFECT INT_VAR 
 				opcode=177 
 				target=1
-				parameter1=16385
+				parameter1=16385 // berserker
 				parameter2=9
 				timing =2
-				resist_dispel=2
+				insert_point=(0 - 1)
+			STR_VAR resource=~MC#BOWN2~ END
+			// thac0
+			LPF ADD_ITEM_EQEFFECT INT_VAR 
+				opcode=177 
+				target=1
+				parameter1=203 // fighter all
+				parameter2=5
+				timing =2
+				insert_point=(0 - 1)
+			STR_VAR resource=~MC#BOWA1~ END
+			LPF ADD_ITEM_EQEFFECT INT_VAR 
+				opcode=177 
+				target=1
+				parameter1=209 // ranger all
+				parameter2=5
+				timing =2
+				insert_point=(0 - 1)
+			STR_VAR resource=~MC#BOWA1~ END
+			LPF ADD_ITEM_EQEFFECT INT_VAR 
+				opcode=177 
+				target=1
+				parameter1=207 // paladin all
+				parameter2=5
+				timing =2
+				insert_point=(0 - 1)
+			STR_VAR resource=~MC#BOWA1~ END
+			LPF ADD_ITEM_EQEFFECT INT_VAR 
+				opcode=177 
+				target=1
+				parameter1=16385 // berserker
+				parameter2=9
+				timing =2
+				insert_point=(0 - 1)
 			STR_VAR resource=~MC#BOWA2~ END
 		END
 	END

@@ -30,25 +30,39 @@
 @2100 = ~Alternative saving throw tables for smoothier progress and better class distinction~
 @2200 = ~Alternative strength modification: bonus starts from 15 STR and smoothier progress~
 
-@3000 = ~Ranged combat system tweaks~
-@3010 = ~Standardize to hit and damage bonus from magical launchers and ammo~
-@3020 = ~Tweak attacks per round of bows~
-@3021 = ~Base 2 APR for all class (vanilla)~
-@3022 = ~Base 1.5 APR for all class~
-@3023 = ~Base 1.5 APR for warrior classes eligible for bow specialization, 1 APR for other classes~
-@3024 = ~Base 1 APR for all classes~
+@3000 = ~Items tweaks~
+@3010 = ~Option: Specific ranged weaponry tweak~
+@3021 = ~Option: 3.5e style to-hit and damage for launchers and ammo with dice size approximation~
+@3022 = ~Option: 3.5e style to-hit and damage for launchers and ammo without dice size approximation (experimental)~
+@3030 = ~Option: Best instead of stacking enchantment bonuss from launchers and ammo~
+@3040 = ~Option: Proper damage bonus for bows and crossbows per strength requirement, and for slings per strength score~
+@3099 = ~Apply options set in components 30xx)~
+@3098 = ~This component requires at least one 30xx component is installed~
 
-@3100 = ~Archer kit tweak: mirror kensai restrictions~
+@3110 = ~Tweak attacks per round for bows~
+@3111 = ~Base 2 APR for all class with 2 THAC0 penalty~
+@3112 = ~Base 2 APR and 2 THAC0 penalty for warrior classes eligible for specialization, 1 APR for other classes~
+@3120 = ~Two-handed slings~
+@3124 = ~test~
+@3130 = ~Tweak attacks per round for light crossbows~
+@3131 = ~Base 1 APR for all classes (vanilla)~
+@3132 = ~Base 1 APR for warrior classes eligible for specialization, fixed 1 APR for other classes~
+@3141 = ~Fixed 1 APR for all classes~
+@3142 = ~Fixed 1 APR for warrior classes eligible for specialization, fixed 1/2 APR for other classes~
+@3150 = ~Tweak attacks per round for light crossbows~
+@3151 = ~Base 1 APR for all classes (vanilla)~
+@3152 = ~Base 1 APR for warrior classes eligible for specialization, fixed 1 APR for other classes~
 
-@4000 = ~Items tweaks~
-@4010 = ~More importable BG1/SOD items available in BG2-SoA (lazy implementation)~
 
-@5000 = ~Spell tweaks~
+
+@4000 = ~Spell tweaks~
+
+@5000 = ~Class and kit tweaks~
 
 @6000 = ~Tactical challenges tweaks~
 @6010 = ~Make SCS kobolds' poisonous weaponry undroppable (install after SCS)~
 
-@7000 = ~NPC tweaks~
+@7000 = ~Misc tweaks~
 @7010 = ~NPC Customization (for power gamers only!)~
-
+@7020 = ~More importable BG1/SOD items available in BG2-SoA (lazy implementation)~
 

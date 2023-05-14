@@ -1,0 +1,39 @@
+@10001 = ~THAC0~ // all uppercase
+@10002 = ~bonus~ // all lowercase
+@10003 = ~penalty~ // all lowercase
+@10004 = ~Damage~ // first letter in word uppercase
+@10005 = ~Speed Factor~ // first letter in word uppercase
+@10006 = ~Weight~ // first letter in word uppercase
+@10101 = ~Strong Arm~ // composite long bow
+@10102 = ~Heavy Crossbow of Accuracy: The Guide
+A favored siege weapon of King Shastir Longeve, crossbows of this type were designed for the systematic removal of defensive forces thought safe behind the battlements of castles. Scant few of these weapons survive to this day, mainly due to the eventual annihilation of the king's forces by a coalition of subjugated lands.
+
+STATISTICS:
+
+Combat abilities:
+– Accuracy: +3 THACO bonus
+
+THAC0: +5
+Damage: +2
+Speed Factor: 7
+Proficiency Type: Crossbow
+Type: Two-handed
+Requires:
+ 12 Strength
+
+Weight: 10~
+@10103 = ~Dandifox was one of the greatest heroes of the hin, the small people also known as halflings. From the concealment of forest arbors, he would attack rich caravans for a "tithe," which he then distributed among the local poor. The heroic robber finally met his end on the point of a guardsman's spear, but not before the constabulary had learned to fear and hate his infallible aim.
+
+STATISTICS:
+
+Combat abilities:
+– +1 THACO bonus at the cost of -1 damage penalty
+
+THAC0: +2
+Speed Factor: 10
+Proficiency Type: Missile Weapons
+Type: One-handed
+Requires:
+ 3 Strength
+
+Weight: 0~

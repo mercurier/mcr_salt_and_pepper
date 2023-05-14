@@ -1,0 +1,168 @@
+
+// this macro is stolen from BG2 Tweak Pack at G3 and modified to take parameter ~%text_update%~, the macro name of the REPLACE_TEXTUALLY to execute
+DEFINE_PATCH_MACRO ~update_item_descriptions~ BEGIN
+  ident=1
+  FOR (index = 0x54 ; index >= 0x50 ; index -= 4) BEGIN // loop through descriptions
+    READ_LONG "%index%" "valid"
+    PATCH_IF ("%valid%" < 2147483646) AND ("%valid%" >= 0) BEGIN // verify description is valid
+      READ_STRREF "%index%" "description"
+      INNER_PATCH_SAVE new_desc ~%description%~ BEGIN
+        LAUNCH_PATCH_MACRO ~%text_update%~
+      END
+      SAY_EVALUATED "%index%" ~%new_desc%~
+  //    PATCH_PRINT ~%new_desc%~
+      ident -=1
+    END
+  END
+END
+
+ACTION_IF (%WEIDU_OS% STRING_EQUAL "win32") BEGIN
+	OUTER_SPRINT text_newline ~%WNL%~
+END ELSE BEGIN
+	OUTER_SPRINT text_newline ~%LNL%~
+END
+
+OUTER_SPRINT text_thac0 @10001
+OUTER_SPRINT text_bonus @10002
+OUTER_SPRINT text_penalty @10003
+OUTER_SPRINT text_damage @10004
+OUTER_SPRINT text_speed_factor @10005
+OUTER_SPRINT text_weight @10006
+ACTION_IF (MOD_IS_INSTALLED ~item_rev/item_rev.tp2~ 0) BEGIN
+	OUTER_SPRINT text_anchor ~%text_weight%~
+END ELSE BEGIN OUTER_SPRINT text_anchor ~%text_speed_factor%~
+END
+
+DEFINE_PATCH_MACRO replace_old_stat_with_placeholder BEGIN
+	line_to_hit=0
+	line_damage=0
+	PATCH_IF !(~%description%~ STRING_CONTAINS_REGEXP ~^%text_thac0%:~) BEGIN
+		PATCH_PRINT ~found thac0 line~
+		line_to_hit=1
+		REPLACE_TEXTUALLY CASE_INSENSITIVE ~%text_thac0%:[ %tab%]*\+[0-9]*[ %tab%]*[%text_bonus%]*~ ~%desc_tohit_bonus%~
+	END 
+	PATCH_IF !(~%description%~ STRING_CONTAINS_REGEXP ~^%text_damage%:~) BEGIN
+		PATCH_PRINT ~found damage line~
+		line_damage=1
+		REPLACE_TEXTUALLY CASE_INSENSITIVE ~%text_damage%:[ %tab%]*\([0-9]*D[0-9]*\)?\([ %tab%]*\+[ %tab%]*[0-9]*\)?\([ %tab%]*%text_bonus%\)?~ ~%desc_damage%~
+	END
+	
+	PATCH_IF line_to_hit=1 AND line_damage=0 BEGIN
+		REPLACE_TEXTUALLY CASE_INSENSITIVE ~^%text_anchor%~ ~%desc_damage%%desc_damage_postfix%%text_anchor%~
+	END ELSE PATCH_IF line_to_hit=0 AND line_damage=1 BEGIN
+		REPLACE_TEXTUALLY CASE_INSENSITIVE ~^%desc_damage%~ ~%desc_tohit_bonus%%desc_tohit_bonus_postfix%%desc_damage%~
+	END ELSE PATCH_IF line_to_hit=0 AND line_damage=0 BEGIN
+		REPLACE_TEXTUALLY CASE_INSENSITIVE ~^%text_anchor%~ ~%desc_tohit_bonus%%desc_tohit_bonus_postfix%%desc_damage%%desc_damage_postfix%%text_anchor%~
+	END
+	// REPLACE_TEXTUALLY CASE_INSENSITIVE ~%text_thac0%:[ %tab%]*\+[0-9]*[ %tab%]*[%text_bonus%]*~ ~__match__~
+	// REPLACE_TEXTUALLY CASE_INSENSITIVE ~%text_damage%:[ %tab%]*\([0-9]*D[0-9]*\)?\([ %tab%]*\+[ %tab%]*[0-9]*\)?\([ %tab%]*%text_bonus%\)?~ ~__match__~
+	// REPLACE_TEXTUALLY CASE_INSENSITIVE ~__match__%LNL%__match__~ ~__match__~ // combine two lines into one placeholder
+	// PATCH_IF (EVAL ~%description%~ STRING_CONTAINS_REGEXP ~^%text_thac0%:~) AND
+		// (EVAL ~%description%~ STRING_CONTAINS_REGEXP ~^%text_damage%:~) BEGIN
+		
+		// PATCH_IF !(~%description%~ STRING_CONTAINS_REGEXP ~[%WNL%%LNL%][%WNL%%LNL%]%text_speed_factor%~) BEGIN
+			// PATCH_PRINT ~! no block found near speed factor~
+			// REPLACE_TEXTUALLY CASE_INSENSITIVE ~%text_speed_factor%~ ~__match__%text_newline%%text_speed_factor%~
+		// END ELSE PATCH_IF !(~%description%~ STRING_CONTAINS_REGEXP ~[%WNL%%LNL%][%WNL%%LNL%]%text_weight%~) BEGIN
+			// PATCH_PRINT ~! no block found near weight~
+			// REPLACE_TEXTUALLY CASE_INSENSITIVE ~%text_weight%~ ~__match__%text_newline%%text_weight%~
+		// END
+	// END
+
+	// REPLACE_TEXTUALLY ~__match__~ ~%desc_tohit_bonus%%desc_newline%%desc_damage%~
+END
+
+DEFINE_PATCH_FUNCTION update_weaponry_description INT_VAR 
+// by mecurier
+	to_hit_bonus = 0
+	damage_bonus = 0
+	damage_dies = 0
+	damage_dice_size = 0
+BEGIN
+	n_desc_lines = 0
+	// to hit bonus description
+
+	SPRINT desc_tohit_bonus_postfix ~%text_newline%~
+	PATCH_IF to_hit_bonus > 0 BEGIN
+		SPRINT desc_tohit_bonus ~%text_thac0%: +%to_hit_bonus% %text_bonus%~ // THAC0 ... bonus
+		SET n_desc_lines += 1
+	END ELSE PATCH_IF to_hit_bonus = 0 BEGIN
+		SPRINT desc_tohit_bonus ~~
+		SPRINT desc_tohit_bonus_postfix ~~
+	END ELSE BEGIN
+		SPRINT desc_tohit_bonus ~%text_thac0%: %to_hit_bonus% %text_penalty%~ // THAC0 ... penalty
+		SET n_desc_lines += 1
+	END
+	// PATCH_PRINT ~%desc_tohit_bonus%~
+	
+	// damage description
+	SPRINT desc_damage_postfix ~%text_newline%~
+	PATCH_IF (damage_dies=0) OR (damage_dice_size=0) BEGIN
+		PATCH_IF damage_bonus >= 0 BEGIN
+			SPRINT desc_damage ~%text_damage%: +%damage_bonus% %text_bonus%~ // Damage ... bonus
+			SET n_desc_lines += 1
+		END ELSE PATCH_IF damage_bonus = 0 BEGIN
+			SPRINT desc_damage ~~
+			SPRINT desc_damage_postfix ~~
+		END ELSE BEGIN
+			SPRINT desc_damage ~%text_damage%: %damage_bonus% %text_penalty%~ // Damage ... penalty
+			SET n_desc_lines += 1
+		END
+	END ELSE BEGIN
+		SET n_desc_lines += 1
+		PATCH_IF damage_bonus > 0 BEGIN
+			SPRINT desc_damage ~%text_damage%: %damage_dies%d%damage_dice_size%+%damage_bonus%~ // Damage xdy+z 
+		END ELSE BEGIN
+			SPRINT desc_damage ~%text_damage%: %damage_dies%d%damage_dice_size%~ // Damage xdy
+		END
+	END
+	// PATCH_PRINT ~%desc_damage%~
+	
+	PATCH_IF n_desc_lines < 2 BEGIN
+		SPRINT desc_newline ~~
+	END ELSE BEGIN
+		SPRINT desc_newline ~%text_newline%~
+	END
+	
+	SPRINT text_update replace_old_stat_with_placeholder
+	LPM update_item_descriptions
+END
+
+<<<<<<<< blank.txt
+>>>>>>>>
+<<<<<<<< patch_name1.tpa
+SAY NAME1 %name1%
+>>>>>>>>
+<<<<<<<< patch_name2.tpa
+SAY NAME2 %name2%
+>>>>>>>>
+<<<<<<<< patch_desc_u.tpa
+SAY UNIDENTIFIED_DESC %desc_u%
+>>>>>>>>
+<<<<<<<< patch_desc_i.tpa
+SAY IDENTIFIED_DESC %desc_i%
+>>>>>>>>
+
+DEFINE_PATCH_FUNCTION patch_res_name_desc_inner STR_VAR res_name="" name1="" name2="" desc_u="" desc_i="" BEGIN
+	// ACTION_IF FILE_EXISTS_IN_GAME ~%file%~ BEGIN
+	INNER_ACTION BEGIN
+		COPY - ~blank.txt~ ~patch_%res_name%.tpa~
+			PATCH_IF !(~%name1%~ STRING_EQUAL "") BEGIN
+				APPEND_FILE_EVALUATE ~patch_name1.tpa~
+			END
+			PATCH_IF !(~%name2%~ STRING_EQUAL "") BEGIN
+				APPEND_FILE_EVALUATE ~patch_name2.tpa~
+			END
+			PATCH_IF !(~%desc_u%~ STRING_EQUAL "") BEGIN
+				APPEND_FILE_EVALUATE ~patch_desc_u.tpa~
+			END
+			PATCH_IF !(~%desc_i%~ STRING_EQUAL "") BEGIN
+				APPEND_FILE_EVALUATE ~patch_desc_i.tpa~
+			END
+		COPY + ~patch_%res_name%.tpa~ ~%MOD_WORKSPACE%~
+	END
+		// COPY_EXISTING ~%res_name%~ ~override~
+			PATCH_INCLUDE ~patch_%res_name%.tpa~
+		// BUT_ONLY
+	// ENDs
+END

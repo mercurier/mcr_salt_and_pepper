@@ -1,0 +1,10 @@
+//// Standardize to hit and damage bonus from enchantment on launchers and ammo
+
+COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
+	READ_SHORT 0x1c item_type
+	PATCH_IF item_type = 0x12 BEGIN  
+		READ_BYTE 0x18 flags
+		flags = flags BOR 0b10000010
+		WRITE_BYTE 0x18 flags
+	END
+BUT_ONLY

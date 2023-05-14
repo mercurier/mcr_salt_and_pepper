@@ -33,8 +33,9 @@
 
 @3000 = ~Items tweaks~
 @3010 = ~Option: Specific ranged weaponry tweak~
-@3021 = ~Option: 3.5e style to-hit and damage for launchers and ammo with dice size approximation~
-@3022 = ~Option: 3.5e style to-hit and damage for launchers and ammo without dice size approximation (experimental)~
+@3020 = ~Option: 3.5e style to-hit and damage for launchers and ammo~
+@3021 = ~with dice size approximation~
+@3022 = ~without dice size approximation (experimental)~
 @3030 = ~Option: Best instead of stacking enchantment bonuss from launchers and ammo~
 @3040 = ~Option: Proper damage bonus for bows per strength requirement~
 @3099 = ~Apply options set in components 30xx)~

@@ -1,7 +1,9 @@
 
 COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 	READ_SHORT 0x1c item_type
-	PATCH_IF (%SOURCE_SIZE% > 0x7f) AND 
+	READ_BYTE 0x18 flags
+	is_droppable = (flags BAND 0b00000100)
+	PATCH_IF (%SOURCE_SIZE% > 0x7f) AND (is_droppable>0) AND
 		((item_type = 0x18) OR (item_type = 0x10) OR (item_type = 0x12)) BEGIN
 		GET_OFFSET_ARRAY itm_headers ITM_V10_HEADERS
 		PHP_EACH itm_headers AS idx => header_off BEGIN

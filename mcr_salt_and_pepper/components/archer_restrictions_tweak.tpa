@@ -1,0 +1,49 @@
+
+
+COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
+	READ_SHORT 0x1c item_type
+	READ_LONG 0x0c strref 
+	GET_STRREF strref name2
+	PATCH_IF (%SOURCE_SIZE% > 0x71) BEGIN
+		READ_BYTE 0x2d kit_flags
+		PATCH_MATCH item_type WITH
+		0x02 // armor
+		0x06 // bracers and gauntlets
+		0x0c // shields
+		0x3c // leather armor
+		0x3d // studded leather
+		0x42 // hide
+		BEGIN
+			PATCH_PRINT ~%SOURCE_FILE% %name2%~
+			WRITE_BYTE 0x2d (kit_flags BOR 0b10000000)
+		END 0x07 BEGIN // head gear
+			READ_BYTE 0x20 class_flags
+			PATCH_IF (class_flags BAND 0b01000100)>0 BEGIN // unusable by mage OR thief
+				PATCH_PRINT ~%SOURCE_FILE% %name2%~
+				WRITE_BYTE 0x2d (kit_flags BOR 0b10000000)
+			END
+		END DEFAULT END
+	END
+BUT_ONLY
+
+
+COPY_EXISTING ~weapprof.2da~  ~override~
+	// remove stars from all melee weapons and styles except for dagger
+	patch_col = 36
+	COUNT_2DA_COLS cols
+	// FOR (column = 4; column < cols; ++column) BEGIN
+	FOR (row = 11; row < 31; ++row) BEGIN // note: counting from line 0 at first line of file
+		READ_2DA_ENTRY row patch_col 1 stars
+		PATCH_IF (stars = 1) BEGIN
+			SET_2DA_ENTRY_LATER ~weapprof2~ row patch_col 0
+		END
+	END
+	SET_2DA_ENTRY_LATER ~weapprof2~ 18 patch_col 1 // dagger
+	SET_2DA_ENTRY_LATER ~weapprof2~ 31 patch_col 0 // styles
+	SET_2DA_ENTRY_LATER ~weapprof2~ 32 patch_col 0
+	SET_2DA_ENTRY_LATER ~weapprof2~ 33 patch_col 0
+	SET_2DA_ENTRY_LATER ~weapprof2~ 34 patch_col 0
+	// END
+	SET_2DA_ENTRIES_NOW ~weapprof2~ 1
+	PRETTY_PRINT_2DA
+BUT_ONLY

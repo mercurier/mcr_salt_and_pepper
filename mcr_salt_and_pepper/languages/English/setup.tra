@@ -4,6 +4,7 @@
 @4 = ~This component is not needed if Item Revisions component Weapon Changes is installed~
 @5 = ~This component requires a BGEE or EET game~
 @6 = ~This component requires SCS component Improved kobolds to install~
+@7 = ~This component must be installed after component 3130~
 
 @1000 = ~Economy system tweaks~
 @1010 = ~Standardize store buying markups~
@@ -35,30 +36,24 @@
 @3021 = ~Option: 3.5e style to-hit and damage for launchers and ammo with dice size approximation~
 @3022 = ~Option: 3.5e style to-hit and damage for launchers and ammo without dice size approximation (experimental)~
 @3030 = ~Option: Best instead of stacking enchantment bonuss from launchers and ammo~
-@3040 = ~Option: Proper damage bonus for bows and crossbows per strength requirement, and for slings per strength score~
+@3040 = ~Option: Proper damage bonus for bows per strength requirement~
 @3099 = ~Apply options set in components 30xx)~
 @3098 = ~This component requires at least one 30xx component is installed~
 
 @3110 = ~Tweak attacks per round for bows~
 @3111 = ~Base 2 APR for all class with 2 THAC0 penalty~
 @3112 = ~Base 2 APR and 2 THAC0 penalty for warrior classes eligible for specialization, 1 APR for other classes~
-@3120 = ~Two-handed slings~
-@3124 = ~test~
-@3130 = ~Tweak attacks per round for light crossbows~
-@3131 = ~Base 1 APR for all classes (vanilla)~
-@3132 = ~Base 1 APR for warrior classes eligible for specialization, fixed 1 APR for other classes~
-@3141 = ~Fixed 1 APR for all classes~
-@3142 = ~Fixed 1 APR for warrior classes eligible for specialization, fixed 1/2 APR for other classes~
-@3150 = ~Tweak attacks per round for light crossbows~
-@3151 = ~Base 1 APR for all classes (vanilla)~
-@3152 = ~Base 1 APR for warrior classes eligible for specialization, fixed 1 APR for other classes~
-
+@3120 = ~xbow TBD~
+@3130 = ~Base 1 APR for darts and throwing daggers~
+@3140 = ~Damage bonus for Slings, darts, and throwing daggers from strength~
+@3150 = ~Two-handed slings~
+@3160 = ~Crossbows for everyone~
 
 
 @4000 = ~Spell tweaks~
 
 @5000 = ~Class and kit tweaks~
-
+@5010 = ~Archers have restrictions mirroring kensais'~
 @6000 = ~Tactical challenges tweaks~
 @6010 = ~Make SCS kobolds' poisonous weaponry undroppable (install after SCS)~
 

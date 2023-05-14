@@ -1,0 +1,13 @@
+
+
+COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
+	READ_SHORT 0x1c item_type
+	PATCH_IF (%SOURCE_SIZE% > 0x7f) AND ((item_type = 0x18) OR (item_type = 0x10) ) BEGIN
+		GET_OFFSET_ARRAY global ITM_V10_GEN_EFFECTS
+		PHP_EACH global AS ind => res BEGIN
+			PATCH_IF (SHORT_AT res)=1 BEGIN // ApR modifier
+				WRITE_LONG res+0x4 1
+			END
+		END
+	END
+BUT_ONLY

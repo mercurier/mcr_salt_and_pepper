@@ -8,6 +8,8 @@ ASK_EVERY_COMPONENT
 ALWAYS
 	INCLUDE ~%MOD_FOLDER%/lib/lib_ini.tpa~
 	INCLUDE ~%MOD_FOLDER%/lib/lib_desc.tpa~
+	INCLUDE ~%MOD_FOLDER%/lib/macros.tpa~
+	INCLUDE ~%MOD_FOLDER%/lib/lib_file_template.tpa~ 
 	// INCLUDE ~%MOD_FOLDER%/lib/sfo2e/*.tph~
 	// OUTER_SPRNT MOD_FOLDER ~mcr_salt_and_pepper~
 	OUTER_SPRINT MOD_WORKSPACE ~weidu_external/%MOD_FOLDER%/workspace~
@@ -42,7 +44,7 @@ OUTER_SET sell_markup_floor = 0 - 1
 INCLUDE ~%MOD_FOLDER%/components/std_shop_markups.tpa~
 
 ///////////////////////////////////
-// Tweak Officer Vai's shop
+// Tweak Officer Vai's bounty
 ///////////////////////////////////
 BEGIN @1021 DESIGNATED 1021 // buy only scalps at 100%
 SUBCOMPONENT @1020
@@ -88,11 +90,31 @@ INCLUDE ~%MOD_FOLDER%/components/std_shop_markups.tpa~
 ///////////////////////////////////
 // Remove random treasure
 ///////////////////////////////////
-// No more random gold, gems or scrolls
-// WIP
-// BEGIN @1100 DESIGNATED 1100
 
-// INCLUDE ~%MOD_FOLDER%/components/remove_random_treasures.tpa~
+
+BEGIN @1111 DESIGNATED 1111 // no creture random treasures
+SUBCOMPONENT @1100
+GROUP @1000
+
+INCLUDE ~%MOD_FOLDER%/components/remove_cre_random_treasures.tpa~
+
+BEGIN @1112 DESIGNATED 1112 // no area random treasures
+SUBCOMPONENT @1100
+GROUP @1000
+
+INCLUDE ~%MOD_FOLDER%/components/remove_area_random_treasures.tpa~
+
+BEGIN @1112 DESIGNATED 1113 // no creture and area random treasures
+SUBCOMPONENT @1100
+GROUP @1000
+
+INCLUDE ~%MOD_FOLDER%/components/remove_cre_random_treasures.tpa~
+INCLUDE ~%MOD_FOLDER%/components/remove_area_random_treasures.tpa~
+
+BEGIN @1120 DESIGNATED 1120 // no random wizard scrolls
+GROUP @1000
+REQUIRE_PREDICATE NOT (MOD_IS_INSTALLED TP2_FILE_NAME 1113) @6
+INCLUDE ~%MOD_FOLDER%/components/no_random_wizard_scrolls.tpa~
 
 ///////////////////////////////////
 // Alternative proficiency mastery system
@@ -126,6 +148,26 @@ OUTER_SET true_grandmastery_at = 5
 INCLUDE ~%MOD_FOLDER%/components/alt_prof_mastery.tpa~
 
 ///////////////////////////////////
+// 2e and 3.5e hybrid proficiency system
+///////////////////////////////////
+
+BEGIN @2021  // with multiclass grandmastery
+DESIGNATED 2021
+SUBCOMPONENT @2020
+GROUP @2000
+
+OUTER_SET multiclass_gm=1
+INCLUDE ~%MOD_FOLDER%/components/hybrid_prof_system.tpa~
+
+BEGIN @2022  // without multiclass grandmastery
+DESIGNATED 2022
+SUBCOMPONENT @2020
+GROUP @2000
+
+OUTER_SET multiclass_gm=0
+INCLUDE ~%MOD_FOLDER%/components/hybrid_prof_system.tpa~
+
+///////////////////////////////////
 // Alternative saving throws
 ///////////////////////////////////
 
@@ -146,6 +188,15 @@ GROUP @2000
 // Less sharp change from STR 18 to 19
 
 INCLUDE ~%MOD_FOLDER%/components/alt_strmod.tpa~
+
+///////////////////////////////////
+// 2H-weapon 1.5 strength damage bonus
+///////////////////////////////////
+BEGIN @2210
+DESIGNATED 2210
+GROUP @2000
+
+INCLUDE ~%MOD_FOLDER%/components/2H_150_strength_damage_bonus.tpa~
 
 ///////////////////////////////////
 ///////////////////////////////////
@@ -169,7 +220,7 @@ BEGIN @3021 // with dice size approximation
 DESIGNATED 3021
 SUBCOMPONENT 3020
 GROUP @3000
-FORBID_COMPONENT ~TP2_FILE_NAME~ 3130 @7
+// FORBID_COMPONENT ~TP2_FILE_NAME~ 3130 @7
 
 BEGIN @3022 // without dice size approximation
 DESIGNATED 3022
@@ -263,14 +314,14 @@ INCLUDE ~%MOD_FOLDER%/components/two_handed_slings.tpa~
 
 
 ///////////////////////////////////
-// Crossbows for everyone
+// Crossbows for all class but druids
 ///////////////////////////////////
 
 BEGIN @3160 
 DESIGNATED 3160
 GROUP @3000
 
-INCLUDE ~%MOD_FOLDER%/components/crossbows_for_everyone.tpa~
+INCLUDE ~%MOD_FOLDER%/components/crossbows_for_all_but_druids.tpa~
 
 ///////////////////////////////////
 ///////////////////////////////////
@@ -294,8 +345,21 @@ INCLUDE ~%MOD_FOLDER%/components/archer_restrictions_tweak.tpa~
 ///////////////////////////////////
 ///////////////////////////////////
 
-BEGIN @6010 // Make SCS kobolds' poisonous weaponry undroppable
+///////////////////////////////////
+// Give selected monsters fighter class
+///////////////////////////////////
+
+BEGIN @6010
 DESIGNATED 6010
+GROUP @6000
+INCLUDE ~%MOD_FOLDER%/components/give_monster_fighter_class.tpa~
+
+///////////////////////////////////
+// Make SCS kobolds' poisonous weaponry undroppable
+///////////////////////////////////
+
+BEGIN @6200 // Make SCS kobolds' poisonous weaponry undroppable
+DESIGNATED 6200
 GROUP @6000
 REQUIRE_PREDICATE (MOD_IS_INSTALLED ~STRATAGEMS/SETUP-STRATAGEMS.TP2~ 7030) @6
 INCLUDE ~%MOD_FOLDER%/components/scs_kobold_tweaks.tpa~

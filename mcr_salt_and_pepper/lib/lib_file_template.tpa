@@ -1,0 +1,59 @@
+<<<<<<<<inline/blank_spl
+SPL V1  
+>>>>>>>>
+<<<<<<<<inline/blank_eff
+EFF V2.0EFF V2.0
+>>>>>>>>
+
+DEFINE_PATCH_MACRO extend_spl BEGIN
+	WRITE_BYTE 0x08 0x00
+	INSERT_BYTES 0x08 (0x6a - 1)
+	WRITE_BYTE 0x6a 0x72
+END
+
+DEFINE_PATCH_MACRO extend_eff BEGIN
+	WRITE_BYTE 0x10 0x00
+	INSERT_BYTES 0x10 (0x100 - 1)
+	WRITE_LONG 0x80 0xffffffff
+	WRITE_LONG 0x84 0xffffffff
+	WRITE_LONG 0x88 0xffffffff
+	WRITE_LONG 0x8c 0xffffffff
+END
+
+
+DEFINE_ACTION_FUNCTION generate_blank_file 
+	INT_VAR inlined=0
+	STR_VAR type="" dest_path=""
+	RET dest_path
+BEGIN
+	ACTION_IF inlined=1 BEGIN
+		ACTION_IF (~%dest_path%~ STRING_EQUAL_CASE "") BEGIN
+			OUTER_SPRINT dest_path ~inlined/temp~
+		END
+		ACTION_MATCH ~%type%~ WITH
+		"eff" BEGIN
+			COPY - ~inline/blank_eff~ ~%dest_path%.eff~
+				LPM extend_eff
+			BUT_ONLY
+		END "spl" BEGIN
+			COPY - ~inline/blank_spl~ ~%dest_path%.spl~
+				LPM extend_spl
+			BUT_ONLY
+		END DEFAULT END
+	END ELSE BEGIN
+		ACTION_IF (~%dest_path%~ STRING_EQUAL_CASE "") BEGIN
+			OUTER_SPRINT dest_path ~weidu_external/temp~
+		END
+		ACTION_MATCH ~%type%~ WITH
+		"eff" BEGIN
+			COPY + ~inline/blank_eff~ ~%dest_path%.eff~
+				LPM extend_eff
+			BUT_ONLY
+		END "spl" BEGIN
+			COPY + ~inline/blank_spl~ ~%dest_path%.spl~
+				LPM extend_spl
+			BUT_ONLY
+		END DEFAULT END
+	END
+END
+	

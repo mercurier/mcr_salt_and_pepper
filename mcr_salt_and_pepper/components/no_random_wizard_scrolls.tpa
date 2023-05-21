@@ -1,0 +1,13 @@
+//// Standardize store buying and selling markups
+
+COPY_EXISTING ~rndtreas.2da~ ~override~
+				~rndmagic.2da~ ~override~
+	REPLACE_TEXTUALLY ~RNDSCR01~ ~018     ~
+	REPLACE_TEXTUALLY ~RNDSCR02~ ~028     ~
+	REPLACE_TEXTUALLY ~RNDSCR03~ ~048     ~
+	REPLACE_TEXTUALLY ~SCRL75~ ~015   ~
+BUT_ONLY
+
+COPY_EXISTING ~rndtres.2da~ ~override~
+	REPLACE_TEXTUALLY ~RNDSCR01~ ~MISC25  ~
+BUT_ONLY

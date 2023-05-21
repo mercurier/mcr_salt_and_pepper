@@ -1,0 +1,8 @@
+
+COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
+	READ_SHORT 0x1c item_type
+	PATCH_IF (item_type = 0x1b) OR (item_type = 0x1f) BEGIN  
+		READ_LONG  0x1e unuse
+		WRITE_LONG 0x1e (unuse BAND 0x00000040)
+	END
+BUT_ONLY

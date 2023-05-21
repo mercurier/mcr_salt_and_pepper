@@ -1,4 +1,4 @@
-//// Standardize to hit and damage bonus from enchantment on launchers and ammo
+
 
 INCLUDE ~%MOD_FOLDER%/components/items_prep.tpa~
 
@@ -114,144 +114,145 @@ END
 // patch launchers and ammo
 COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 	PATCH_IF (%SOURCE_SIZE% > 0x7f) BEGIN
-		// get first launcher header offset
-		GET_OFFSET_ARRAY itm_headers ITM_V10_HEADERS
-		PHP_EACH itm_headers AS idx => header_off BEGIN
-			READ_BYTE header_off ability_type
-			READ_BYTE header_off+2 ability_loc
-			READ_SHORT 0x1c item_type
-			READ_LONG  0x60 item_ench
-			PATCH_IF (ability_type=4) AND (item_type = 0x0f || item_type = 0x12 || item_type = 0x1b) BEGIN  // bows crossbows slings
-				PATCH_PRINT ~%SOURCE_RES% header offset %header_off% type %ability_type% loc %ability_loc%~
-				READ_BYTE  0x20 thief_unusable
-				is_long_heavy = ((thief_unusable BAND 0b01000000) > 0)  // is longbow or heavy xbow?
-				
-				WRITE_SHORT header_off+0x1c 4  // missle damage type
-				PATCH_IF launcher_strength_bonus=1 BEGIN
-					READ_SHORT 0x26 str_req
-					READ_SHORT 0x28 str_ex_req
-					LPF get_str_dmg INT_VAR strength=str_req strength_ex=str_ex_req RET str_dmg END
-				END ELSE BEGIN
-					str_dmg = (str_req-14 >0)? (str_req-14)/2 : 0  // vanilla behavior
-				END
-				
-				WRITE_SHORT header_off+0x18 $opt_array(~launcher_damage_dices_thrown~) // damage_dies_thrown
-				
-				PATCH_IF item_ench>0 AND launcher_enchantment_bonus_to_ammo=1 BEGIN
-					LPF ADD_ITEM_EQEFFECT
-						INT_VAR opcode=345 target=1 timing=2 parameter1=item_ench special = 1
+		PATCH_MATCH ~%SOURCE_RES%~ WITH // exclude easter egg items
+			~mdk2gun~ ~secret01~ ~xbow12~
+			~bolt07~ ~flam01~ ~frag01~ ~fragsap~ ~frosty~ ~laser~ ~mdk2bull~ ~mdk2bul2~ ~puls01~ ~puls02~ ~secret02~ ~secret03~ ~secret04~
+		BEGIN END DEFAULT
+			// get first launcher header offset
+			GET_OFFSET_ARRAY itm_headers ITM_V10_HEADERS
+			PHP_EACH itm_headers AS idx => header_off BEGIN
+				READ_BYTE header_off ability_type
+				READ_BYTE header_off+2 ability_loc
+				READ_SHORT 0x1c item_type
+				READ_LONG  0x60 item_ench
+				PATCH_IF (ability_type=4) AND (item_type = 0x0f || item_type = 0x12 || item_type = 0x1b) BEGIN  // bows crossbows slings
+					PATCH_PRINT ~%SOURCE_RES% header offset %header_off% type %ability_type% loc %ability_loc%~
+					READ_BYTE  0x20 thief_unusable
+					is_long_heavy = ((thief_unusable BAND 0b01000000) > 0)  // is longbow or heavy xbow?
+					
+					WRITE_SHORT header_off+0x1c 4  // missle damage type
+					PATCH_IF launcher_strength_bonus=1 BEGIN
+						READ_SHORT 0x26 str_req
+						READ_SHORT 0x28 str_ex_req
+						LPF get_str_dmg INT_VAR strength=str_req strength_ex=str_ex_req RET str_dmg END
+					END ELSE BEGIN
+						str_dmg = (str_req-14 >0)? (str_req-14)/2 : 0  // vanilla behavior
 					END
 					
-					// add eff to block redundant ammo enchantment bonus
-					FOR (i_ench=1; i_ench<=item_ench; ++i_ench) BEGIN
-						LPF ADD_ITEM_EQEFFECT INT_VAR opcode=318 target=1 timing=2 STR_VAR resource= EVAL ~MC#E%i_ench%A1~ END
-						LPF ADD_ITEM_EQEFFECT INT_VAR opcode=318 target=1 timing=2 STR_VAR resource= EVAL ~MC#E%i_ench%D1~ END
+					WRITE_SHORT header_off+0x18 $opt_array(~launcher_damage_dices_thrown~) // damage_dies_thrown
+					
+					PATCH_IF item_ench>0 AND launcher_enchantment_bonus_to_ammo=1 BEGIN
+						LPF ADD_ITEM_EQEFFECT
+							INT_VAR opcode=345 target=1 timing=2 parameter1=item_ench special = 1
+						END
+						
+						// add eff to block redundant ammo enchantment bonus
+						FOR (i_ench=1; i_ench<=item_ench; ++i_ench) BEGIN
+							LPF ADD_ITEM_EQEFFECT INT_VAR opcode=318 target=1 timing=2 STR_VAR resource= EVAL ~MC#E%i_ench%A1~ END
+							LPF ADD_ITEM_EQEFFECT INT_VAR opcode=318 target=1 timing=2 STR_VAR resource= EVAL ~MC#E%i_ench%D1~ END
+						END
 					END
-				END
-				// END 
+					// END 
 
-				// Standardize to-hit and damage bonus
-				READ_SHORT header_off+0x16 old_damage_dice_size
-				READ_SHORT header_off+0x14 old_to_hit_bonus
-				READ_SHORT header_off+0x1a old_damage_bonus
-				PATCH_MATCH item_type WITH
-				0x0f BEGIN // bows
-					// PATCH_PRINT ~bows E:%launcher_enchantment_bonus_to_ammo% eq %item_ench% die size~
-					WRITE_SHORT header_off+0x16 (is_long_heavy ?
-						($opt_array(~longbow_damage_dice_size~)) :
-						($opt_array(~shortbow_damage_dice_size~)))  // damage dice size
-					WRITE_SHORT header_off+0x14 launcher_enchantment_bonus_to_ammo*item_ench + (is_long_heavy ?
-						($opt_array(~longbow_to_hit_bonus~)) :
-						($opt_array(~shortbow_to_hit_bonus~)))  // to hit bonus
-					WRITE_SHORT header_off+0x1a launcher_enchantment_bonus_to_ammo*item_ench + (is_long_heavy ?
-						($opt_array(~longbow_damage_bonus~)) :
-						($opt_array(~shortbow_damage_bonus~))) + str_dmg  // damage bonus
-				END 0x1b BEGIN // xbows
-					WRITE_SHORT header_off+0x16 (is_long_heavy ?
-						($opt_array(~heavy_xbow_damage_dice_size~)) :
-						($opt_array(~light_xbow_damage_dice_size~)))  // damage dice size
-					WRITE_SHORT header_off+0x14 launcher_enchantment_bonus_to_ammo*item_ench + (is_long_heavy ?
-						($opt_array(~heavy_xbow_to_hit_bonus~)) :
-						($opt_array(~light_xbow_to_hit_bonus~)))  // to hit bonus
-					WRITE_SHORT header_off+0x1a launcher_enchantment_bonus_to_ammo*item_ench + (is_long_heavy ?
-						($opt_array(~heavy_xbow_damage_bonus~)) :
-						($opt_array(~light_xbow_damage_bonus~)))  // damage bonus
-				END 0x12 BEGIN // slings
-					WRITE_SHORT header_off+0x16 $opt_array(~sling_damage_dice_size~)  // damage dice size
-					WRITE_SHORT header_off+0x14 launcher_enchantment_bonus_to_ammo*item_ench + 
-						$opt_array(~sling_to_hit_bonus~)  // to hit bonus
-					WRITE_SHORT header_off+0x1a launcher_enchantment_bonus_to_ammo*item_ench + 
-						$opt_array(~sling_damage_bonus~)  // damage bonus
-				END DEFAULT END
-				READ_SHORT header_off+0x16 new_damage_dice_size
-				READ_SHORT header_off+0x14 new_to_hit_bonus
-				READ_SHORT header_off+0x1a new_damage_bonus
-				PATCH_IF (new_to_hit_bonus != old_to_hit_bonus) OR (new_damage_bonus != old_damage_bonus) OR 
-					($opt_array(~launcher_damage_dices_thrown~)>0) BEGIN
-					PATCH_PRINT ~updating desc...~
-					LPF update_weaponry_description INT_VAR 
-						to_hit_bonus = new_to_hit_bonus
-						damage_bonus = new_damage_bonus
-						damage_dies = $opt_array(~launcher_damage_dices_thrown~)
-						damage_dice_size = new_damage_dice_size
-					END
-				END
-			END
-		 
-			PATCH_IF (ability_type=2) AND (item_type = 0x05 || item_type = 0x1f || item_type = 0x0e) BEGIN // arrow, bolt, and bullet
-				PATCH_PRINT ~%SOURCE_RES% header offset %header_off% type %ability_type% loc %ability_loc%~
-				WRITE_SHORT header_off+0x1c 4  // missle damage type
-				WRITE_SHORT header_off+0x18 $opt_array(~ammo_damage_dices_thrown~)
-				// add enchantment based to-hit and damage bonus
-				PATCH_IF launcher_enchantment_bonus_to_ammo=1 BEGIN
-					// magic here
-					FOR (ent_level=1; ent_level<=item_ench;++ent_level) BEGIN
-						LPF ADD_ITEM_EQEFFECT INT_VAR
-							opcode=177
-							target=1
-							timing=2
-							parameter1=0
-							parameter2=2
-							insert_point=(0 - 1)
-							STR_VAR resource= EVAL ~MC#E%ent_level%A1~
-						END
-						LPF ADD_ITEM_EQEFFECT INT_VAR
-							opcode=177
-							target=1
-							timing=2
-							parameter1=0
-							parameter2=2
-							insert_point=(0 - 1)
-							STR_VAR resource= EVAL ~MC#E%ent_level%D1~
-						END
-					END
-					WRITE_SHORT header_off+0x14 0  // to hit bonus
-					WRITE_SHORT header_off+0x1a (item_type=0x0e)*$opt_array(~bullet_damage_bonus~)  // damage bonus
-				END ELSE BEGIN // vanilla behavior
-					WRITE_SHORT header_off+0x14 item_ench  // to hit bonus
-					WRITE_SHORT header_off+0x1a item_ench+(item_type=0x0e)*$opt_array(~bullet_damage_bonus~)  // damage bonus
-				END
-				PATCH_IF $opt_array(~ammo_damage_dices_thrown~)=1 BEGIN
+					// Standardize to-hit and damage bonus
 					READ_SHORT header_off+0x16 old_damage_dice_size
-					WRITE_SHORT header_off+0x16 
-						($opt_array(~shortbow_damage_dice_size~))*(item_type = 0x05) +
-						($opt_array(~light_xbow_damage_dice_size~))*(item_type = 0x1f) + 
-						($opt_array(~sling_damage_dice_size~))*(item_type = 0x0e)
-					PATCH_IF (~%SOURCE_RES%~ STRING_EQUAL_CASE ~bolt07~) BEGIN // revert Jansen's special ammo damage dice
-						WRITE_SHORT header_off+0x16 2
+					READ_SHORT header_off+0x14 old_to_hit_bonus
+					READ_SHORT header_off+0x1a old_damage_bonus
+					PATCH_MATCH item_type WITH
+					0x0f BEGIN // bows
+						// PATCH_PRINT ~bows E:%launcher_enchantment_bonus_to_ammo% eq %item_ench% die size~
+						WRITE_SHORT header_off+0x16 (is_long_heavy ?
+							($opt_array(~longbow_damage_dice_size~)) :
+							($opt_array(~shortbow_damage_dice_size~)))  // damage dice size
+						WRITE_SHORT header_off+0x14 launcher_enchantment_bonus_to_ammo*item_ench + (is_long_heavy ?
+							($opt_array(~longbow_to_hit_bonus~)) :
+							($opt_array(~shortbow_to_hit_bonus~)))  // to hit bonus
+						WRITE_SHORT header_off+0x1a launcher_enchantment_bonus_to_ammo*item_ench + (is_long_heavy ?
+							($opt_array(~longbow_damage_bonus~)) :
+							($opt_array(~shortbow_damage_bonus~))) + str_dmg  // damage bonus
+					END 0x1b BEGIN // xbows
+						WRITE_SHORT header_off+0x16 (is_long_heavy ?
+							($opt_array(~heavy_xbow_damage_dice_size~)) :
+							($opt_array(~light_xbow_damage_dice_size~)))  // damage dice size
+						WRITE_SHORT header_off+0x14 launcher_enchantment_bonus_to_ammo*item_ench + (is_long_heavy ?
+							($opt_array(~heavy_xbow_to_hit_bonus~)) :
+							($opt_array(~light_xbow_to_hit_bonus~)))  // to hit bonus
+						WRITE_SHORT header_off+0x1a launcher_enchantment_bonus_to_ammo*item_ench + (is_long_heavy ?
+							($opt_array(~heavy_xbow_damage_bonus~)) :
+							($opt_array(~light_xbow_damage_bonus~)))  // damage bonus
+					END 0x12 BEGIN // slings
+						WRITE_SHORT header_off+0x16 $opt_array(~sling_damage_dice_size~)  // damage dice size
+						WRITE_SHORT header_off+0x14 launcher_enchantment_bonus_to_ammo*item_ench + 
+							$opt_array(~sling_to_hit_bonus~)  // to hit bonus
+						WRITE_SHORT header_off+0x1a launcher_enchantment_bonus_to_ammo*item_ench + 
+							$opt_array(~sling_damage_bonus~)  // damage bonus
+					END DEFAULT END
+					READ_SHORT header_off+0x16 new_damage_dice_size
+					READ_SHORT header_off+0x14 new_to_hit_bonus
+					READ_SHORT header_off+0x1a new_damage_bonus
+					PATCH_IF (new_to_hit_bonus != old_to_hit_bonus) OR (new_damage_bonus != old_damage_bonus) OR 
+						($opt_array(~launcher_damage_dices_thrown~)>0) BEGIN
+						PATCH_PRINT ~updating desc...~
+						LPF update_weaponry_description INT_VAR 
+							to_hit_bonus = new_to_hit_bonus
+							damage_bonus = new_damage_bonus
+							damage_dies = $opt_array(~launcher_damage_dices_thrown~)
+							damage_dice_size = new_damage_dice_size
+						END
 					END
-				END ELSE BEGIN
-					WRITE_SHORT header_off+0x16 0
 				END
-				READ_SHORT header_off+0x16 new_damage_dice_size
-				// PATCH_IF (old_damage_dice_size != new_damage_dice_size) BEGIN
-					LPF update_weaponry_description INT_VAR 
-						to_hit_bonus = item_ench
-						damage_bonus = item_ench
-						damage_dies = 1
-						damage_dice_size = new_damage_dice_size
+			 
+				PATCH_IF (ability_type=2) AND (item_type = 0x05 || item_type = 0x1f || item_type = 0x0e) BEGIN // arrow, bolt, and bullet
+					PATCH_PRINT ~%SOURCE_RES% header offset %header_off% type %ability_type% loc %ability_loc%~
+					WRITE_SHORT header_off+0x1c 4  // missle damage type
+					WRITE_SHORT header_off+0x18 $opt_array(~ammo_damage_dices_thrown~)
+					// add enchantment based to-hit and damage bonus
+					PATCH_IF launcher_enchantment_bonus_to_ammo=1 BEGIN
+						// magic here
+						FOR (ent_level=1; ent_level<=item_ench;++ent_level) BEGIN
+							LPF ADD_ITEM_EQEFFECT INT_VAR
+								opcode=177
+								target=1
+								timing=2
+								parameter1=0
+								parameter2=2
+								insert_point=(0 - 1)
+								STR_VAR resource= EVAL ~MC#E%ent_level%A1~
+							END
+							LPF ADD_ITEM_EQEFFECT INT_VAR
+								opcode=177
+								target=1
+								timing=2
+								parameter1=0
+								parameter2=2
+								insert_point=(0 - 1)
+								STR_VAR resource= EVAL ~MC#E%ent_level%D1~
+							END
+						END
+						WRITE_SHORT header_off+0x14 0  // to hit bonus
+						WRITE_SHORT header_off+0x1a (item_type=0x0e)*$opt_array(~bullet_damage_bonus~)  // damage bonus
+					END ELSE BEGIN // vanilla behavior
+						WRITE_SHORT header_off+0x14 item_ench  // to hit bonus
+						WRITE_SHORT header_off+0x1a item_ench+(item_type=0x0e)*$opt_array(~bullet_damage_bonus~)  // damage bonus
 					END
-				// END
+					
+					PATCH_IF $opt_array(~ammo_damage_dices_thrown~)=1 BEGIN
+						READ_SHORT header_off+0x16 old_damage_dice_size
+						WRITE_SHORT header_off+0x16 
+							($opt_array(~shortbow_damage_dice_size~))*(item_type = 0x05) +
+							($opt_array(~light_xbow_damage_dice_size~))*(item_type = 0x1f) + 
+							($opt_array(~sling_damage_dice_size~))*(item_type = 0x0e)
+					END ELSE BEGIN
+						WRITE_SHORT header_off+0x16 0
+					END
+					READ_SHORT header_off+0x16 new_damage_dice_size
+						LPF update_weaponry_description INT_VAR 
+							to_hit_bonus = item_ench
+							damage_bonus = item_ench
+							damage_dies = 1
+							damage_dice_size = new_damage_dice_size
+						END
+				END
 			END
 		END
 	END

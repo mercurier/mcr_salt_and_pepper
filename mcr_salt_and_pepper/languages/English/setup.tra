@@ -18,18 +18,26 @@
 
 @1030 = ~Standardize store selling markups~
 @1031 = ~All shops sell at 150%~
-@1032 = ~All shops sell at AT LEAST 150%~
+@1032 = ~All shops sell at *AT LEAST* 150%~
 
-@1100 = ~Remove random treasure from creatures~
+@1100 = ~Tweak random treasures~
+@1111 = ~No random treasures from creatures~
+@1112 = ~No random treasures from areas (WIP, don't install)~
+@1113 = ~No random treasures from creatures and areas (WIP, don't install)~
+@1120 = ~No wizard scrolls from random treasures~
 
 @2000 = ~Generic combat system tweaks~
-@2010 = ~Alternative proficiency mastery system~
+@2010 = ~Alternative proficiency mastery system (install *BEFORE* SCS)~
 @2011 = ~4 stars true grandmastery~
 @2012 = ~4 stars BG2EE style grandmastery~
 @2013 = ~4 stars BG2EE style grandmastery，5th star for true grandmastery exclusive to kensais and archers~
+@2020 = ~2e and 3.5e hybrid proficiency system (install *BEFORE* SCS)~
+@2021 = ~With multiclass grandmastery~
+@2022 = ~Without multiclass grandmastery~
 
 @2100 = ~Alternative saving throw tables for smoothier progress and better class distinction~
 @2200 = ~Alternative strength modification: bonus starts from 15 STR and smoothier progress~
+@2210 = ~Apply 1.5x strength damage bonus for two-handed melee weapons~
 
 @3000 = ~Items tweaks~
 @3010 = ~Option: Specific ranged weaponry tweak~
@@ -48,7 +56,7 @@
 @3130 = ~Base 1 APR for darts and throwing daggers~
 @3140 = ~Damage bonus for Slings, darts, and throwing daggers from strength~
 @3150 = ~Two-handed slings~
-@3160 = ~Crossbows for everyone~
+@3160 = ~Crossbows for all class but druids~
 
 
 @4000 = ~Spell tweaks~
@@ -56,7 +64,8 @@
 @5000 = ~Class and kit tweaks~
 @5010 = ~Archers have restrictions mirroring kensais'~
 @6000 = ~Tactical challenges tweaks~
-@6010 = ~Make SCS kobolds' poisonous weaponry undroppable (install after SCS)~
+@6010 = ~Give selected monsters fighter class (beta, install *BEFORE* SCS)~
+@6200 = ~Make SCS kobolds' poisonous weaponry undroppable (install *AFTER* SCS)~
 
 @7000 = ~Misc tweaks~
 @7010 = ~NPC Customization (for power gamers only!)~

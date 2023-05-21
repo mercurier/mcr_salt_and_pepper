@@ -1,28 +1,24 @@
 
 
 COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
-	READ_SHORT 0x1c item_type
+	READ_SHORT 0x1c category
 	READ_LONG 0x0c strref 
 	GET_STRREF strref name2
 	PATCH_IF (%SOURCE_SIZE% > 0x71) BEGIN
 		READ_BYTE 0x2d kit_flags
-		PATCH_MATCH item_type WITH
-		0x02 // armor
-		0x06 // bracers and gauntlets
-		0x0c // shields
-		0x3c // leather armor
-		0x3d // studded leather
-		0x42 // hide
-		BEGIN
-			PATCH_PRINT ~%SOURCE_FILE% %name2%~
-			WRITE_BYTE 0x2d (kit_flags BOR 0b10000000)
-		END 0x07 BEGIN // head gear
-			READ_BYTE 0x20 class_flags
-			PATCH_IF (class_flags BAND 0b01000100)>0 BEGIN // unusable by mage OR thief
-				PATCH_PRINT ~%SOURCE_FILE% %name2%~
-				WRITE_BYTE 0x2d (kit_flags BOR 0b10000000)
+		PATCH_MATCH category WITH
+		15  // bows
+		18  // slings
+		24  // darts
+		27  // crossbows
+		BEGIN // skip these items
+		END DEFAULT 
+			READ_BYTE 0x2f kensai_unuse
+			PATCH_IF (kensai_unuse BAND 0b00000100)>0 BEGIN
+				READ_BYTE  0x2d archer_unuse
+				WRITE_BYTE 0x2d (archer_unuse BOR 0b10000000)
 			END
-		END DEFAULT END
+		END
 	END
 BUT_ONLY
 

@@ -1,0 +1,49 @@
+
+COPY ~%MOD_FOLDER%/2da/prof/STYLBONU.2da~ ~override~
+COPY ~%MOD_FOLDER%/2da/prof/PROFS.2da~ ~override~
+COPY ~%MOD_FOLDER%/2da/prof/PROFSMAX.2da~ ~override~
+COPY ~%MOD_FOLDER%/2da/prof/WSPATCK.2da~ ~override~
+COPY ~%MOD_FOLDER%/2da/prof/WSPECIAL.2da~ ~override~
+COPY ~%MOD_FOLDER%/2da/prof/PROFSMAX.2da~ ~override~
+
+// eliminate nonproficiency thac0 penalty
+COPY_EXISTING ~clswpbon.2da~ ~override~
+	COUNT_2DA_COLS n_cols
+	COUNT_2DA_ROWS n_cols n_rows
+	FOR (i_row=0; i_row<n_rows; ++i_row) BEGIN
+		SET_2DA_ENTRY_LATER ~clswpbon2da~ i_row 3 0
+	END
+	SET_2DA_ENTRIES_NOW ~clswpbon2da~ n_cols
+	// PRETTY_PRINT_2DA
+BUT_ONLY
+
+// Patch max # of stars for all classes 
+COPY_EXISTING ~weapprof.2da~  ~override~
+	COUNT_2DA_COLS cols
+	FOR (column = 4; column < cols; ++column) BEGIN  // update 5-star weapon prof system to 4-star
+		PATCH_MATCH column WITH
+			12 13 14 15 19 20 BEGIN
+			mcgm_stars = multiclass_gm*3
+		END DEFAULT mcgm_stars=0 END
+		
+		FOR (i_row = 3; i_row < 31; ++i_row) BEGIN // note: counting from first line of file as line 0
+			READ_2DA_ENTRY i_row column 1 stars
+			SET_2DA_ENTRY_LATER ~weapprof2~ i_row column (((stars - 1 > 0)? (stars - 1):0) + mcgm_stars)
+		END
+		
+		FOR (i_row = 31; i_row < 35; ++i_row) BEGIN // note: counting from first line of file as line 0
+			SET_2DA_ENTRY_LATER ~weapprof2~ i_row column 2
+		END
+	END
+	SET_2DA_ENTRIES_NOW ~weapprof2~ 1
+	PRETTY_PRINT_2DA
+BUT_ONLY
+
+// Patch up Divine power spell to follow warrior APR changes
+ACTION_IF FILE_EXISTS_IN_GAME ~SPPR412B.eff~ BEGIN
+	COPY_EXISTING ~SPPR412A.eff~ ~override~
+					~SPPR412B.eff~ ~override~
+		READ_LONG 0x1c apr_bonus
+		WRITE_LONG 0x1c ((apr_bonus>5)?(apr_bonus - 5) : (apr_bonus + 6))
+	BUT_ONLY
+END

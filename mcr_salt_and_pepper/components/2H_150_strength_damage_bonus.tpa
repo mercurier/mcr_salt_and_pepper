@@ -1,0 +1,57 @@
+// this component uses strmod.2da patched in this mod
+
+COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
+	PATCH_IF (%SOURCE_SIZE% > 0x7f) BEGIN
+		READ_BYTE 0x18 flags
+		is_2H = (flags BAND 0b00000010)
+		PATCH_IF is_2H>0 BEGIN
+			READ_BYTE 0x31 prof
+			PATCH_MATCH prof WITH 89 90 92 93 98 99 102 BEGIN
+				PATCH_FOR_EACH str_to_apply_bonus IN 16 18 19 21 23 24 25 BEGIN
+					// PATCH_PRINT ~%SOURCE_RES% prof %prof% str %str_to_apply_bonus%~
+					LPF ADD_ITEM_EQEFFECT INT_VAR
+						opcode=272
+						parameter1=1
+						target=1
+						timing=2
+						insert_point= 0 - 1
+						STR_VAR resource= EVAL ~M9STRD%str_to_apply_bonus%~
+					END
+				END
+			END DEFAULT END
+		END
+	END
+BUT_ONLY
+		
+LAF generate_blank_file INT_VAR inlined=1 STR_VAR type=~eff~ RET dest_path END
+
+// add str damage spl loader eff
+ACTION_FOR_EACH str_to_apply_bonus IN 16 18 19 21 23 24 25 BEGIN
+	COPY ~%dest_path%.eff~ ~override/M9STRD%str_to_apply_bonus%.eff~
+		WRITE_LONG 0x10 326
+		WRITE_LONG 0x14 1
+		WRITE_LONG 0x1c ~%str_to_apply_bonus%~		
+		WRITE_LONG 0x20 124
+		// WRITE_LONG 0x24 0
+		// WRITE_LONG 0x28 1
+		WRITE_ASCII 0x30 ~M9STRDMG~
+		// WRITE_ASCII 0x94 ~M9STRDMG~
+	BUT_ONLY
+END
+
+LAF generate_blank_file INT_VAR inlined=1 STR_VAR type=~spl~ RET dest_path END
+
+// str damage spl
+COPY ~%dest_path%.spl~ ~override/M9STRDMG.spl~
+	LPF ADD_SPELL_HEADER INT_VAR
+		type=1 
+		location=4
+		target=5
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode=73
+		target=1
+		parameter1=1
+		duration=1
+	END
+BUT_ONLY

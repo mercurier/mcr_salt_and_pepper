@@ -96,7 +96,7 @@ BEGIN @1111 DESIGNATED 1111 // no creture random treasures
 SUBCOMPONENT @1100
 GROUP @1000
 
-INCLUDE ~%MOD_FOLDER%/components/remove_cre_random_treasures.tpa~
+INCLUDE ~%MOD_FOLDER%/components/remove_creature_random_treasures.tpa~
 
 BEGIN @1112 DESIGNATED 1112 // no area random treasures
 SUBCOMPONENT @1100
@@ -108,7 +108,7 @@ BEGIN @1112 DESIGNATED 1113 // no creture and area random treasures
 SUBCOMPONENT @1100
 GROUP @1000
 
-INCLUDE ~%MOD_FOLDER%/components/remove_cre_random_treasures.tpa~
+INCLUDE ~%MOD_FOLDER%/components/remove_creature_random_treasures.tpa~
 INCLUDE ~%MOD_FOLDER%/components/remove_area_random_treasures.tpa~
 
 BEGIN @1120 DESIGNATED 1120 // no random wizard scrolls
@@ -218,13 +218,13 @@ GROUP @3000
 
 BEGIN @3021 // with dice size approximation
 DESIGNATED 3021
-SUBCOMPONENT 3020
+SUBCOMPONENT @3020
 GROUP @3000
 // FORBID_COMPONENT ~TP2_FILE_NAME~ 3130 @7
 
 BEGIN @3022 // without dice size approximation
 DESIGNATED 3022
-SUBCOMPONENT 3020
+SUBCOMPONENT @3020
 GROUP @3000
 
 ///////////////////////////////////

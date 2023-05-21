@@ -5,17 +5,19 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 	READ_LONG 0x0c strref 
 	GET_STRREF strref name2
 	PATCH_IF (%SOURCE_SIZE% > 0x71) BEGIN
-		READ_BYTE 0x2d kit_flags
+		READ_BYTE 0x2d archer_unuse
 		PATCH_MATCH category WITH
 		15  // bows
 		18  // slings
 		24  // darts
 		27  // crossbows
-		BEGIN // skip these items
-		END DEFAULT 
+		BEGIN END// skip these items
+		17 19 20 21 22 23 25 26 29 30 69 BEGIN  // melee weapons excluding dagger
+			WRITE_BYTE 0x2d (archer_unuse BOR 0b10000000)
+		END
+		DEFAULT 
 			READ_BYTE 0x2f kensai_unuse
 			PATCH_IF (kensai_unuse BAND 0b00000100)>0 BEGIN
-				READ_BYTE  0x2d archer_unuse
 				WRITE_BYTE 0x2d (archer_unuse BOR 0b10000000)
 			END
 		END
@@ -27,14 +29,20 @@ COPY_EXISTING ~weapprof.2da~  ~override~
 	// remove stars from all melee weapons and styles except for dagger
 	patch_col = 36
 	COUNT_2DA_COLS cols
-	// FOR (column = 4; column < cols; ++column) BEGIN
-	FOR (row = 11; row < 31; ++row) BEGIN // note: counting from line 0 at first line of file
+	FOR (row = 11; row < 31; ++row) BEGIN // note: counting from first line of file as line 0
 		READ_2DA_ENTRY row patch_col 1 stars
 		PATCH_IF (stars = 1) BEGIN
 			SET_2DA_ENTRY_LATER ~weapprof2~ row patch_col 0
 		END
 	END
-	SET_2DA_ENTRY_LATER ~weapprof2~ 18 patch_col 1 // dagger
+	READ_2DA_ENTRY 29 4 1 mage_stars  // hybrid proficiency system compatibility
+	READ_2DA_ENTRY 18 0 1 dagger_prof_name  // cdtweak weapon category combination compatibility
+	PATCH_IF (~%dagger_prof_name%~ STRING_EQUAL_CASE ~DAGGER~) BEGIN
+		SET_2DA_ENTRY_LATER ~weapprof2~ 18 patch_col mage_stars // dagger
+	END ELSE BEGIN
+		SET_2DA_ENTRY_LATER ~weapprof2~ 25 patch_col mage_stars // small_sword
+	END
+	
 	SET_2DA_ENTRY_LATER ~weapprof2~ 31 patch_col 0 // styles
 	SET_2DA_ENTRY_LATER ~weapprof2~ 32 patch_col 0
 	SET_2DA_ENTRY_LATER ~weapprof2~ 33 patch_col 0

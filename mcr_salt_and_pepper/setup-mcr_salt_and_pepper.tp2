@@ -323,6 +323,12 @@ GROUP @3000
 
 INCLUDE ~%MOD_FOLDER%/components/crossbows_for_all_but_druids.tpa~
 
+BEGIN @3500 // More importable BG1/SOD items available in BG2-SoA
+DESIGNATED 3500
+GROUP @3000
+REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ @5
+INCLUDE ~%MOD_FOLDER%/components/more_import_BG1_to_BG2.tpa~
+
 ///////////////////////////////////
 ///////////////////////////////////
 // Class and kit tweaks
@@ -366,7 +372,7 @@ INCLUDE ~%MOD_FOLDER%/components/scs_kobold_tweaks.tpa~
 
 ///////////////////////////////////
 ///////////////////////////////////
-// NPC tweaks
+// Misc tweaks
 ///////////////////////////////////
 ///////////////////////////////////
 
@@ -375,8 +381,4 @@ DESIGNATED 7010
 GROUP @7000
 INCLUDE ~%MOD_FOLDER%/components/npc_customization.tpa~
 
-BEGIN @7020 // More importable BG1/SOD items available in BG2-SoA
-DESIGNATED 7020
-GROUP @7000
-REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ @5
-INCLUDE ~%MOD_FOLDER%/components/more_import_BG1_to_BG2.tpa~
+

@@ -323,7 +323,21 @@ GROUP @3000
 
 INCLUDE ~%MOD_FOLDER%/components/crossbows_for_all_but_druids.tpa~
 
-BEGIN @3500 // More importable BG1/SOD items available in BG2-SoA
+///////////////////////////////////
+// Helms don't grant critical hit protection
+///////////////////////////////////
+
+BEGIN @3300 
+DESIGNATED 3300
+GROUP @3000
+REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ @5
+INCLUDE ~%MOD_FOLDER%/components/helms_dont_grant_critical_hit_protection.tpa~
+
+///////////////////////////////////
+// More importable BG1/SOD items available in BG2-SoA
+///////////////////////////////////
+
+BEGIN @3500
 DESIGNATED 3500
 GROUP @3000
 REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ @5

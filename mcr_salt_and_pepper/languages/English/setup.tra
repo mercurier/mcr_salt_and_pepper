@@ -57,6 +57,7 @@
 @3140 = ~Damage bonus for Slings, darts, and throwing daggers from strength~
 @3150 = ~Two-handed slings~
 @3160 = ~Make crossbows usable by all classes but single-class druids~
+@3300 = ~Helms don't grant critical hit protection~
 @3500 = ~More importable BG1/SOD items available in BG2-SoA (lazy implementation)~
 
 @4000 = ~Spell tweaks~

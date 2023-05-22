@@ -43,8 +43,7 @@ COPY - ~mcr_salt_and_pepper/2da/npc_customization.2da~ ~mcr_salt_and_pepper/comp
 						END PATCH_IF kit >= 0 BEGIN 
 							WRITE_LONG 0x244 kit
 						END PATCH_IF race >= 0 BEGIN 
-							// WRITE_LONG 0x74 flag
-							WRITE_BYTE 0x258 race
+							WRITE_BYTE 0x272 race
 						END PATCH_IF avatar >= 0 BEGIN 
 							WRITE_LONG 0x28  avatar
 						END PATCH_IF racial_e >= 0 BEGIN 

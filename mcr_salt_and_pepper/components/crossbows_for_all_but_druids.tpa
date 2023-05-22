@@ -3,7 +3,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 	READ_SHORT 0x1c item_type
 	READ_BYTE 0x20 unuse3
 	thief_unusable = (unuse3 BAND 0b01000000)
-	PATCH_IF ((item_type = 0x1b) OR (item_type = 0x1f)) AND (thief_unusable=0) BEGIN  
+	PATCH_IF ((item_type = 0x1b) OR (item_type = 0x1f)) BEGIN // AND (thief_unusable=0) BEGIN  
 		READ_LONG  0x1e unuse
 		WRITE_LONG 0x1e (unuse BAND 0x00000040)
 	END

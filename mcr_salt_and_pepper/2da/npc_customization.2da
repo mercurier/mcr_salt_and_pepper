@@ -1,8 +1,24 @@
 2DA V1.0
 *
+// set "Enable" column to 1 to make the line effective
+// set other columns  to -1 to skip changing those attributes
             Enable   STR   DEX   CON   INT   WIS   CHA   CLASS   ALI          KIT   FLAG   RACE   AVATAR   R_ENEMY   MR
 mainchar         0    17    15    13    15    13    11       7    50   0x40000000      0      2   0x6101         0    0
-IMOEN1           1    13    15    13    17    13    11       4    33           -1      0      1   0x6310         0    0
-NEERA            1    16    16    14    13    14    11      12    49   0x40070000      0      2   0x6111       121    0
-VICONI           1    15    13    17    13    15    11       8    50   0x40000000      0      4   0x6011         0    0
-JAHEIR           1    11    11    13    13    17    15      11    35   0x40120000      0      3   0x6011         0    0
+
+// rectify BG1 Imoen's stats 
+IMOEN1           0    13    15    15    17    13    11       4    33           -1      0      1   0x6310         0    0
+
+// change BG1 Imoen to elven archer
+IMOEN1           1    16    17    13    13    14    11      12    49   0x40070000      0      2   0x6111       121    0
+
+// change BG1 Neera to elven archer
+NEERA            0    16    17    13    13    14    11      12    49   0x40070000      0      2   0x6111       121    0
+
+// change BG1 Neera to human thief, eligiable dual-classing to mage
+NEERA            1    13    15    15    17    13    11       4    33   0x40000000      0      1   0x6310         0    0
+
+// change BG1 Viconia to dwarven F/C with elven avatar
+VICONI           1    15    12    18    11    15    11       8    50   0x40000000      0      4   0x6011         0    0
+
+// change BG1 Jaheira to avenger
+JAHEIR           1    11    15    11    11    17    15      11    -1   0x40120000      0      3   0x6011         0    0

@@ -11,6 +11,9 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 		18  // slings
 		24  // darts
 		27  // crossbows
+		5   // arrows
+		14  // bullets
+		31  // bolts
 		BEGIN END// skip these items
 		17 19 20 21 22 23 25 26 29 30 69 BEGIN  // melee weapons excluding dagger
 			WRITE_BYTE 0x2d (archer_unuse BOR 0b10000000)

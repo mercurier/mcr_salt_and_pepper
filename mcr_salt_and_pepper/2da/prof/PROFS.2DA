@@ -1,7 +1,7 @@
 2DA V1.0
 0
                         FIRST_LEVEL     RATE
-MAGE                    0               0
+MAGE                    0               60
 FIGHTER                 2               3
 CLERIC                  1               4
 THIEF                   1               4
@@ -19,6 +19,6 @@ CLERIC_THIEF            1               4
 FIGHTER_DRUID           2               3
 FIGHTER_MAGE_CLERIC     2               3
 CLERIC_RANGER           2               3
-SORCERER                0               0
+SORCERER                0               60
 MONK                    1               4
 SHAMAN                  1               4

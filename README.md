@@ -141,7 +141,7 @@ This component is designed to work with *Spell Revisions* to take advantage of i
 
 | Class        | Death | Polymorph | Breath | Spell/Wand |
 |:-------------|:------|:----------|:-------|:-----------|
-|Warrior       | Good  | Good      | Fair   | Bad        |
+|Warrior       | Good  | Fair      | Fair   | Bad        |
 |Cleric/Shaman | Fair  | Fair      | Bad    | Good       |
 |Thief         | Fair  | Fair      | Good   | Bad        |
 |Mage/Sorceror | Bad   | Fair      | Fair   | Good       |

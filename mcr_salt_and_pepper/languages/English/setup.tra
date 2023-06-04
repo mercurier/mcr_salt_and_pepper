@@ -54,7 +54,7 @@
 @3112 = ~Base 2 APR and 2 THAC0 penalty for warrior classes eligible for specialization, 1 APR for other classes~
 @3120 = ~xbow TBD~
 @3130 = ~Base 1 APR for darts and throwing daggers~
-@3140 = ~Damage bonus for Slings, darts, and throwing daggers from strength~
+@3140 = ~Only damage bonus from strength for slings and throwable weapons~
 @3150 = ~Two-handed slings~
 @3160 = ~Make crossbows usable by all classes but single-class druids~
 @3300 = ~Helms don't grant critical hit protection~

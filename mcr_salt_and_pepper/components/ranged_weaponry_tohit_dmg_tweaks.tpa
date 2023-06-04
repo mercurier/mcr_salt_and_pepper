@@ -131,6 +131,9 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 					is_long_heavy = ((thief_unusable BAND 0b01000000) > 0)  // is longbow or heavy xbow?
 					
 					WRITE_SHORT header_off+0x1c 4  // missle damage type
+					READ_BYTE  header_off+0x26 flag_str
+					flag_str = (flag BAND 0b11110010)
+					WRITE_BYTE header_off+0x26 flag_str  // remove str thac0 dmg bonus flag
 					PATCH_IF launcher_strength_bonus=1 BEGIN
 						READ_SHORT 0x26 str_req
 						READ_SHORT 0x28 str_ex_req

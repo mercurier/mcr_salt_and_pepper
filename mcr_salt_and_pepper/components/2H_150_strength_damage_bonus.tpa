@@ -6,7 +6,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 		is_2H = (flags BAND 0b00000010)
 		PATCH_IF is_2H>0 BEGIN
 			READ_SHORT 0x1c category
-			PATCH_MATCH category WITH 20 21 25 26 29 30 BEGIN
+			PATCH_MATCH category WITH 20 21 25 26 29 30 57 BEGIN
 				PATCH_FOR_EACH str_to_apply_bonus IN 16 18 19 21 23 24 25 BEGIN
 					// PATCH_PRINT ~%SOURCE_RES% prof %prof% str %str_to_apply_bonus%~
 					LPF ADD_ITEM_EQEFFECT INT_VAR

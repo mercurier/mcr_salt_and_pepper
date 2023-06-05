@@ -68,7 +68,7 @@ This component has three major impacts:
 - Access to high level spells are limited by plot progress
 
 ### Group 2000: Generic combat system tweaks
-#### Component 201x: Alternative proficiency mastery system (install *BEFORE* SCS)~
+#### Component 201x: Alternative proficiency mastery system (install *BEFORE* SCS)
 4 stars true grandmastery
 
 OR
@@ -93,7 +93,7 @@ This is a mixture of Tweak Anthology's (True) Grandmastery and Scales of Balance
 |4|3|5|-3|1.5|1|9|
 |5 (option 3 only)|3|5|-3|N/A|1.5|12|
 
-#### Component 202x: 2e and 3.5e hybrid proficiency system (install *BEFORE* SCS)~
+#### Component 202x: 2e and 3.5e hybrid proficiency system (install *BEFORE* SCS)
 
 Can be installed with or Without multiclass grandmastery.
 

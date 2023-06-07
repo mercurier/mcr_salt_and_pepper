@@ -9,7 +9,8 @@ COPY_EXISTING ~bow05.itm~ ~override~
 	END
 BUT_ONLY
 
-COPY_EXISTING ~die.eff~ ~override/MC#BOWN1.eff~
+LAF generate_blank_file INT_VAR inlined=1 STR_VAR type="eff" END
+COPY ~inlined/temp.eff~ ~override/MC#BOWN1.eff~
 	WRITE_LONG 0x10 1    // apr
 	WRITE_LONG 0x14 1    // self
 	WRITE_LONG 0x1c 1    // value

@@ -2,7 +2,7 @@
 @2 = ~This component requires a BGEE, BG2EE or EET game~
 @3 = ~This component requires Item Revisions component Weapon Changes to install~
 @4 = ~This component is not needed if Item Revisions component Weapon Changes is installed~
-@5 = ~This component requires a BGEE or EET game~
+@5 = ~This component requires a BG2, BG2EE, BGT, or EET game~
 @6 = ~This component requires SCS component Improved kobolds to install~
 @7 = ~This component must be installed after component 3130~
 
@@ -40,7 +40,7 @@
 @2210 = ~Apply 1.5x strength damage bonus for two-handed melee weapons~
 
 @3000 = ~Items tweaks~
-@3010 = ~Option: Specific ranged weaponry tweak~
+@3010 = ~Option: specific item tweaks~
 @3020 = ~Option: 3.5e style to-hit and damage for launchers and ammo~
 @3021 = ~with dice size approximation~
 @3022 = ~without dice size approximation (experimental)~
@@ -61,6 +61,7 @@
 @3500 = ~More importable BG1/SOD items available in BG2-SoA (lazy implementation)~
 
 @4000 = ~Spell tweaks~
+@4300 = ~Make Protection from Missiles caster only~
 
 @5000 = ~Class and kit tweaks~
 @5010 = ~Archers have equipment restrictions mirroring kensais'~

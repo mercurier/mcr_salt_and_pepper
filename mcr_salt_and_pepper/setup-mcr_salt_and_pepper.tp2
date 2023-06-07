@@ -205,7 +205,7 @@ INCLUDE ~%MOD_FOLDER%/components/2H_150_strength_damage_bonus.tpa~
 ///////////////////////////////////
 
 ///////////////////////////////////
-// Specific ranged weaponry tweak
+// Option: specific item tweaks
 ///////////////////////////////////
 
 BEGIN @3010
@@ -213,7 +213,7 @@ DESIGNATED 3010
 GROUP @3000
 
 ///////////////////////////////////
-// 3.5e style ranged weaponry to hit and damage
+// Option: 3.5e style to-hit and damage for launchers and ammo
 ///////////////////////////////////
 
 BEGIN @3021 // with dice size approximation
@@ -228,7 +228,7 @@ SUBCOMPONENT @3020
 GROUP @3000
 
 ///////////////////////////////////
-// Best instead of stacking enchantment bonuss from launchers and ammo
+// Option: Best instead of stacking enchantment bonuss from launchers and ammo
 ///////////////////////////////////
 BEGIN @3030 
 DESIGNATED 3030
@@ -237,13 +237,12 @@ REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @2
 // Inspired by Item Revisions Revised by Bartimaeus@G3 and Enchant the Missile Launchers by Dee
 
 ///////////////////////////////////
-// Damage bonus for bows per strength requirement, for slings per strength score
+// Option: Proper damage bonus for composite bows
 ///////////////////////////////////
 BEGIN @3040
 DESIGNATED 3040
 GROUP @3000
 REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @2
-// Inspired by Item Revisions Revised by Bartimaeus@G3 and Enchant the Missile Launchers by Dee
 
 ///////////////////////////////////
 // Apply items changes made in group 3000
@@ -293,12 +292,13 @@ GROUP @3000
 INCLUDE ~%MOD_FOLDER%/components/throwable_apr_tweaks.tpa~
 
 ///////////////////////////////////
-// Damage bonus for Slings, darts, and throwing daggers from strength
+// Only damage bonus from strength for slings and throwable weapons
 ///////////////////////////////////
 
 BEGIN @3140 
 DESIGNATED 3140
 GROUP @3000
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @2
 
 INCLUDE ~%MOD_FOLDER%/components/strength_damage_bonus_for_slings_and_throwables.tpa~
 
@@ -330,7 +330,7 @@ INCLUDE ~%MOD_FOLDER%/components/crossbows_for_all_but_druids.tpa~
 BEGIN @3300 
 DESIGNATED 3300
 GROUP @3000
-REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ @5
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @2
 INCLUDE ~%MOD_FOLDER%/components/helms_dont_grant_critical_hit_protection.tpa~
 
 ///////////////////////////////////
@@ -340,7 +340,7 @@ INCLUDE ~%MOD_FOLDER%/components/helms_dont_grant_critical_hit_protection.tpa~
 BEGIN @3500
 DESIGNATED 3500
 GROUP @3000
-REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ @5
+REQUIRE_PREDICATE GAME_IS ~soa tob bgt bg2ee eet~ @5
 INCLUDE ~%MOD_FOLDER%/components/more_import_BG1_to_BG2.tpa~
 
 ///////////////////////////////////

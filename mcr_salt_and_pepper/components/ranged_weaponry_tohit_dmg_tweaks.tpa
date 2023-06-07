@@ -11,7 +11,6 @@ END ELSE ACTION_IF (MOD_IS_INSTALLED ~%TP2_FILE_NAME%~ 3022) BEGIN
 	LAF SFO_read_ini_file STR_VAR ini_to_read= EVAL ~%MOD_FOLDER%/components/35e_tohit_damage_real.ini~
 		RET_ARRAY opt_array=SFO_reserved_ini_hash END
 END ELSE BEGIN
-// !(MOD_IS_INSTALLED ~%TP2_FILE_NAME%~ 3020) BEGIN
 	COPY_EXISTING - ~bull01.itm~ nowhere
 		READ_SHORT 0x8a $opt_array(~ammo_damage_dices_thrown~)  // read default ammo # of dmg dies
 		READ_SHORT 0x8c $opt_array(~bullet_damage_bonus~)  // read default ammo damage bonus
@@ -48,10 +47,14 @@ END
 
 ACTION_IF (MOD_IS_INSTALLED ~%TP2_FILE_NAME%~ 3030) BEGIN
 	OUTER_SET launcher_enchantment_bonus_to_ammo = 1
+END ELSE BEGIN
+	OUTER_SET launcher_enchantment_bonus_to_ammo = 0
 END
 
 ACTION_IF (MOD_IS_INSTALLED ~%TP2_FILE_NAME%~ 3040) BEGIN
 	OUTER_SET launcher_strength_bonus = 1
+END ELSE BEGIN
+	OUTER_SET launcher_strength_bonus = 0
 END
 
 PRINT ~printing all loaded options~
@@ -87,8 +90,9 @@ END
 
 // prepare eff files for enchantment bonus management
 ACTION_IF launcher_enchantment_bonus_to_ammo=1 BEGIN
+	LAF generate_blank_file INT_VAR inlined=1 STR_VAR type="eff" END
 	ACTION_FOR_EACH i_ench IN 1 2 3 4 5 6 BEGIN
-		COPY_EXISTING ~die.eff~ ~override/MC#E%i_ench%A1.eff~
+		COPY ~inlined/temp.eff~ ~override/MC#E%i_ench%A1.eff~
 			WRITE_LONG 0x10 167  // missle attack bonus
 			WRITE_LONG 0x14 1    // self
 			WRITE_LONG 0x1c 1    // value
@@ -132,14 +136,14 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 					
 					WRITE_SHORT header_off+0x1c 4  // missle damage type
 					READ_BYTE  header_off+0x26 flag_str
-					flag_str = (flag BAND 0b11110010)
+					flag_str = (flag_str BAND 0b11110010)
 					WRITE_BYTE header_off+0x26 flag_str  // remove str thac0 dmg bonus flag
+					READ_SHORT 0x26 str_req
 					PATCH_IF launcher_strength_bonus=1 BEGIN
-						READ_SHORT 0x26 str_req
 						READ_SHORT 0x28 str_ex_req
 						LPF get_str_dmg INT_VAR strength=str_req strength_ex=str_ex_req RET str_dmg END
 					END ELSE BEGIN
-						str_dmg = (str_req-14 >0)? (str_req-14)/2 : 0  // vanilla behavior
+						str_dmg = (str_req - 14 >0)? (str_req - 14)/2 : 0  // vanilla behavior
 					END
 					
 					WRITE_SHORT header_off+0x18 $opt_array(~launcher_damage_dices_thrown~) // damage_dies_thrown

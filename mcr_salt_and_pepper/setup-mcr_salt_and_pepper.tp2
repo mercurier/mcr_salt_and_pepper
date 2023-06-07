@@ -1,6 +1,6 @@
 BACKUP ~mcr_salt_and_pepper/backup~
 AUTHOR ~mercurier~
-VERSION ~v3.0.0dev~
+VERSION ~v3.0.0-beta.1~
 
 README ~%MOD_FOLDER%/readme-mcr_salt_and_pepper.md~
 

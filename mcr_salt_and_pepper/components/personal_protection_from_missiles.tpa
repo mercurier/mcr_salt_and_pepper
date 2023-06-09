@@ -8,9 +8,17 @@ DEFINE_PATCH_MACRO update_spell_aoe_duration BEGIN
 	REPLACE_TEXTUALLY CASE_INSENSITIVE ~%desc_duration_1_turn%~ ~%desc_duration_5_turn%~
 END
 
-COPY_EXISTING ~spwi311.spl~ ~override~
-				~spra303.spl~ ~override~
+COPY_EXISTING ~spra303.spl~ ~override~
+				~spwi311.spl~ ~override~
 	LPF ALTER_SPELL_EFFECT INT_VAR target=1 duration=300 END
 	SPRINT text_update update_spell_aoe_duration
 	LPM update_item_descriptions
+	READ_LONG 0x50 spell_desc_strref
 BUT_ONLY
+
+ACTION_IF FILE_EXISTS_IN_GAME ~dwsw311.spl~ BEGIN
+	COPY_EXISTING ~dwsw311.spl~ ~override~
+		LPF ALTER_SPELL_EFFECT INT_VAR target=1 duration=300 END
+		WRITE_LONG 0x50 spell_desc_strref
+	BUT_ONLY
+END

@@ -240,7 +240,7 @@ Add the following items to Adventure's Mart:
 ### Group 4000: Spell tweaks
 #### Component 4001： Make Protection from Missiles caster only
 
-Make the *Protection from (Normal) Missiles* spell affects the caster only. Also the duration is set to 5 turns (1 hour), same as other low level protection spells. This component is compatible with SCS despite installation order.
+Make the *Protection from (Normal) Missiles* spell affect the caster only. Also the duration is set to 5 turns (1 hour), same as other low level protection spells. This component is compatible with SCS despite installation order.
 
 ### Group 5000: Class and kit tweaks
 #### Component 5010: Archers have equipment restrictions mirroring kensais'

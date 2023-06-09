@@ -37,3 +37,8 @@ Requires:
  3 Strength
 
 Weight: 0~
+
+@10201 = ~Area of Effect: 1 creature~
+@10202 = ~Area of Effect: Caster~
+@10203 = ~Duration: 1 turn~
+@10204 = ~Duration: 5 turn~

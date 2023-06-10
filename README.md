@@ -189,7 +189,7 @@ This component tweaks the following items:
 
 Detailed changes can be found in `mcr_salt_and_pepper/2da/items_mod.2da`. To skip changes to any item, just update the "INSTALL" column to 0 in the respective line.
 
-To modders: this 2da file can be used to record non-standard to-hit and damage bonus so that they will be retained during installation of component #3020 and #3040, as it has already done so for Item Revisions. You can modify this 2da file to make it account changes made in your own mods.
+To modders: this 2da file can be used to record non-standard to-hit and damage bonus so that they will be retained during installation of component #3020 and #3040, as it has already done so for Item Revisions. You can modify this 2da file to make it account changes made in your own mods, and create a PR for that if you wish.
 
 #### Component 3020: Option: 3.5e style to-hit and damage for launchers and ammo
 
@@ -263,6 +263,8 @@ Archers will not be able to use helms, bracers, gauntlets, shields, or any melee
 
 ### Group 6000: Tactical challenges tweaks
 #### Component 6200: Make SCS kobolds' poisonous weaponry undroppable (install *AFTER* SCS)
+
+This component assumes that kobolds apply non-magical poision to their weaponry that vaporizes quickly, emulating assassin's "Poison Weapon" ability. They will drop non-poisonous weapon instead so that the player's party cannot take advantage of the poison.
 
 ### Group 7000: Misc tweaks
 #### Component 7010: NPC Customization (for power gamers only!)

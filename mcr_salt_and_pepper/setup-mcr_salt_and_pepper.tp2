@@ -242,7 +242,7 @@ REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @2
 BEGIN @3040
 DESIGNATED 3040
 GROUP @3000
-REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @2
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~%TP2_FILE_NAME%~ 2200)
 
 ///////////////////////////////////
 // Apply items changes made in group 3000

@@ -44,9 +44,9 @@
 @3020 = ~Option: 3.5e style to-hit and damage for launchers and ammo~
 @3021 = ~with dice size approximation~
 @3022 = ~without dice size approximation (experimental)~
-@3030 = ~Option: Best instead of stacking enchantment bonuss from launchers and ammo~
-@3040 = ~Option: Proper damage bonus for composite bows~
-@3099 = ~Apply options set in components 30xx)~
+@3030 = ~Option: Best instead of stacking enchantment bonuss from launchers and ammo (EE game only)~
+@3040 = ~Option: Proper damage bonus for composite bows (requirs component #2200)~
+@3099 = ~Apply options set in components #30xx)~
 @3098 = ~This component requires at least one 30xx component is installed~
 
 @3110 = ~Tweak attacks per round for bows~
@@ -54,10 +54,10 @@
 @3112 = ~Base 2 APR and 2 THAC0 penalty for warrior classes eligible for specialization, 1 APR for other classes~
 @3120 = ~xbow TBD~
 @3130 = ~Base 1 APR for darts and throwing daggers~
-@3140 = ~Only damage bonus from strength for slings and throwable weapons~
+@3140 = ~Only damage bonus from strength for slings and throwable weapons (EE game only)~
 @3150 = ~Two-handed slings~
 @3160 = ~Make crossbows usable by all classes but single-class druids~
-@3300 = ~Helms don't grant critical hit protection~
+@3300 = ~Helms don't grant critical hit protection (EE game only)~
 @3500 = ~More importable BG1/SOD items available in BG2-SoA (lazy implementation)~
 
 @4000 = ~Spell tweaks~

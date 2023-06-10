@@ -85,13 +85,13 @@ If the 3rd option is installed, kensais and archers will be eligiable to reach t
 
 This is a mixture of Tweak Anthology's (True) Grandmastery and Scales of Balance's "Weapon Proficiency Overhaul" component. 
 
-| Stars | THAC0  | Damage | Speed factor | APR (option 1) | APR (option 2 & 3) | Required level|
-|:------|:-------|:-------|:-------------|:---------------|:-------------------|:--------------|
+| Stars | THAC0  | Damage | Speed factor | APR (#2011) | APR (#2012 or #2013) | Required level|
+|:------|:-------|:-------|:-------------|:------------|:---------------------|:--------------|
 |1|0|0|0|0|0|1|
 |2|1|2|0|0.5|0.5|1|
 |3|2|4|-1|1|1|6|
 |4|3|5|-3|1.5|1|9|
-|5 (option 3 only)|3|5|-3|N/A|1.5|12|
+|5 (#2013 only)|3|5|-3|N/A|1.5|12|
 
 OR
 
@@ -116,7 +116,9 @@ Installing #2014 or #2015 will also make non-humanoid monsters more challenging 
 
 #### Component 2020: 2e and 3.5e hybrid fighting styles
 
-Fighting styles are redesigned such that each star approximately corresponds to one 3.5e-style feat
+Fighting styles are redesigned such that:
+- Each star in fighting style approximately corresponds to one 3.5e-style feat
+- Benefit to a given weapon catrgory from 1 star invested in fighting style is less powerful than 1 star invested in the exact weapon category proficiency, considering that a style actually benefits multiple weapon categories
 
 *Single weapon style (emulating Improved Critical feat):*
 - 1 star: +1 THAC0 bonus

@@ -237,6 +237,8 @@ Per 3.5e rule.
 
 Per 3.5e rule. This component also assumes that benifit of non-magical helms is already included in the body armor, as a full suit mail or plat armor includes a helm by default; the seperate slot for helms is for the purpose of replacing the default non-magical helms with magical ones.
 
+This component is compatible with Item Revisions so that a few selected helms retain their critical hits immunity bonus.
+
 #### Component 3500: More importable BG1/SOD items available in BG2-SoA (lazy implementation)
 
 Add the following items to Adventure's Mart:

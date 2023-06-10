@@ -61,7 +61,7 @@
 @3500 = ~More importable BG1/SOD items available in BG2-SoA (lazy implementation)~
 
 @4000 = ~Spell tweaks~
-@4001 = ~Make Protection from Missiles caster only~
+@4001 = ~Make Protection from Missiles affect the caster only~
 
 @5000 = ~Class and kit tweaks~
 @5010 = ~Archers have equipment restrictions mirroring kensais'~

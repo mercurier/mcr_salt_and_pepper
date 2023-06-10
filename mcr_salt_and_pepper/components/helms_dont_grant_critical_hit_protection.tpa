@@ -1,5 +1,12 @@
 OUTER_SET is_IR = (MOD_IS_INSTALLED ~ITEM_REV\ITEM_REV.TP2~ 0)
 
+
+OUTER_SPRINT desc_helm_cc @10007
+
+DEFINE_PATCH_MACRO revised_crit_aversion BEGIN
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~^.*%desc_helm_cc%.*[%WNL%%LNL%]~ ~~
+END
+
 COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ override 
 	PATCH_IF SOURCE_SIZE>0x71 BEGIN
 		PATCH_IF NOT ((~%SOURCE_RES%~ STRING_EQUAL_CASE ~helm04~) AND is_IR) BEGIN
@@ -11,8 +18,8 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ override
 					WRITE_BYTE 0x1b THIS | 2 // disable critical protection
 					// add_ac=0
 					// is_helmet=0
-					// SPRINT text_update revised_crit_aversion
-					// LPM update_item_descriptions
+					SPRINT text_update revised_crit_aversion
+					LPM update_item_descriptions
 				END
 			END
 		END

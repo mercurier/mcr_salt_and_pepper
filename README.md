@@ -235,7 +235,7 @@ Per 3.5e rule.
 
 #### Component 3300: Helms don't grant critical hit protection
 
-Per 3.5e rule.
+Per 3.5e rule. This component also assumes that benifit of non-magical helms is already included in the body armor, as a full suit mail or plat armor includes a helm by default; the seperate slot for helms is for the purpose of replacing the default non-magical helms with magical ones.
 
 #### Component 3500: More importable BG1/SOD items available in BG2-SoA (lazy implementation)
 
@@ -246,7 +246,7 @@ Add the following items to Adventure's Mart:
 - Armor of missle attraction
 
 ### Group 4000: Spell tweaks
-#### Component 4001： Make Protection from Missiles caster only
+#### Component 4001： Make Protection from Missiles affect the caster only
 
 Make the *Protection from (Normal) Missiles* spell affect the caster only. Also the duration is set to 5 turns (1 hour), same as other low level protection spells. This component is compatible with SCS despite installation order.
 

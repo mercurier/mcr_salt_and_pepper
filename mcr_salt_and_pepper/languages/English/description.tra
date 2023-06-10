@@ -4,6 +4,7 @@
 @10004 = ~Damage~ // first letter in word uppercase
 @10005 = ~Speed Factor~ // first letter in word uppercase
 @10006 = ~Weight~ // first letter in word uppercase
+@10007 = ~Protects against critical hits~ // from helms description
 @10101 = ~Strong Arm~ // composite long bow
 @10102 = ~Heavy Crossbow of Accuracy: The Guide
 A favored siege weapon of King Shastir Longeve, crossbows of this type were designed for the systematic removal of defensive forces thought safe behind the battlements of castles. Scant few of these weapons survive to this day, mainly due to the eventual annihilation of the king's forces by a coalition of subjugated lands.

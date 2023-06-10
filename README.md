@@ -269,7 +269,7 @@ This component assumes that kobolds apply non-magical poision to their weaponry 
 ### Group 7000: Misc tweaks
 #### Component 7010: NPC Customization (for power gamers only!)
 
-This component allows players to change stats, race, alignment, class, kit, racial enemy of joinable NPCs, so that the game can be played as if using a created party without loss of NPC interaction contents. A new game is required to see the effect.
+This component allows players to change stats, race, alignment, class, kit, racial enemy, and magic resistance of joinable NPCs, so that the game can be played as if using a created party without loss of NPC interaction contents. A new game is required to see the effect.
 
 Refer to `mcr_salt_and_pepper/2da/npc_customization.2da` for details. 
 

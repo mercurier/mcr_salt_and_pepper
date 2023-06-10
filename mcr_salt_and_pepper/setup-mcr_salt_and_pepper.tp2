@@ -230,7 +230,6 @@ BEGIN @3021 // with dice size approximation
 DESIGNATED 3021
 SUBCOMPONENT @3020
 GROUP @3000
-// FORBID_COMPONENT ~TP2_FILE_NAME~ 3130 @7
 
 BEGIN @3022 // without dice size approximation
 DESIGNATED 3022
@@ -252,7 +251,7 @@ REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @2
 BEGIN @3040
 DESIGNATED 3040
 GROUP @3000
-REQUIRE_PREDICATE (MOD_IS_INSTALLED ~%TP2_FILE_NAME%~ 2200)
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~%TP2_FILE_NAME%~ 2200) @7
 
 ///////////////////////////////////
 // Apply items changes made in group 3000

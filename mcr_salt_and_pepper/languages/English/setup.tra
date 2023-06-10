@@ -4,7 +4,7 @@
 @4 = ~This component is not needed if Item Revisions component Weapon Changes is installed~
 @5 = ~This component requires a BG2, BG2EE, BGT, or EET game~
 @6 = ~This component requires SCS component Improved kobolds to install~
-@7 = ~This component must be installed after component 3130~
+@7 = ~This component must be installed after component #2200~
 
 @1000 = ~Economy system tweaks~
 @1010 = ~Standardize store buying markups~

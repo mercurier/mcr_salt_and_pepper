@@ -1,5 +1,4 @@
 
-COPY ~%MOD_FOLDER%/2da/prof/STYLBONU.2da~ ~override~
 COPY ~%MOD_FOLDER%/2da/prof/PROFS.2da~ ~override~
 COPY ~%MOD_FOLDER%/2da/prof/PROFSMAX.2da~ ~override~
 COPY ~%MOD_FOLDER%/2da/prof/WSPATCK.2da~ ~override~

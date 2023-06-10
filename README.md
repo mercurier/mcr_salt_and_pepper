@@ -69,17 +69,17 @@ This component has three major impacts:
 
 ### Group 2000: Generic combat system tweaks
 #### Component 201x: Alternative proficiency mastery system (install *BEFORE* SCS)
-4 stars true grandmastery
+2011: 4 stars true grandmastery
 
 OR
 
-4 stars BG2EE style grandmastery
+2012: 4 stars BG2EE style grandmastery
 
 OR
 
-4 stars BG2EE style grandmastery，5th star for true grandmastery exclusive to kensais and archers
+2013: 4 stars BG2EE style grandmastery，5th star for true grandmastery exclusive to kensais and archers
 
-Note: 4 star (true) grandmastery is design that the character gains full benefit of the respective grandmastery but with 4 stars at level 9. 
+Note for #2011-#2013: 4 star (true) grandmastery is design that the character gains full benefit of the respective grandmastery but with 4 stars at level 9. 
 
 If the 3rd option is installed, kensais and archers will be eligiable to reach true grandmastery at level 12.
 
@@ -93,11 +93,17 @@ This is a mixture of Tweak Anthology's (True) Grandmastery and Scales of Balance
 |4|3|5|-3|1.5|1|9|
 |5 (option 3 only)|3|5|-3|N/A|1.5|12|
 
-#### Component 202x: 2e and 3.5e hybrid proficiency system (install *BEFORE* SCS)
+OR
 
-Can be installed with or Without multiclass grandmastery.
+2014: 2e and 3.5e hybrid proficiency system with multiclass grandmastery
 
-This component makes the following changs:
+OR
+
+2015: 2e and 3.5e hybrid proficiency system without multiclass grandmastery
+
+Note for #2014 and #2015:
+
+Changes:
 - 0 star: proficient; 1 star: specialization; ... ; 4 star: grandmastery
 - All classes are proficiency with whatever weapons they are allowed to use
 - All classes can invest up to 2 stars in any fighting style 
@@ -106,28 +112,30 @@ This component makes the following changs:
 - Thieves, clerics, shamans, and monks can invest 1 star in one fighting style at level 1
 - Mages and sourcerers gain no proficiency stars at all
 
+Installing #2014 or #2015 will also make non-humanoid monsters more challenging in SCS as their effective proficiency level is scaled up by one level.
+
+#### Component 2020: 2e and 3.5e hybrid fighting styles
+
 Fighting styles are redesigned such that each star approximately corresponds to one 3.5e-style feat
 
 *Single weapon style (emulating Improved Critical feat):*
-- 1 star: -1 THAC0 bonus
+- 1 star: +1 THAC0 bonus
 - 2 stars: -1 THAC0 bonus and scoring critical hits when rolling 19 & 20
 
 *Two-handed style (emulating Power Attack feat):*
-- 1 star: +2 damage bonus, +1 THAC0 penalty 
-- 2 stars: +4 damage bonus, +1 THAC0 penalty
+- 1 star: +2 damage bonus, -1 THAC0 penalty 
+- 2 stars: +4 damage bonus, -1 THAC0 penalty
 
 *Sword-and-shield style (emulating Combat Expertise feat):*
-- 1 star: -1 AC bonus, +1 THAC0 penalty 
-- 2 stars: -2 AC bonus, +1 THAC0 penalty
+- 1 star: -1 AC bonus, -1 THAC0 penalty 
+- 2 stars: -2 AC bonus, -1 THAC0 penalty
 
 This style is designed to work with *Items Revisions component: Revised Shield Bonuses*, netting a significant overall AC bonus from shield utilization.
 
 *Two-weapons style (2e and 3.5e hybrid rule):*
-- 0 star: +4 THAC0 penalty for main hand, +8 THAC0 penalty and -2 damage penalty for off hand
-- 1 star: +2 THAC0 penalty for main hand, +4 THAC0 penalty and -2 damage penalty for off hand
-- 2 stars: no THAC0 penalty for main hand, +2 THAC0 penalty and -2 damage penalty for off hand
-
-Note: installing this component will make non-humanoid monsters more challenging in SCS as their effective proficiency level is scaled up by one level.
+- 0 star: -4 THAC0 penalty for main hand, -8 THAC0 penalty and -2 damage penalty for off hand
+- 1 star: -2 THAC0 penalty for main hand, -4 THAC0 penalty and -2 damage penalty for off hand
+- 2 stars: no THAC0 penalty for main hand, -2 THAC0 penalty and -2 damage penalty for off hand
 
 #### Component 2100: Alternative saving throw tables for smoothier progress and better class distinction
 

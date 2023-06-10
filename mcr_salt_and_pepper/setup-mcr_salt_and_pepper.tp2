@@ -151,21 +151,31 @@ INCLUDE ~%MOD_FOLDER%/components/alt_prof_mastery.tpa~
 // 2e and 3.5e hybrid proficiency system
 ///////////////////////////////////
 
-BEGIN @2021  // with multiclass grandmastery
-DESIGNATED 2021
-SUBCOMPONENT @2020
+BEGIN @2014  // 2e and 3.5e hybrid proficiency system with multiclass grandmastery
+DESIGNATED 2014
+SUBCOMPONENT @2010
 GROUP @2000
 
 OUTER_SET multiclass_gm=1
 INCLUDE ~%MOD_FOLDER%/components/hybrid_prof_system.tpa~
 
-BEGIN @2022  // without multiclass grandmastery
-DESIGNATED 2022
-SUBCOMPONENT @2020
+BEGIN @2015  // 2e and 3.5e hybrid proficiency system without multiclass grandmastery
+DESIGNATED 2015
+SUBCOMPONENT @2010
 GROUP @2000
 
 OUTER_SET multiclass_gm=0
 INCLUDE ~%MOD_FOLDER%/components/hybrid_prof_system.tpa~
+
+///////////////////////////////////
+// Alternative fighting styles
+///////////////////////////////////
+
+BEGIN @2020  // 2e and 3.5e hybrid fighting styles
+DESIGNATED 2020
+GROUP @2000
+
+INCLUDE ~%MOD_FOLDER%/components/hybrid_fighting_styles.tpa~
 
 ///////////////////////////////////
 // Alternative saving throws

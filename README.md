@@ -187,6 +187,10 @@ Note: the exta 0.5x damage will show up in charecter info panel after about 1 se
 This component tweaks the following items:
 - Strong Arm: changed from +2 weapon to non-magical, as the proper damage bonus from strength enabled by component 3040 alone makes it a potent weapon. This also gives you a good reason to use +2/+3 arrows if component 3030 is installed.
 
+Detailed changes can be found in `mcr_salt_and_pepper/2da/items_mod.2da`. To skip changes to any item, just update the "INSTALL" column to 0 in the respective line.
+
+To modders: this 2da file can be used to record non-standard to-hit and damage bonus so that they will be retained during installation of component #3020 and #3040, as it has already done so for Item Revisions. You can modify this 2da file to make it account changes made in your own mods.
+
 #### Component 3020: Option: 3.5e style to-hit and damage for launchers and ammo
 
 with dice size approximation: longbows deal 1d6+1 damage, light crossbows deal 1d8 damage, heavy crossbows deal 1d8+1 damage
@@ -265,7 +269,7 @@ Archers will not be able to use helms, bracers, gauntlets, shields, or any melee
 
 This component allows players to change stats, race, alignment, class, kit, racial enemy of joinable NPCs, so that the game can be played as if using a created party without loss of NPC interaction contents. A new game is required to see the effect.
 
-Refer to `mcr_salt_and_pepper\2da\npc_customization.2da` for details. 
+Refer to `mcr_salt_and_pepper/2da/npc_customization.2da` for details. 
 
 # Credits
 

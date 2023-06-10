@@ -10,54 +10,46 @@ COPY - ~%MOD_FOLDER%/2da/items_mod.2da~ nowhere
 	COUNT_2DA_ROWS n_cols n_rows
 	READ_2DA_ENTRIES_NOW ~item_mod~ n_cols
 	FOR (i_row = 0; i_row < n_rows; ++i_row) BEGIN
-		READ_2DA_ENTRY_FORMER item_mod i_row 0  id
-		READ_2DA_ENTRY_FORMER item_mod i_row 1  ir_type
-		READ_2DA_ENTRY_FORMER item_mod i_row 2  item_res
-		READ_2DA_ENTRY_FORMER item_mod i_row 3  mod_tohit
-		READ_2DA_ENTRY_FORMER item_mod i_row 4  mod_dmg
-		READ_2DA_ENTRY_FORMER item_mod i_row 5  mod_set_ench
-		READ_2DA_ENTRY_FORMER item_mod i_row 6  mod_source
-		READ_2DA_ENTRY_FORMER item_mod i_row 7  new_id_name_ref
-		READ_2DA_ENTRY_FORMER item_mod i_row 8  new_id_desc_ref
+		READ_2DA_ENTRY_FORMER item_mod i_row 0  IR_id
+		READ_2DA_ENTRY_FORMER item_mod i_row 1  install_flag
+		READ_2DA_ENTRY_FORMER item_mod i_row 2  IR_type
+		READ_2DA_ENTRY_FORMER item_mod i_row 3  item_res
+		READ_2DA_ENTRY_FORMER item_mod i_row 4  mod_tohit
+		READ_2DA_ENTRY_FORMER item_mod i_row 5  mod_dmg
+		READ_2DA_ENTRY_FORMER item_mod i_row 6  mod_set_ench
+		READ_2DA_ENTRY_FORMER item_mod i_row 7  mod_set_value
+		READ_2DA_ENTRY_FORMER item_mod i_row 8  mod_source
+		READ_2DA_ENTRY_FORMER item_mod i_row 9  new_id_name_ref
+		READ_2DA_ENTRY_FORMER item_mod i_row 10 new_id_desc_ref
 		PATCH_PRINT ~%item_res% %mod_source% %new_id_name_ref% %new_id_desc_ref%~
 		
-		PATCH_IF (FILE_EXISTS_IN_GAME ~%item_res%.itm~) AND (
-			(~%mod_source%~ STRING_EQUAL_CASE  "ALL") OR
-			(has_IR=1 AND (~%mod_source%~ STRING_EQUAL_CASE "DV")) OR
-			(has_MCR=1 AND (~%mod_source%~ STRING_EQUAL_CASE "MC#")) )
+		PATCH_IF (FILE_EXISTS_IN_GAME ~%item_res%.itm~) AND (install_flag=1) AND (
+			(~%mod_source%~ STRING_EQUAL_CASE  "_VA_") OR  // is a vanilla item
+			(has_IR=1 AND (~%mod_source%~ STRING_EQUAL_CASE "DV")) OR  // item modded by Items Revisions previously
+			(has_MCR=1 AND (~%mod_source%~ STRING_EQUAL_CASE "MC#")) )  // item modded by this mod previously
 		BEGIN
 			INNER_ACTION BEGIN
 				COPY_EXISTING ~%item_res%.itm~ ~override~
 					PATCH_IF mod_tohit!=0 BEGIN
 						LPF ADD_ITEM_EQEFFECT INT_VAR opcode=167 target=1 timing=2 parameter1=mod_tohit END
 					END
+					
 					PATCH_IF mod_dmg!=0 BEGIN
 						LPF ADD_ITEM_EQEFFECT INT_VAR opcode=286 target=1 timing=2 parameter1=mod_dmg END
 					END
+					
 					PATCH_IF mod_set_ench >=0 BEGIN
 						WRITE_LONG 0x60 mod_set_ench
 					END
-
-					// PATCH_IF !(~%new_id_name_ref%~ STRING_EQUAL_CASE "-1") BEGIN
-						// INNER_ACTION BEGIN
-							// COPY - ~blank.txt~ ~patch_%item_res%.tpa~
-								// APPEND_FILE_EVALUATE ~patch_item_name2.tpa~
-							// BUT_ONLY
-						// END
-						// PATCH_INCLUDE ~patch_%item_res%.tpa~
-					// END
-					// PATCH_IF !(~%new_id_desc_ref%~ STRING_EQUAL_CASE "-1") BEGIN
-						// INNER_ACTION BEGIN
-							// COPY - ~blank.txt~ ~patch_%item_res%.tpa~
-								// APPEND_FILE_EVALUATE ~patch_item_desc.tpa~
-							// BUT_ONLY
-						// END
-						// PATCH_INCLUDE ~patch_%item_res%.tpa~
-					// END
+					
+					PATCH_IF mod_set_value >=0 BEGIN
+						WRITE_LONG 0x34 mod_set_value
+					END
 					
 					PATCH_IF !(~%new_id_name_ref%~ STRING_EQUAL_CASE "-1") BEGIN
 						LPF patch_res_name_desc_inner STR_VAR res_name= EVAL ~%item_res%~ name2= EVAL ~%new_id_name_ref%~ END
 					END
+					
 					PATCH_IF !(~%new_id_desc_ref%~ STRING_EQUAL_CASE "-1") BEGIN
 						LPF patch_res_name_desc_inner STR_VAR res_name= EVAL ~%item_res%~ desc_i= EVAL ~%new_id_desc_ref%~ END
 					END

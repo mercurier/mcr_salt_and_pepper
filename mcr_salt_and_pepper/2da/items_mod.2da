@@ -1,9 +1,15 @@
 2DA V1.0
 *
-                                           TYPE     ITM      TOHIT    DMG      ENCH_SET  SOURCE  NEW_NAME   NEW_DESC
-HEARTSEEKER_3                              BOWCOMP  bow10    3        0        -1          DV          -1         -1
-HEAVY_CROSSBOW_OF_ACCURACY_1               XBOWHVY  xbow03   3        0         2          ALL         -1     @10102
-SLING_OF_SEEKING_1                         SLING    slng03   6        0        -1          DV          -1         -1
-ARLAS_DRAGONBANE_3                         SLING    slng05   -2       -2       -1          DV          -1         -1
-SLING_OF_UNERRING_ACCURACY_1               SLING    slng11   1        -1       -1          ALL         -1     @10103
-STRONG_ARM_2                               BOWCOMP  bow11    0        0        0           MC#     @10101         -1
+// note:_avoid_using_spaces_in_comments_as_they_might_interfere_with_weidu_2DA_parsing_functions
+// sources:_record_resource_prefixes_used_in_mods_to_track_source_of_change
+// _VA_=vanilla
+// DV=Items_Revisions_and_Spell_Revisions_by_Demivrgvs
+// MC#=mercurers_salt_and_pepper_by_mercurier
+
+                               INSTALL     TYPE     ITM_RES  TOHIT_ADJ DMG_ADJ ENCH_SET VALUE_SET SOURCE  NEW_NAME   NEW_DESC
+HEARTSEEKER_3                  1           BOWCOMP  bow10    3         0       -1       -1        DV            -1         -1
+HEAVY_CROSSBOW_OF_ACCURACY_1   1           XBOWHVY  xbow03   3         0        2       -1        _VA_          -1     @10102
+SLING_OF_SEEKING_1             1           SLING    slng03   6         0       -1       -1        DV            -1         -1
+ARLAS_DRAGONBANE_3             1           SLING    slng05   -2        -2      -1       -1        DV            -1         -1
+SLING_OF_UNERRING_ACCURACY_1   1           SLING    slng11   1         -1      -1       -1        _VA_          -1     @10103
+STRONG_ARM_2                   1           BOWCOMP  bow11    0         0       0        3000      MC#       @10101         -1

@@ -70,3 +70,14 @@ Specialized (2 slots): The wielder gets a +1 bonus to attack rolls and inflicts 
 Proficient (1 slot): The wielder's penalties are reduced to -2 with the main weapon and -4 with the off-hand weapon. -2 penalty to damage with the off-hand weapon is unchanged.
 
 Specialized (2 slots): The wielder's penalties are reduced to 0 with the main weapon and -2 with the off-hand weapon. -2 penalty to damage with the off-hand weapon is unchanged~
+
+@10311 = ~Specialized (1 slot): The character receives +1 to hit, +2 to damage, and (for warriors only) an extra 1/2 attack per round with the selected weapon.~
+@10312 = ~Master (2 slots): The character receives +3 to hit, +3 to damage, and (for warriors only) an extra 1/2 attack per round with the selected weapon.~
+@10313 = ~High Master (3 slots): The character receives +3 to hit, +4 to damage, -1 to Speed Factor, and (for warriors only) an extra 1/2 attack per round with the selected weapon.~
+@10314 = ~Grand Master (4 slots): The character receives +3 to hit, +5 to damage, -3 to Speed Factor, and (for warriors only) an extra attack per round with the selected weapon.~
+
+@10323 = ~Master (3 slots): The character receives +2 to hit, +4 to damage, -1 to Speed Factor, and (for warriors only) an extra attack per round with the selected weapon. Minumum level 6 is required.~
+@10324 = ~Grand Master (4 slots): The character receives +3 to hit, +5 to damage, -3 to Speed Factor, and (for warriors only) an extra attack per round with the selected weapon. Minumum level 9 is required.~
+@10325 = ~Grand Master (4 slots): The character receives +3 to hit, +5 to damage, -3 to Speed Factor, and (for warriors only) extra one and a half attacks per round with the selected weapon. Minumum level 9 is required.~
+@10326 = ~High Master (4 slots): The character receives +3 to hit, +5 to damage, -3 to Speed Factor, and (for warriors only) an extra attack per round with the selected weapon. Minumum level 9 is required.~
+@10327 = ~Grand Master (5 slots): The character receives +3 to hit, +5 to damage, -3 to Speed Factor, and (for warriors only) extra one and a half attacks per round with the selected weapon. Minumum level 12 is required.~

@@ -46,3 +46,23 @@ ACTION_IF FILE_EXISTS_IN_GAME ~SPPR412B.eff~ BEGIN
 		WRITE_LONG 0x1c ((apr_bonus>5)?(apr_bonus - 5) : (apr_bonus + 6))
 	BUT_ONLY
 END
+
+// update bgee description
+
+ACTION_IF GAME_IS ~bgee~ THEN BEGIN
+	STRING_SET_EVALUATE  ~24219~ @10311 // 1 slot
+	STRING_SET_EVALUATE  ~24220~ @10312 // 2 slots
+	STRING_SET_EVALUATE  ~24221~ @10313 // 3 slots
+	STRING_SET_EVALUATE  ~24222~ @10314 // 4 slots
+	// STRING_SET_EVALUATE  ~24223~ @10315 // 5 slots
+END
+
+// update bg2ee and eet description
+
+ACTION_IF GAME_IS ~bg2ee eet~ THEN BEGIN
+	STRING_SET_EVALUATE  ~32116~ @10311 // 1 slot
+	STRING_SET_EVALUATE  ~32117~ @10312 // 2 slots
+	STRING_SET_EVALUATE  ~32118~ @10313 // 3 slots
+	STRING_SET_EVALUATE  ~32119~ @10314 // 4 slots
+	// STRING_SET_EVALUATE  ~32120~ @10315 // 5 slots
+END

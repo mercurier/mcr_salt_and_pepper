@@ -4,10 +4,10 @@ COPY ~%MOD_FOLDER%/2da/prof/STYLBONU.2da~ ~override~
 // update bgee description
 
 ACTION_IF GAME_IS ~bgee~ THEN BEGIN
-  STRING_SET_EVALUATE  ~25044~  // 2-handed
-  STRING_SET_EVALUATE  ~25045~  // Sword and shield
-  STRING_SET_EVALUATE  ~25046~  // Single weapon
-  STRING_SET_EVALUATE  ~24999~  // 2 weapons
+  STRING_SET_EVALUATE  ~25044~ @10301 // 2-handed
+  STRING_SET_EVALUATE  ~25045~ @10302 // Sword and shield
+  STRING_SET_EVALUATE  ~25046~ @10303 // Single weapon
+  STRING_SET_EVALUATE  ~24999~ @10304 // 2 weapons
 END
 
 // update bg2ee and eet description

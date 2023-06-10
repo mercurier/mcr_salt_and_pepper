@@ -13,6 +13,8 @@ COPY_EXISTING ~wspatck.2da~ ~override~
 			// +1 apr for 4-star, netting 1.5 apr
 			READ_2DA_ENTRY 4 i n_cols attacks
 			SET_2DA_ENTRY_LATER ~wspatck2~ 4 i (attacks < 0)?(attacks -1):(attacks +1)
+			SPRINT 4_star_desc @10325
+			SPRINT 5_star_desc ~~
 		END
 		5 BEGIN
 			// +0.5 apr for 4-star, netting 1 apr
@@ -28,10 +30,14 @@ COPY_EXISTING ~wspatck.2da~ ~override~
 				READ_2DA_ENTRY 5 i n_cols attacks
 				SET_2DA_ENTRY_LATER ~wspatck2~ 5 i (attacks < 0)?(attacks -1):(attacks +1)
 			END
+			SPRINT 4_star_desc @10326
+			SPRINT 5_star_desc @10327
 		END DEFAULT 
 			// +0.5 apr for 4-star, netting 1 apr
 			READ_2DA_ENTRY 4 i n_cols attacks
 			SET_2DA_ENTRY_LATER ~wspatck2~ 4 i (attacks < 0)?(0 - attacks):(0 - attacks -1)
+			SPRINT 4_star_desc @10324
+			SPRINT 5_star_desc ~~
 		END
 	END
 	SET_2DA_ENTRIES_NOW ~wspatck2~ n_cols
@@ -90,3 +96,24 @@ COPY_EXISTING ~PROFSMAX.2da~  ~override~
 	SET_2DA_ENTRIES_NOW ~PROFSMAX2~ n_cols
 	PRETTY_PRINT_2DA
 BUT_ONLY
+
+
+// update bgee description
+
+ACTION_IF GAME_IS ~bgee~ THEN BEGIN
+	// STRING_SET_EVALUATE  ~24219~ @10311 // 1 slot
+	// STRING_SET_EVALUATE  ~24220~ @10312 // 2 slots
+	STRING_SET_EVALUATE  ~24221~ @10323 // 3 slots
+	STRING_SET_EVALUATE  ~24222~ ~%4_star_desc%~ // 4 slots
+	STRING_SET_EVALUATE  ~24223~ ~%5_star_desc%~ // 5 slots
+END
+
+// update bg2ee and eet description
+
+ACTION_IF GAME_IS ~bg2ee eet~ THEN BEGIN
+	// STRING_SET_EVALUATE  ~32116~ @10311 // 1 slot
+	// STRING_SET_EVALUATE  ~32117~ @10312 // 2 slots
+	STRING_SET_EVALUATE  ~32118~ @10323 // 3 slots
+	STRING_SET_EVALUATE  ~32119~ ~%4_star_desc%~ // 4 slots
+	STRING_SET_EVALUATE  ~32120~ ~%5_star_desc%~ // 5 slots
+END

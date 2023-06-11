@@ -229,7 +229,7 @@ Per 3.5e rule.
 
 #### Component 3140: Only damage bonus from strength for slings and throwable weapons
 
-These weapons will use Strength for damage bonus and Dexterity for THAC0 bonus, per 3.5e rule.
+Slings, darts and throwing daggers/hammers/axes/spears will use Strength for damage bonus and Dexterity for THAC0 bonus, per 3.5e rule.
 
 #### Component 3150: Two-handed slings
 

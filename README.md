@@ -258,6 +258,23 @@ Add the following items to Adventure's Mart:
 
 Make the *Protection from (Normal) Missiles* spell affect the caster only. Also the duration is set to 5 turns (1 hour), same as other low level protection spells. This component is compatible with SCS despite installation order.
 
+#### Component 4300: Spontaneous casting for clerics and druids
+
+This is a reworked version of [Renegade0's original Spontaneous Casting mod](https://github.com/Renegade0/SpontaneousCasting). 
+
+Improvements:
+- Spontaneous Casting uses proper caster level and is actually interruptable
+- Activators of all three types of Spontaneous Casting (healing, harming, and summoning) are combined into one innate ability to allow for invoking using one hotkey
+- Spontaneous Casting no longer breaks with Improved Alacrity
+- More distinguishable icons for Spontaneous Casting so that you know which memorized spell you are going to convert
+
+Limitations:
+- Spontaneous Casting uses casting animation and chanting of the original spell
+
+This compoent relies on additional healing/harming/summoning spells introduced by Spell Revisions. Spell Revisions needs to be either installed first or is immediately available for installation (i.e. SR's files are already placed in the game folder).
+
+#### Component 4310: Add hotkey 'X' for Spontaneous Casting (requires component #4300 *AND* EEEx hotkey module)
+
 ### Group 5000: Class and kit tweaks
 #### Component 5010: Archers have equipment restrictions mirroring kensais'
 

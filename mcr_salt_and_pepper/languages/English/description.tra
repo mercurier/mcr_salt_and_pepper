@@ -82,3 +82,17 @@ Specialized (2 slots): The wielder's penalties are reduced to 0 with the main we
 @10325 = ~Grand Master (4 slots): The character receives +3 to hit, +5 to damage, -3 to Speed Factor, and (for warriors only) extra 1 and 1/2 attacks per round with the selected weapon. Minimum level 9 is required.~
 @10326 = ~High Master (4 slots): The character receives +3 to hit, +5 to damage, -3 to Speed Factor, and (for warriors only) an extra attack per round with the selected weapon. Minimum level 9 is required.~
 @10327 = ~Grand Master (5 slots): The character receives +3 to hit, +5 to damage, -3 to Speed Factor, and (for warriors only) extra 1 and 1/2 attacks per round with the selected weapon. Minimum level 12 is required.~
+
+@10410 = ~Gained ability: Spontaneous Casting~
+@10411 = ~Choose Spontaneous Casting healing spells~
+@10412 = ~Choose Spontaneous Casting harming spells~
+
+@10413 = ~Spontaneous Casting~
+
+// Don't translate %sc_duration_rounds%
+@10414 = ~Spontaneous Casting
+
+Duration: %sc_duration_rounds% round
+Casting Time: Instant
+
+When activated, this ability allows casting prepared cleric/druid spells as healing/wounding/summoning spells of respectve spell levels. Its effect lasts through out the duration or until one such spell is cast, whichever comes earlier.~

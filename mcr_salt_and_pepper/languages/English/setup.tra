@@ -5,6 +5,8 @@
 @5 = ~This component requires a BG2, BG2EE, BGT, or EET game~
 @6 = ~This component requires SCS component Improved kobolds to install~
 @7 = ~This component must be installed after component #2200~
+@8 = ~This component requires Spell Revisions main component to be installed first or available for installation~
+@9 = ~This component requires component #4300 *AND* EEEx hotkey module to be installed first~
 
 @1000 = ~Economy system tweaks~
 @1010 = ~Standardize store buying markups~
@@ -62,6 +64,9 @@
 
 @4000 = ~Spell tweaks~
 @4001 = ~Make Protection from Missiles affect the caster only~
+
+@4300 = ~Spontaneous casting for clerics and druids~
+@4310 = ~Add hotkey 'X' for Spontaneous Casting~
 
 @5000 = ~Class and kit tweaks~
 @5010 = ~Archers have equipment restrictions mirroring kensais'~

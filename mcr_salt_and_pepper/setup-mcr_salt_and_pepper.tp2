@@ -368,6 +368,31 @@ GROUP @4000
 INCLUDE ~%MOD_FOLDER%/components/personal_protection_from_missiles.tpa~
 
 ///////////////////////////////////
+// Spontaneous casting
+///////////////////////////////////
+
+BEGIN @4300 DESIGNATED 4300 // Revised Spontaneous Casting for clerics and druids
+REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~spell_rev/spell_rev.tp2~ 0 ) OR
+					FILE_EXISTS ~spell_rev/spell_rev.tp2~
+					) @8
+INCLUDE ~%MOD_FOLDER%/components/spontaneous_casting.tpa~
+
+BEGIN @4310 DESIGNATED 4310 // install hotkey
+REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~EEEX/EEEX.TP2~ 7 ) AND
+					(MOD_IS_INSTALLED ~%TP2_FILE_NAME%~ 4300 )
+					) @9
+					
+ACTION_IF (%WEIDU_OS% STRING_EQUAL "win32") BEGIN
+	OUTER_SPRINT text_newline ~%WNL%~
+END ELSE BEGIN
+	OUTER_SPRINT text_newline ~%LNL%~
+END
+
+COPY_EXISTING ~B3Hotkey.lua~ ~override~
+	REPLACE_TEXTUALLY ~B3Hotkey_Hotkeys = {~ ~B3Hotkey_Hotkeys = {%text_newline%%TAB%{function() B3Hotkey_AttemptToCastViaHotkey("M9SCACT_") end, {}, {0x78}},~
+BUT_ONLY
+
+///////////////////////////////////
 ///////////////////////////////////
 // Class and kit tweaks
 ///////////////////////////////////
@@ -396,6 +421,7 @@ INCLUDE ~%MOD_FOLDER%/components/archer_restrictions_tweak.tpa~
 BEGIN @6010
 DESIGNATED 6010
 GROUP @6000
+DEPRECATED "Removed as SCS implemented monster level proficiency progress"
 INCLUDE ~%MOD_FOLDER%/components/give_monster_fighter_class.tpa~
 
 ///////////////////////////////////

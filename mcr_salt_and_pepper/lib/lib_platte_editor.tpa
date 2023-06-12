@@ -1,0 +1,101 @@
+
+DEFINE_PATCH_FUNCTION adjust_bam_platte_rgb
+// Originally wrote by mercurier
+// This function adjust RGB values of platte
+	INT_VAR 
+		r_adjust = 0
+		g_adjust = 0
+		b_adjust = 0
+		// default: auto infer platte size from header, may won't work with non-standard BAMs
+		// for spell icons, this is usually 256 (0x100)
+		platte_size = 0 
+BEGIN
+	READ_ASCII 0x0 sg (4) //Signature
+	PATCH_IF (~%sg%~ STRING_EQUAL_CASE ~BAMC~ = 1) BEGIN
+		READ_LONG 0x8 dl //Uncompressed data length
+		DECOMPRESS_REPLACE_FILE 0xc (SOURCE_SIZE - 0xc) dl
+	END
+	READ_LONG 0x10 platte_offset
+	PATCH_IF platte_size = 0 BEGIN
+		READ_LONG 0x14 frame_look_up_table_offset
+		platte_size = (frame_look_up_table_offset - platte_offset) /4
+	END
+	FOR (i=0; i<platte_size; i+=1) BEGIN
+		// patch R channel
+		r_offset = platte_offset + i*4 + 2
+		READ_BYTE r_offset r_value
+		r_value_new = r_value + r_adjust
+		r_value_new = (r_value_new < 0x00) ? 0x00 : r_value_new
+		r_value_new = (r_value_new > 0xff) ? 0xff : r_value_new
+		WRITE_BYTE r_offset r_value_new
+		// patch G channel
+		g_offset = platte_offset + i*4 + 1
+		READ_BYTE g_offset g_value
+		g_value_new = g_value + g_adjust
+		g_value_new = (g_value_new < 0x00) ? 0x00 : g_value_new
+		g_value_new = (g_value_new > 0xff) ? 0xff : g_value_new
+		WRITE_BYTE g_offset g_value_new
+		// patch B channel
+		b_offset = platte_offset + i*4
+		READ_BYTE b_offset b_value
+		b_value_new = b_value + b_adjust
+		b_value_new = (b_value_new < 0x00) ? 0x00 : b_value_new
+		b_value_new = (b_value_new > 0xff) ? 0xff : b_value_new
+		WRITE_BYTE b_offset b_value_new
+	END
+END
+
+
+DEFINE_PATCH_FUNCTION remap_bam_platte_rgb
+// Originally wrote by mercurier
+// This function remaps RGB channels of platte
+	INT_VAR 
+		new_r = 0 // 0: original r channel
+		new_g = 1 // 1: original g channel
+		new_b = 2 // 2: original b channel
+		// default: auto infer platte size from header, may won't work with non-standard BAMs
+		// for spell icons, this is usually 256 (0x100)
+		platte_size = 0 
+BEGIN
+	READ_ASCII 0x0 sg (4) //Signature
+	PATCH_IF (~%sg%~ STRING_EQUAL_CASE ~BAMC~ = 1) BEGIN
+		READ_LONG 0x8 dl //Uncompressed data length
+		DECOMPRESS_REPLACE_FILE 0xc (SOURCE_SIZE - 0xc) dl
+	END
+	READ_LONG 0x10 platte_offset
+	PATCH_IF platte_size = 0 BEGIN
+		READ_LONG 0x14 frame_look_up_table_offset
+		platte_size = (frame_look_up_table_offset - platte_offset) /4
+	END
+	FOR (i=0; i<platte_size; i+=1) BEGIN
+		// read original RGB values
+		r_offset = platte_offset + i*4 + 2
+		READ_BYTE r_offset r_value
+		g_offset = platte_offset + i*4 + 1
+		READ_BYTE g_offset g_value
+		b_offset = platte_offset + i*4
+		READ_BYTE b_offset b_value
+		
+		// remap RGB channels
+		PATCH_MATCH new_r WITH
+		1 BEGIN r_value_new = g_value END
+		2 BEGIN r_value_new = b_value END
+		DEFAULT r_value_new = r_value END
+		
+		PATCH_MATCH new_g WITH
+		0 BEGIN g_value_new = r_value END
+		2 BEGIN g_value_new = b_value END
+		DEFAULT g_value_new = g_value END
+		
+		PATCH_MATCH new_b WITH
+		0 BEGIN b_value_new = r_value END
+		1 BEGIN b_value_new = g_value END
+		DEFAULT b_value_new = b_value END
+		
+		// write new RGB values
+		WRITE_BYTE r_offset r_value_new
+		WRITE_BYTE g_offset g_value_new
+		WRITE_BYTE b_offset b_value_new
+		PATCH_PRINT ~remap: %r_value%,%g_value%,%b_value% to %r_value_new%,%g_value_new%,%b_value_new%~
+	END
+END

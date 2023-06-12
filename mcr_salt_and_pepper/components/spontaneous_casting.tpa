@@ -1,0 +1,719 @@
+
+INCLUDE ~%MOD_FOLDER%/lib/lib_platte_editor.tpa~
+
+///////////////////////////////////////////////////
+// Install additional healing/harming/summoning spells
+///////////////////////////////////////////////////
+
+
+
+
+///////////////////////////////////////////////////
+// Install SC ability spells resources
+///////////////////////////////////////////////////
+
+OUTER_SET sc_duration_rounds = 2
+OUTER_SET sc_duration = sc_duration_rounds*6
+
+LAF generate_blank_file INT_VAR inlined=1 STR_VAR type="eff" END
+LAF generate_blank_file INT_VAR inlined=1 STR_VAR type="spl" END
+
+
+// generic SC ability giver spell
+COPY ~inlined/temp.spl~  ~override/M9SCGA__.spl~
+	WRITE_BYTE 0x1c 4 // innate
+	WRITE_LONG 0x34 1 // level 1
+	SAY NAME1 @10410
+	LPF ADD_SPELL_HEADER INT_VAR
+		type=1 
+		location=4
+		target=5
+		target_count=0
+		STR_VAR icon= ~SPWI110B~
+	END
+	LPF ADD_SPELL_EFFECT
+		INT_VAR
+		opcode = 177  
+		target = 1
+		parameter1 = 204 // cleric all
+		parameter2 = 5
+		STR_VAR resource = ~M9SCGAPR~
+	END
+	LPF ADD_SPELL_EFFECT // add inherited effect
+		INT_VAR
+		opcode = 177  
+		target = 1
+		parameter1 = 208 // druid all
+		parameter2 = 5
+		STR_VAR resource = ~M9SCGADR~
+	END
+BUT_ONLY
+
+COPY ~inlined/temp.eff~  ~override/M9SCGAPR.eff~
+	WRITE_LONG 0x10 146 // cast spell 
+	WRITE_LONG 0x14 1 // self
+	WRITE_LONG 0x20 1 // instantly
+	// WRITE_LONG 0x24 0 // timing
+	WRITE_LONG 0x2c 100 // prob
+	WRITE_ASCII 0x30 ~M9SCGAPR~ 
+BUT_ONLY
+
+COPY ~override/M9SCGAPR.eff~  ~override/M9SCGADR.eff~
+	WRITE_LONG 0x10 146 // cast spell
+	// WRITE_LONG 0x24 9 // permanent
+	WRITE_ASCII 0x30 ~M9SCGADR~ 
+BUT_ONLY
+
+COPY ~override/M9SCGA__.spl~  ~override/M9SCGAPR.spl~
+	WRITE_LONG 0x08 0xffffffff
+	WRITE_BYTE 0xa2 8
+	WRITE_BYTE 0x9e 1 // good
+	WRITE_ASCII 0xae ~M9SCGAGD~
+	WRITE_BYTE 0xa2+0x30 8
+	WRITE_BYTE 0x9e+0x30 3 // evil
+	WRITE_ASCII 0xae+0x30 ~M9SCGAEV~
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 177  
+		target = 1
+		parameter1 = 2 // ge neutral
+		parameter2 = 8
+		STR_VAR resource = ~M9SCPAGD~
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 177  
+		target = 1
+		parameter1 = 2 // ge neutral
+		parameter2 = 8
+		STR_VAR resource = ~M9SCPAEV~
+	END
+BUT_ONLY
+
+COPY ~override/M9SCGAPR.eff~ ~override/M9SCGAGD.eff~
+	WRITE_LONG 0x10 146 // cast spell 
+	WRITE_ASCII 0x30 ~M9SCGAGD~ 
+BUT_ONLY
+
+COPY ~override/M9SCGAPR.eff~ ~override/M9SCGAEV.eff~
+	WRITE_LONG 0x10 146 // cast spell 
+	WRITE_ASCII 0x30 ~M9SCGAEV~ 
+BUT_ONLY
+
+COPY ~override/M9SCGAPR.eff~ ~override/M9SCPAGD.eff~
+	WRITE_LONG 0x10 171 // give ability
+	WRITE_ASCII 0x30 ~M9SCPAGD~ 
+BUT_ONLY
+
+COPY ~override/M9SCGAPR.eff~ ~override/M9SCPAEV.eff~
+	WRITE_LONG 0x10 171 // give ability
+	WRITE_ASCII 0x30 ~M9SCPAEV~ 
+BUT_ONLY
+
+DEFINE_PATCH_MACRO give_ability_activator BEGIN
+	LPF DELETE_EFFECT INT_VAR multi_match=10 END
+	WRITE_LONG 0x08 0xffffffff
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 171 // give ability
+		target = 1
+		STR_VAR resource = ~M9SCACT_~
+	END
+END
+
+DEFINE_PATCH_MACRO add_protection_from_sc_res BEGIN
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 318
+		target = 1
+		timing=9
+		STR_VAR resource = EVAL ~%sc_res%~
+	END
+END
+
+// pick healing SCing
+COPY ~override/M9SCGA__.spl~  ~override/M9SCPAGD.spl~
+	WRITE_ASCII 0x76 ~SPPR607B~
+	LPM give_ability_activator
+	SPRINT sc_res ~M9SCACTE~
+	LPM add_protection_from_sc_res
+	SPRINT sc_res ~M9SCACTS~
+	LPM add_protection_from_sc_res
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 172 // remove spell
+		target = 1
+		STR_VAR resource = ~M9SCPAGD~
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 172 // remove spell
+		target = 1
+		STR_VAR resource = ~M9SCPAEV~
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 215 // play visual
+		target = 1
+		parameter2=1
+		STR_VAR resource = ~ICRMPARI~
+	END
+	SAY NAME1 @10411
+BUT_ONLY
+
+// pick harmng SCing
+COPY ~override/M9SCGA__.spl~  ~override/M9SCPAEV.spl~
+	WRITE_ASCII 0x76 ~SPPR608B~
+	LPM give_ability_activator
+	SPRINT sc_res ~M9SCACTG~
+	LPM add_protection_from_sc_res
+	SPRINT sc_res ~M9SCACTS~
+	LPM add_protection_from_sc_res
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 172 // remove spell
+		target = 1
+		STR_VAR resource = ~M9SCPAGD~
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 172 // remove spell
+		target = 1
+		STR_VAR resource = ~M9SCPAEV~
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 215 // play visual
+		target = 1
+		parameter2=1
+		STR_VAR resource = ~1WDCMDAM~
+	END
+	SAY NAME1 @10412
+BUT_ONLY
+
+COPY ~override/M9SCGAPR.spl~  ~override/M9SCGAGD.spl~
+	LPM give_ability_activator
+	SPRINT sc_res ~M9SCACTE~
+	LPM add_protection_from_sc_res
+	SPRINT sc_res ~M9SCACTS~
+	LPM add_protection_from_sc_res
+BUT_ONLY
+
+COPY ~override/M9SCGAPR.spl~  ~override/M9SCGAEV.spl~
+	LPM give_ability_activator
+	SPRINT sc_res ~M9SCACTS~
+	LPM add_protection_from_sc_res
+	SPRINT sc_res ~M9SCACTG~
+	LPM add_protection_from_sc_res
+BUT_ONLY
+
+COPY ~override/M9SCGAPR.spl~  ~override/M9SCGADR.spl~
+	LPM give_ability_activator
+	SPRINT sc_res ~M9SCACTE~
+	LPM add_protection_from_sc_res
+	SPRINT sc_res ~M9SCACTG~
+	LPM add_protection_from_sc_res
+BUT_ONLY
+
+// SC activator
+COPY ~override/M9SCGA__.spl~  ~override/M9SCACT_.spl~
+	LPF DELETE_EFFECT INT_VAR multi_match=10 END
+	WRITE_ASCII 0x76 ~SPPR412B~
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 172 // remove spell itself
+		target = 1
+		STR_VAR resource = ~M9SCACT_~
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 146 // cast spell
+		target = 1
+		parameter2=1
+		STR_VAR resource = ~M9SCACTG~
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 146 // cast spell
+		target = 1
+		parameter2=1
+		STR_VAR resource = ~M9SCACTE~
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 146 // cast spell
+		target = 1
+		parameter2=1
+		STR_VAR resource = ~M9SCACTS~
+	END
+	
+	SPRINT spell_desc @10414
+	SAY NAME1 @10413
+	SAY_EVALUATED UNIDENTIFIED_DESC ~%spell_desc%~
+BUT_ONLY
+
+DEFINE_PATCH_MACRO add_activator_effects BEGIN
+	LPF DELETE_EFFECT INT_VAR multi_match=10 END
+	WRITE_LONG 0x08 0xffffffff
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 191 // caster level boost
+		target = 1
+		duration=sc_duration
+		parameter1=cl_boost
+		parameter2=1
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 145 // disable wizard spells
+		target = 1
+		duration=6
+		parameter2=0
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 144 // disable innate button
+		target = 1
+		duration=6
+		parameter2=13
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 188 // clease aura
+		target = 1
+		duration=6
+		parameter2=1
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 215 // play visual
+		target = 1
+		parameter2=1
+		STR_VAR resource = EVAL ~%visual%~
+	END
+	LPF ADD_SPELL_EFFECT INT_VAR
+		opcode = 171 // give back activator ability
+		target = 1
+		STR_VAR resource = ~M9SCACT_~
+	END
+END
+
+COPY ~override/M9SCGA__.spl~  ~override/M9SCACTG.spl~
+	cl_boost=60
+	SPRINT visual ~ICRMPARI~
+	LPM add_activator_effects
+BUT_ONLY
+
+COPY ~override/M9SCGA__.spl~  ~override/M9SCACTE.spl~
+	cl_boost=120
+	SPRINT visual ~1WDCMDAM~
+	LPM add_activator_effects
+BUT_ONLY
+
+COPY ~override/M9SCGA__.spl~  ~override/M9SCACTS.spl~
+	cl_boost=180
+	SPRINT visual ~M9SCACTS~
+	LPM add_activator_effects
+BUT_ONLY
+
+// summoning visual
+COPY_EXISTING ~ICRMPARI.VVC~ ~override/M9SCACTS.VVC~
+	WRITE_ASCII 0x08 ~M9SCACTS~
+BUT_ONLY
+
+COPY_EXISTING ~SPCMWOUI.BAM~ ~override/M9SCACTS.BAM~
+	LPF remap_bam_platte_rgb INT_VAR new_g=2 new_b=1 platte_size=256 END
+BUT_ONLY
+
+
+// patch class/kit ability 2DA files
+
+// this macro uses two global vars: clab_2da_file, ability_ref
+DEFINE_ACTION_MACRO patch_class_ability_2da BEGIN
+	COPY_EXISTING ~%clab_2da_file%~ ~override~
+		COUNT_2DA_COLS n_cols
+		COUNT_2DA_ROWS n_cols n_rows
+		SPRINT row_tail ~~
+		FOR (i=1; i<= n_cols - 2; i+=1) BEGIN
+			SPRINT row_tail ~%row_tail%****        ~
+		END
+		INSERT_2DA_ROW n_rows n_cols ~ABILIM#1    %ability_ref% %row_tail%~
+	BUT_ONLY
+END
+
+// patch true class cleric class ability 2da
+OUTER_SPRINT clab_2da_file ~CLABPR01.2da~
+OUTER_SPRINT ability_ref ~AP_M9SCGAPR~
+LAM patch_class_ability_2da
+// patch true class druid class ability 2da
+OUTER_SPRINT clab_2da_file ~CLABDR01.2da~
+OUTER_SPRINT ability_ref ~AP_M9SCGADR~
+LAM patch_class_ability_2da
+
+// patch cleric and druid kit ability 2da
+COPY_EXISTING ~KITLIST.2DA~ ~override~
+	COUNT_2DA_COLS n_cols_outer
+	COUNT_2DA_ROWS n_cols_outer n_rows_outer
+	FOR (i_row_outer=0; i_row_outer<n_rows_outer; i_row_outer+=1) BEGIN
+		READ_2DA_ENTRY i_row_outer 5 n_cols_outer clab_2da_res
+		READ_2DA_ENTRY i_row_outer 8 n_cols_outer class
+		SPRINT clab_2da_file ~%clab_2da_res%.2da~
+		PATCH_IF (FILE_EXISTS_IN_GAME ~%clab_2da_file%~) AND (NOT FILE_CONTAINS_EVALUATED (~%clab_2da_file%~ ~M9SCGA~)) BEGIN 
+			PATCH_PRINT ~patching class %class%, table %clab_2da_file%~
+			PATCH_IF class = 3 BEGIN
+				SPRINT ability_ref ~AP_M9SCGAPR~
+				INNER_ACTION BEGIN
+					LAM patch_class_ability_2da
+				END
+			END ELSE PATCH_IF class = 11 BEGIN
+				SPRINT ability_ref ~AP_M9SCGADR~
+				INNER_ACTION BEGIN
+					LAM patch_class_ability_2da
+				END
+			END
+		END
+	END
+BUT_ONLY
+
+///////////////////////////////////////////////////
+// Initialize list of convert-from spells eligible for spontaneous casting
+///////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION get_registered_cleric_spells
+	RET list
+BEGIN 
+	OUTER_SPRINT list ~~
+	COPY_EXISTING ~spell.ids~ ~weidu_external/%mod_folder%/workspace/spell.ids~
+		COUNT_2DA_ROWS 2 rowcount
+		FOR (i=0;i<rowcount;i+=1) BEGIN
+			READ_2DA_ENTRY i 1 2 spell_ref_name
+			PATCH_IF (STRING_LENGTH ~%spell_ref_name%~ >= 7) BEGIN
+			LPF SUBSTRING INT_VAR start = 0 length =7 STR_VAR string = EVAL ~%spell_ref_name%~ RET substring END
+				PATCH_IF (~%substring%~ STRING_EQUAL_CASE ~CLERIC_~) BEGIN
+					// PATCH_PRINT ~%spell_ref_name%~
+					LPF RES_NUM_OF_SPELL_NAME STR_VAR spell_name = EVAL ~%spell_ref_name%~ RET spell_res END
+					PATCH_IF (FILE_EXISTS_IN_GAME ~%spell_res%.spl~) BEGIN
+						INNER_PATCH_FILE  ~%spell_res%.spl~ BEGIN
+							READ_SHORT 0x1c spell_type
+						END
+						PATCH_IF (spell_type=2) AND ( EVAL ~%list%~ STRING_CONTAINS_REGEXP EVAL ~%spell_res%~) BEGIN
+							SPRINT list ~%list% %spell_res%~
+						END
+					END ELSE BEGIN
+						PATCH_PRINT ~resource file %spell_res%.spl of %spell_ref_name% does not exist in game.~
+					END
+				END
+			END
+		END
+	BUT_ONLY
+END
+
+LAF get_registered_cleric_spells RET list END // note there is a leading space in the returned list
+
+// add avenger kit spells to list
+OUTER_SPRINT list ~SPDR101 SPDR201 SPDR301 SPDR401 SPDR501 SPDR601 %list%~
+
+PRINT ~#%list%#~
+
+// convert list to array using inline file hack: it's not graceful, but it works
+
+<<<<<<<< blank.txt
+>>>>>>>>
+
+<<<<<<<< list_to_array.tpa
+ACTION_DEFINE_ARRAY source_spells BEGIN
+%list%
+END
+>>>>>>>>
+
+COPY - ~blank.txt~ ~source_spell_array.tpa~
+	APPEND_FILE_EVALUATE ~list_to_array.tpa~
+BUT_ONLY
+
+INCLUDE ~source_spell_array.tpa~
+
+// export it for debugging
+COPY + ~source_spell_array.tpa~ ~weidu_external/%mod_folder%/workspace/source_spell_array.tpa~
+
+///////////////////////////////////////////////////
+// Define convert-to spells for spontaneous casting for each level
+///////////////////////////////////////////////////
+
+// SR spells
+LAF RES_NUM_OF_SPELL_NAME STR_VAR spell_name = ~CLERIC_CAUSE_LIGHT_WOUNDS~ RET spell_res END
+OUTER_SPRINT lv1_harm_res ~%spell_res%~
+LAF RES_NUM_OF_SPELL_NAME STR_VAR spell_name = ~CLERIC_CAUSE_MODERATE_WOUNDS~ RET spell_res END
+OUTER_SPRINT lv2_harm_res ~%spell_res%~
+LAF RES_NUM_OF_SPELL_NAME STR_VAR spell_name = ~CLERIC_CAUSE_MEDIUM_WOUNDS~ RET spell_res END
+OUTER_SPRINT lv3_harm_res ~%spell_res%~
+LAF RES_NUM_OF_SPELL_NAME STR_VAR spell_name = ~CLERIC_CURE_MODERATE_WOUNDS~ RET spell_res END
+OUTER_SPRINT lv2_cure_res ~%spell_res%~
+LAF RES_NUM_OF_SPELL_NAME STR_VAR spell_name = ~CLERIC_ANIMAL_SUMMONING_LEVEL_1~ RET spell_res END
+OUTER_SPRINT lv1_summ_res ~%spell_res%~
+LAF RES_NUM_OF_SPELL_NAME STR_VAR spell_name = ~CLERIC_ANIMAL_SUMMONING_LEVEL_2~ RET spell_res END
+OUTER_SPRINT lv2_summ_res ~%spell_res%~
+LAF RES_NUM_OF_SPELL_NAME STR_VAR spell_name = ~CLERIC_ANIMAL_SUMMONING_LEVEL_3~ RET spell_res END
+OUTER_SPRINT lv3_summ_res ~%spell_res%~
+LAF RES_NUM_OF_SPELL_NAME STR_VAR spell_name = ~CLERIC_ANIMAL_SUMMONING_4~ RET spell_res END
+OUTER_SPRINT lv7_summ_res ~%spell_res%~
+
+// vanilla spells
+OUTER_SPRINT lv1_cure_res ~SPPR103~
+OUTER_SPRINT lv3_cure_res ~SPPR315~
+OUTER_SPRINT lv4_cure_res ~SPPR401~
+OUTER_SPRINT lv5_cure_res ~SPPR502~
+OUTER_SPRINT lv6_cure_res ~SPPR607~
+OUTER_SPRINT lv7_cure_res ~SPPR712~
+
+OUTER_SPRINT lv4_harm_res ~SPPR414~
+OUTER_SPRINT lv5_harm_res ~SPPR510~
+OUTER_SPRINT lv6_harm_res ~SPPR608~
+OUTER_SPRINT lv7_harm_res ~SPPR708~
+
+OUTER_SPRINT lv4_summ_res ~SPPR402~
+OUTER_SPRINT lv5_summ_res ~SPPR501~
+OUTER_SPRINT lv6_summ_res ~SPPR602~
+
+
+ACTION_DEFINE_ARRAY spl_res_cure BEGIN 
+	~%lv1_cure_res%~ ~%lv2_cure_res%~ ~%lv3_cure_res%~ ~%lv4_cure_res%~ ~%lv5_cure_res%~ ~%lv6_cure_res%~ ~%lv7_cure_res%~ 
+END
+
+ACTION_DEFINE_ARRAY spl_res_harm BEGIN 
+	~%lv1_harm_res%~ ~%lv2_harm_res%~ ~%lv3_harm_res%~ ~%lv4_harm_res%~ ~%lv5_harm_res%~ ~%lv6_harm_res%~ ~%lv7_harm_res%~ 
+END
+
+ACTION_DEFINE_ARRAY spl_res_summ BEGIN 
+	~%lv1_summ_res%~ ~%lv2_summ_res%~ ~%lv3_summ_res%~ ~%lv4_summ_res%~ ~%lv5_summ_res%~ ~%lv6_summ_res%~ ~%lv7_summ_res%~ 
+END
+
+// store abilities and effects of these spells in an inline 2DA. Again, ungraceful, slow, and ugly, but it works
+// do not write to disk until it is completed as random file IO behavior may screw things up
+
+DEFINE_ACTION_MACRO append_sp_spells_2da BEGIN
+	COPY_EXISTING ~%to_spell%.spl~ ~weidu_external/%mod_folder%/workspace~
+		READ_SHORT 0x34 spell_level
+		READ_SHORT 0x68 n_headers
+		accum_effs = 0
+		SPRINT spl_res ~%SOURCE_FILE%~
+		FOR (i_header=0; i_header<n_headers; i_header+=1) BEGIN
+			READ_BYTE 0x72+0x28*i_header h_type
+			READ_ASCII 0x76+0x28*i_header h_icon
+			READ_BYTE 0x7e+0x28*i_header h_target
+			READ_BYTE 0x80+0x28*i_header h_range
+			READ_BYTE 0x82+0x28*i_header h_min_lvl
+			READ_BYTE 0x84+0x28*i_header h_speed
+			READ_BYTE 0x90+0x28*i_header h_n_eff
+			PATCH_PRINT ~n_eff %h_n_eff%~
+			
+			FOR (i_eff=0; i_eff<h_n_eff; i_eff+=1) BEGIN
+				READ_SHORT 0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x00 eff_opcode
+				READ_BYTE  0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x02 eff_target
+				READ_BYTE  0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x03 eff_power
+				READ_LONG  0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x04 eff_para1
+				READ_LONG  0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x08 eff_para2
+				READ_BYTE  0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x0c eff_timing
+				READ_BYTE  0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x0d eff_resist_dispel
+				READ_LONG  0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x0e eff_duration
+				READ_ASCII 0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x14 eff_resource
+				PATCH_IF ~%eff_resource%~ STRING_EQUAL ~~ BEGIN SPRINT eff_resource ~########~ END
+				READ_LONG  0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x1c eff_n_dice
+				READ_LONG  0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x20 eff_dice_size
+				READ_LONG  0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x24 eff_save_type
+				READ_LONG  0x72+0x28*n_headers+(accum_effs+i_eff)*0x30+0x28 eff_save_bonus
+				INNER_ACTION BEGIN
+					COPY - ~sc_to_spells.2da~ ~sc_to_spells.2da~
+						COUNT_2DA_ROWS 25 n_rows
+						INSERT_2DA_ROW n_rows 25 ~%spl_res% %sc_type% %spell_level% %n_headers% %i_header% %h_type% %h_icon% %h_target% %h_range% %h_min_lvl% %h_speed% %h_n_eff% %i_eff% %eff_opcode% %eff_target% %eff_power% %eff_para1% %eff_para2% %eff_timing% %eff_resist_dispel% %eff_duration% %eff_resource% %eff_n_dice% %eff_dice_size% %eff_save_type% %eff_save_bonus%~
+					BUT_ONLY
+				END
+			END
+			accum_effs += h_n_eff
+		END
+	BUT_ONLY
+END
+
+
+<<<<<<<< convert_to_spell_header.2da
+2DA V1.0
+0
+    SC_TYPE LVL N_HEADER H_IDX H_TYPE H_ICON H_TARGET H_RANGE H_MIN_LVL H_SPEED N_EFF EFF_IDX EFF_OPCODE EFF_TARGET EFF_POWER EFF_PARA1 EFF_PARA2 EFF_TIMING EFF_RESIST_DISPEL EFF_DURATION EFF_RESOURCE EFF_N_DICE EFF_DICE_SIZE EFF_SAVE_TYPE EFF_SAVE_BONUS
+
+>>>>>>>>
+
+COPY - ~convert_to_spell_header.2da~ ~sc_to_spells.2da~
+
+ACTION_PHP_EACH spl_res_cure AS _ => to_spell BEGIN
+	OUTER_SET sc_type = 1
+	LAM append_sp_spells_2da
+END
+
+ACTION_PHP_EACH spl_res_harm AS _ => to_spell BEGIN
+	OUTER_SET sc_type = 2
+	LAM append_sp_spells_2da
+END
+
+ACTION_PHP_EACH spl_res_summ AS _ => to_spell BEGIN
+	OUTER_SET sc_type = 3
+	LAM append_sp_spells_2da
+END
+
+// export it for debugging
+COPY + ~sc_to_spells.2da~ ~weidu_external/%mod_folder%/workspace/sc_to_spells.2da~
+	PRETTY_PRINT_2DA
+BUT_ONLY
+
+
+///////////////////////////////////////////////////
+// Patching spell ablities and effects
+///////////////////////////////////////////////////
+
+// prepare new bams for SCing by patching the originals bams of convert-from spells
+// do this in a seperte loop to avoid strange weidu variable scoping behavior
+
+DEFINE_PATCH_FUNCTION get_new_bam_res_name INT_VAR sc_type=1 STR_VAR old_bam_res_name=~~ RET new_bam_res_name BEGIN
+	// pad res name with tailing underscores if its length < 7
+	name_len = (STRING_LENGTH ~%old_bam_res_name%~)
+	FOR (i=0; i<(7 - name_len); i+=1) BEGIN
+		SPRINT old_bam_res_name ~%old_bam_res_name%_~
+	END
+	LPF SUBSTRING INT_VAR start=2 length=5 STR_VAR string = EVAL ~%old_bam_res_name%~ RET substring END
+	PATCH_MATCH sc_type WITH 
+		1 BEGIN SPRINT post_fix ~G~ END // good healing SCing
+		2 BEGIN SPRINT post_fix ~E~ END // evil harming SCing
+		3 BEGIN SPRINT post_fix ~S~ END // summon
+		DEFAULT SPRINT post_fix ~_~ END
+	
+	SPRINT new_bam_res_name ~M9%substring%%post_fix%~
+END
+
+ACTION_PHP_EACH source_spells AS _ => source_spell BEGIN
+	COPY_EXISTING - ~%source_spell%.spl~ nowhere
+		READ_ASCII 0x76 h_icon
+		
+		// create healing bam for convert-from spells
+		LPF get_new_bam_res_name INT_VAR sc_type=1 STR_VAR old_bam_res_name = EVAL ~%h_icon%~ RET new_bam_res_name END
+		INNER_ACTION BEGIN
+			COPY_EXISTING ~%h_icon%.BAM~ ~override/%new_bam_res_name%.BAM~
+				LPF adjust_bam_platte_rgb INT_VAR g_adjust=30 b_adjust=60 platte_size=256 END
+			BUT_ONLY
+			// COPY_EXISTING + ~%new_bam_res_name%.BAM~ ~weidu_external/%mod_folder%/workspace~
+		END
+		
+		// create harming bam for convert-from spells
+		LPF get_new_bam_res_name INT_VAR sc_type=2 STR_VAR old_bam_res_name = EVAL ~%h_icon%~ RET new_bam_res_name END
+		INNER_ACTION BEGIN
+			COPY_EXISTING ~%h_icon%.BAM~ ~override/%new_bam_res_name%.BAM~
+				LPF adjust_bam_platte_rgb INT_VAR r_adjust=60 platte_size=256 END
+			BUT_ONLY
+			// COPY_EXISTING + ~%new_bam_res_name%.BAM~ ~weidu_external/%mod_folder%/workspace~
+		END
+		
+		
+		// create summoning bam for convert-from spells
+		LPF get_new_bam_res_name INT_VAR sc_type=3 STR_VAR old_bam_res_name = EVAL ~%h_icon%~ RET new_bam_res_name END
+		INNER_ACTION BEGIN
+			COPY_EXISTING ~%h_icon%.BAM~ ~override/%new_bam_res_name%.BAM~
+				LPF adjust_bam_platte_rgb INT_VAR g_adjust=40 platte_size=256 END
+			BUT_ONLY
+			// COPY_EXISTING + ~%new_bam_res_name%.BAM~ ~weidu_external/%mod_folder%/workspace~
+		END
+	BUT_ONLY
+END
+
+// Patch convert-from spells to give them ability headers of convert-to spells
+
+ACTION_PHP_EACH source_spells AS _ => source_spell BEGIN
+	// COPY_EXISTING ~%source_spell%.spl~ ~weidu_external/%mod_folder%/workspace/%source_spell%.spl~
+	COPY_EXISTING - ~%source_spell%.spl~ ~%source_spell%_wip.spl~
+		READ_SHORT 0x34 spell_level
+		READ_ASCII 0x76 spell_ab_icon
+	PRINT ~patching source spell %source_spell% of lvl %spell_level% ...~
+	COPY ~weidu_external/%mod_folder%/workspace/sc_to_spells.2da~ nowhere
+		COUNT_2DA_COLS n_cols
+		COUNT_2DA_ROWS n_cols n_rows
+		READ_2DA_ENTRIES_NOW table n_cols
+		FOR (i_row=0;i_row<n_rows;i_row+=1) BEGIN
+			READ_2DA_ENTRY_FORMER table i_row 0  target_spell_res
+			READ_2DA_ENTRY_FORMER table i_row 1  target_sc_spell_type // 1: heal 2: harm 3: summon
+			READ_2DA_ENTRY_FORMER table i_row 2  target_spell_level
+			READ_2DA_ENTRY_FORMER table i_row 3  n_header
+			READ_2DA_ENTRY_FORMER table i_row 4  h_idx
+			READ_2DA_ENTRY_FORMER table i_row 5  h_type
+			READ_2DA_ENTRY_FORMER table i_row 6  h_icon
+			READ_2DA_ENTRY_FORMER table i_row 7  h_target
+			READ_2DA_ENTRY_FORMER table i_row 8  h_range
+			READ_2DA_ENTRY_FORMER table i_row 9  h_min_lvl
+			READ_2DA_ENTRY_FORMER table i_row 10 h_speed
+			READ_2DA_ENTRY_FORMER table i_row 11 n_eff
+			READ_2DA_ENTRY_FORMER table i_row 12 eff_idx
+			READ_2DA_ENTRY_FORMER table i_row 13 eff_opcode
+			READ_2DA_ENTRY_FORMER table i_row 14 eff_target
+			READ_2DA_ENTRY_FORMER table i_row 15 eff_power
+			READ_2DA_ENTRY_FORMER table i_row 16 eff_para1
+			READ_2DA_ENTRY_FORMER table i_row 17 eff_para2
+			READ_2DA_ENTRY_FORMER table i_row 18 eff_timing
+			READ_2DA_ENTRY_FORMER table i_row 19 eff_resist_dispel
+			READ_2DA_ENTRY_FORMER table i_row 20 eff_duration
+			READ_2DA_ENTRY_FORMER table i_row 21 eff_resource
+			READ_2DA_ENTRY_FORMER table i_row 22 eff_n_dice
+			READ_2DA_ENTRY_FORMER table i_row 23 eff_dice_size
+			READ_2DA_ENTRY_FORMER table i_row 24 eff_save_type
+			READ_2DA_ENTRY_FORMER table i_row 25 eff_save_bonus
+			
+			// PATCH_PRINT ~read row %i_row% level #%target_spell_level%#~
+			PATCH_IF spell_level = target_spell_level BEGIN
+				// patch convert-from spell BAM for SCing
+				PATCH_IF (h_idx = 0) AND (eff_idx = 0) BEGIN
+					LPF get_new_bam_res_name INT_VAR sc_type=target_sc_spell_type STR_VAR old_bam_res_name = EVAL ~%spell_ab_icon%~ RET new_bam_res_name END
+				END
+				INNER_ACTION BEGIN
+					// COPY ~weidu_external/%mod_folder%/workspace/%source_spell%.spl~ ~weidu_external/%mod_folder%/workspace/%source_spell%.spl~
+					COPY - ~%source_spell%_wip.spl~ ~%source_spell%_wip.spl~
+						READ_SHORT 0x68 existing_headers
+						PATCH_IF eff_idx = 0 BEGIN
+							// add ability header
+							LPF ADD_SPELL_HEADER 
+								INT_VAR 
+									type=h_type 
+									location=2
+									target=h_target
+									target_count=0
+									range=h_range
+									required_level=h_min_lvl + target_sc_spell_type*60
+									speed=h_speed
+								STR_VAR icon= EVAL ~%new_bam_res_name%~
+								RET insert_point 
+								header_insert_point = insert_point
+							END
+						END
+						// add ability effect, one at a time
+						LPF ADD_SPELL_EFFECT // add inherited effect
+							INT_VAR  
+							opcode = eff_opcode  
+							target = eff_target
+							timing = eff_timing
+							parameter1 = eff_para1
+							parameter2 = eff_para2
+							power = eff_power
+							resist_dispel = eff_resist_dispel
+							duration = eff_duration
+							dicenumber = eff_n_dice
+							dicesize = eff_dice_size
+							savingthrow = eff_save_type
+							savebonus = eff_save_bonus
+							header = header_insert_point + 1
+							insert_point = ~-1~
+							STR_VAR resource = EVAL ~%eff_resource%~
+						END
+						PATCH_IF n_eff - eff_idx = 1 BEGIN // if last "inherited" effect of current ability header added, then add a SC-specific effect
+							PATCH_IF target_sc_spell_type = 1 BEGIN SPRINT remove_res ~M9SCACTG~ END
+							PATCH_IF target_sc_spell_type = 2 BEGIN SPRINT remove_res ~M9SCACTE~ END
+							PATCH_IF target_sc_spell_type = 3 BEGIN SPRINT remove_res ~M9SCACTS~ END
+							LPF ADD_SPELL_EFFECT 
+								INT_VAR opcode = 321 target = 1 timing = 0 parameter2 = 2 power = 0 resist_dispel = 2 
+									duration = 0 header = header_insert_point + 1 insert_point = 0
+								STR_VAR resource = EVAL ~%remove_res%~
+							END
+						END
+					BUT_ONLY
+				END
+			END
+		END
+	BUT_ONLY
+	// save patched convert-from spells to override
+	COPY ~%source_spell%_wip.spl~ ~override/%source_spell%.spl~
+	// exporting
+	// COPY + ~%source_spell%_wip.spl~ ~weidu_external/%mod_folder%/workspace/%source_spell%.spl~
+	CLEAR_INLINED
+END
+
+
+// patch improved alacrity so that SC does not break it
+COPY_EXISTING ~spwi921.spl~ ~override~
+	LPF ADD_SPELL_EFFECT 
+		INT_VAR opcode = 101 target = 1 timing = 0 parameter2 = 188 power = 0 resist_dispel = 2 
+			duration = 12 insert_point = ~-1~
+	END
+BUT_ONLY

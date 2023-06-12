@@ -273,6 +273,8 @@ Limitations:
 
 This compoent relies on additional healing/harming/summoning spells introduced by Spell Revisions. Spell Revisions needs to be either installed first or is immediately available for installation (i.e. SR's files are already placed in the game folder).
 
+To modders: this component utilizes a library that does some basic RGB color channels manipulations. Check `mcr_salt_and_pepper/lib/lib_platte_editor.tpa` for details.
+
 #### Component 4310: Add hotkey 'X' for Spontaneous Casting (requires component #4300 *AND* EEEx hotkey module)
 
 ### Group 5000: Class and kit tweaks

@@ -10,7 +10,7 @@ COPY_EXISTING ~bow05.itm~ ~override~
 BUT_ONLY
 
 LAF generate_blank_file INT_VAR inlined=1 STR_VAR type="eff" END
-COPY ~inlined/temp.eff~ ~override/MC#BOWN1.eff~
+COPY ~inlined/temp.eff~ ~override/M9BOWN1.eff~
 	WRITE_LONG 0x10 1    // apr
 	WRITE_LONG 0x14 1    // self
 	WRITE_LONG 0x1c 1    // value
@@ -22,14 +22,14 @@ COPY ~inlined/temp.eff~ ~override/MC#BOWN1.eff~
 	WRITE_LONG 0x44 0
 	WRITE_LONG 0x90 0
 BUT_ONLY
-COPY_EXISTING ~MC#BOWN1.eff~ ~override/MC#BOWN2.eff~
+COPY_EXISTING ~M9BOWN1.eff~ ~override/M9BOWN2.eff~
 	WRITE_LONG 0x1c (0 - 1)
 BUT_ONLY
-COPY_EXISTING ~MC#BOWN1.eff~ ~override/MC#BOWA1.eff~
+COPY_EXISTING ~M9BOWN1.eff~ ~override/M9BOWA1.eff~
 	WRITE_LONG 0x10 167    // missle thaco
 	WRITE_LONG 0x1c 2
 BUT_ONLY
-COPY_EXISTING ~MC#BOWN1.eff~ ~override/MC#BOWA2.eff~
+COPY_EXISTING ~M9BOWN1.eff~ ~override/M9BOWA2.eff~
 	WRITE_LONG 0x10 167    // missle thaco
 	WRITE_LONG 0x1c (0 - 2)
 BUT_ONLY
@@ -111,7 +111,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 				parameter2=5
 				timing =2
 				insert_point=(0 - 1)
-			STR_VAR resource=~MC#BOWN1~ END
+			STR_VAR resource=~M9BOWN1~ END
 			LPF ADD_ITEM_EQEFFECT INT_VAR 
 				opcode=177 
 				target=1
@@ -119,7 +119,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 				parameter2=5
 				timing =2
 				insert_point=(0 - 1)
-			STR_VAR resource=~MC#BOWN1~ END
+			STR_VAR resource=~M9BOWN1~ END
 			LPF ADD_ITEM_EQEFFECT INT_VAR 
 				opcode=177 
 				target=1
@@ -127,7 +127,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 				parameter2=5
 				timing =2
 				insert_point=(0 - 1)
-			STR_VAR resource=~MC#BOWN1~ END
+			STR_VAR resource=~M9BOWN1~ END
 			LPF ADD_ITEM_EQEFFECT INT_VAR 
 				opcode=177 
 				target=1
@@ -135,7 +135,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 				parameter2=9
 				timing =2
 				insert_point=(0 - 1)
-			STR_VAR resource=~MC#BOWN2~ END
+			STR_VAR resource=~M9BOWN2~ END
 			// thac0
 			LPF ADD_ITEM_EQEFFECT INT_VAR 
 				opcode=177 
@@ -144,7 +144,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 				parameter2=5
 				timing =2
 				insert_point=(0 - 1)
-			STR_VAR resource=~MC#BOWA1~ END
+			STR_VAR resource=~M9BOWA1~ END
 			LPF ADD_ITEM_EQEFFECT INT_VAR 
 				opcode=177 
 				target=1
@@ -152,7 +152,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 				parameter2=5
 				timing =2
 				insert_point=(0 - 1)
-			STR_VAR resource=~MC#BOWA1~ END
+			STR_VAR resource=~M9BOWA1~ END
 			LPF ADD_ITEM_EQEFFECT INT_VAR 
 				opcode=177 
 				target=1
@@ -160,7 +160,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 				parameter2=5
 				timing =2
 				insert_point=(0 - 1)
-			STR_VAR resource=~MC#BOWA1~ END
+			STR_VAR resource=~M9BOWA1~ END
 			LPF ADD_ITEM_EQEFFECT INT_VAR 
 				opcode=177 
 				target=1
@@ -168,7 +168,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.itm$~ ~override~
 				parameter2=9
 				timing =2
 				insert_point=(0 - 1)
-			STR_VAR resource=~MC#BOWA2~ END
+			STR_VAR resource=~M9BOWA2~ END
 		END
 	END
 BUT_ONLY

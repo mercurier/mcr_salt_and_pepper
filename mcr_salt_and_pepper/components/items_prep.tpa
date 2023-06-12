@@ -26,7 +26,7 @@ COPY - ~%MOD_FOLDER%/2da/items_mod.2da~ nowhere
 		PATCH_IF (FILE_EXISTS_IN_GAME ~%item_res%.itm~) AND (install_flag=1) AND (
 			(~%mod_source%~ STRING_EQUAL_CASE  "_VA_") OR  // is a vanilla item
 			(has_IR=1 AND (~%mod_source%~ STRING_EQUAL_CASE "DV")) OR  // item modded by Items Revisions previously
-			(has_MCR=1 AND (~%mod_source%~ STRING_EQUAL_CASE "MC#")) )  // item modded by this mod previously
+			(has_MCR=1 AND (~%mod_source%~ STRING_EQUAL_CASE "M9")) )  // item modded by this mod previously
 		BEGIN
 			INNER_ACTION BEGIN
 				COPY_EXISTING ~%item_res%.itm~ ~override~
